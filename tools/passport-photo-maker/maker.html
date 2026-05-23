@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">
+    <title>Create Passport Photos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f0f4ff; min-height: 100vh;
+            display: flex; align-items: center; justify-content: center; padding: 15px;
+        }
+        .container {
+            width: 100%; max-width: 500px; background: white;
+            border-radius: 24px; padding: 25px 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .page { display: none; flex-direction: column; gap: 20px; }
+        .page.active { display: flex; }
+        .header { text-align: center; position: relative; }
+        .back-home {
+            position: absolute; left: 0; top: 0; text-decoration: none;
+            color: #6366f1; font-weight: 600; font-size: 0.9rem;
+        }
+        .header h1 { font-size: 1.5rem; color: #1e293b; margin-bottom: 5px; }
+        .header p { font-size: 0.85rem; color: #64748b; }
+        .upload-box {
+            border: 2px dashed #cbd5e1; border-radius: 16px;
+            padding: 30px 20px; text-align: center; cursor: pointer;
+            background: #fafbfc; transition: all 0.2s;
+        }
+        .upload-box:hover { border-color: #6366f1; background: #eef2ff; }
+        .upload-box:active { transform: scale(0.98); }
+        .upload-box .icon { font-size: 3rem; margin-bottom: 10px; }
+        .upload-box h3 { font-size: 1rem; color: #1e293b; margin-bottom: 5px; }
+        .upload-box p { font-size: 0.8rem; color: #94a3b8; }
+        input[type="file"] { display: none; }
+        .preview-box {
+            display: flex; align-items: center; gap: 12px;
+            background: #f8fafc; padding: 12px; border-radius: 12px;
+        }
+        .preview-box img {
+            width: 65px; height: 82px; object-fit: cover;
+            border-radius: 8px; background: white; border: 1px solid #e2e8f0;
+        }
+        .preview-info { flex: 1; }
+        .preview-info strong { font-size: 0.9rem; color: #1e293b; display: block; }
+        .preview-info span { font-size: 0.75rem; color: #64748b; }
+        button, .btn {
+            border: none; border-radius: 50px; padding: 14px 20px;
+            font-weight: 600; font-size: 0.95rem; cursor: pointer;
+            width: 100%; transition: all 0.2s;
+            text-decoration: none; display: inline-block; text-align: center;
+        }
+        button:active, .btn:active { transform: scale(0.97); }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-secondary { background: white; color: #334155; border: 1.5px solid #d1d5db; }
+        .btn-outline { background: white; color: #6366f1; border: 1.5px solid #6366f1; }
+        .btn-sm { width: auto; padding: 8px 16px; font-size: 0.8rem; }
+        .btn-row { display: flex; gap: 8px; }
+        .btn-row button, .btn-row .btn { flex: 1; }
+        .canvas-wrapper {
+            background: #f1f5f9; padding: 8px; border-radius: 12px; text-align: center;
+        }
+        canvas { width: 100%; height: auto; border-radius: 6px; background: white; display: block; }
+        .result-header { display: flex; align-items: center; gap: 10px; }
+        .toast {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            background: #1e293b; color: white; padding: 12px 25px;
+            border-radius: 30px; font-size: 0.85rem; z-index: 999;
+            opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="page active" id="homePage">
+        <div class="header">
+            <a href="index.html" class="back-home">← Home</a>
+            <h1>📸 Passport Photo Maker</h1>
+            <p>Upload your photo and get A4 sheet</p>
+        </div>
+        <div class="upload-box" id="uploadBox">
+            <div class="icon">📁</div>
+            <h3>Tap to Upload Photo</h3>
+            <p>JPEG, PNG, WebP</p>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        <div id="previewSection" style="display:none;">
+            <div class="preview-box">
+                <img id="previewImg" src="" alt="Preview">
+                <div class="preview-info">
+                    <strong>Photo Ready</strong>
+                    <span id="photoInfo">--</span>
+                </div>
+                <button class="btn-outline btn-sm" id="clearBtn">✕</button>
+            </div>
+            <button class="btn-primary" id="generateBtn">Generate A4 Sheet</button>
+        </div>
+    </div>
+    <div class="page" id="resultPage">
+        <div class="result-header">
+            <button class="btn-secondary btn-sm" id="backBtn">← Back</button>
+            <strong style="color:#1e293b;">A4 Sheet Preview</strong>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="myCanvas"></canvas>
+        </div>
+        <div>
+            <p style="font-weight:600;margin-bottom:10px;color:#1e293b;">Download As:</p>
+            <div class="btn-row">
+                <button class="btn-primary" id="downloadPNG">PNG</button>
+                <button class="btn-primary" id="downloadJPG">JPG</button>
+                <button class="btn-outline" id="downloadPDF">PDF</button>
+            </div>
+        </div>
+        <button class="btn-secondary" id="newBtn">Create New Sheet</button>
+        <a href="index.html" class="btn btn-secondary">🏠 Back to Home</a>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+    const homePage=document.getElementById('homePage'),resultPage=document.getElementById('resultPage'),
+    uploadBox=document.getElementById('uploadBox'),fileInput=document.getElementById('fileInput'),
+    previewSection=document.getElementById('previewSection'),previewImg=document.getElementById('previewImg'),
+    photoInfo=document.getElementById('photoInfo'),clearBtn=document.getElementById('clearBtn'),
+    generateBtn=document.getElementById('generateBtn'),myCanvas=document.getElementById('myCanvas'),
+    backBtn=document.getElementById('backBtn'),downloadPNG=document.getElementById('downloadPNG'),
+    downloadJPG=document.getElementById('downloadJPG'),downloadPDF=document.getElementById('downloadPDF'),
+    newBtn=document.getElementById('newBtn'),toast=document.getElementById('toast');
+    let userImage=null;
+    function showToast(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2000)}
+    function showPage(page){homePage.classList.remove('active');resultPage.classList.remove('active');if(page==='home')homePage.classList.add('active');else resultPage.classList.add('active')}
+    uploadBox.addEventListener('click',()=>fileInput.click());
+    fileInput.addEventListener('change',(e)=>{const file=e.target.files[0];if(file)loadImage(file)});
+    uploadBox.addEventListener('dragover',(e)=>{e.preventDefault();uploadBox.style.borderColor='#6366f1';uploadBox.style.background='#eef2ff'});
+    uploadBox.addEventListener('dragleave',()=>{uploadBox.style.borderColor='#cbd5e1';uploadBox.style.background='#fafbfc'});
+    uploadBox.addEventListener('drop',(e)=>{e.preventDefault();uploadBox.style.borderColor='#cbd5e1';uploadBox.style.background='#fafbfc';const file=e.dataTransfer.files[0];if(file)loadImage(file)});
+    function loadImage(file){if(!file.type.startsWith('image/')){showToast('Please select an image file');return}const reader=new FileReader();reader.onload=(e)=>{const img=new Image();img.onload=()=>{userImage=img;previewImg.src=e.target.result;photoInfo.textContent=img.width+' × '+img.height+' px';previewSection.style.display='block';showToast('Photo loaded')};img.src=e.target.result};reader.readAsDataURL(file)}
+    clearBtn.addEventListener('click',()=>{userImage=null;previewImg.src='';previewSection.style.display='none';fileInput.value='';showToast('Photo removed')});
+    generateBtn.addEventListener('click',()=>{if(!userImage){showToast('Please upload a photo first');return}const DPI=300,A4_W=Math.round(210/25.4*DPI),A4_H=Math.round(297/25.4*DPI),PHOTO_W=Math.round(35/25.4*DPI),PHOTO_H=Math.round(45/25.4*DPI),COLS=4,ROWS=6,GAP=Math.round(3/25.4*DPI),gridW=COLS*PHOTO_W+(COLS-1)*GAP,gridH=ROWS*PHOTO_H+(ROWS-1)*GAP,startX=Math.round((A4_W-gridW)/2),startY=Math.round((A4_H-gridH)/2);myCanvas.width=A4_W;myCanvas.height=A4_H;const ctx=myCanvas.getContext('2d');ctx.fillStyle='#FFFFFF';ctx.fillRect(0,0,A4_W,A4_H);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';for(let row=0;row<ROWS;row++){for(let col=0;col<COLS;col++){const x=startX+col*(PHOTO_W+GAP),y=startY+row*(PHOTO_H+GAP);ctx.fillStyle='#333333';ctx.fillRect(x-2,y-2,PHOTO_W+4,PHOTO_H+4);ctx.drawImage(userImage,x,y,PHOTO_W,PHOTO_H);ctx.strokeStyle='#333333';ctx.lineWidth=2;ctx.strokeRect(x-2,y-2,PHOTO_W+4,PHOTO_H+4)}}showPage('result');showToast('A4 sheet ready')});
+    downloadPNG.addEventListener('click',()=>{const link=document.createElement('a');link.download='passport-photos.png';link.href=myCanvas.toDataURL('image/png');link.click();showToast('Downloaded')});
+    downloadJPG.addEventListener('click',()=>{const link=document.createElement('a');link.download='passport-photos.jpg';link.href=myCanvas.toDataURL('image/jpeg',0.95);link.click();showToast('Downloaded')});
+    downloadPDF.addEventListener('click',()=>{const imgData=myCanvas.toDataURL('image/jpeg',0.95);const win=window.open('','_blank');if(win){win.document.write('<html><head><title>Passport Photos</title><style>@page{size:A4;margin:0}body{margin:0;display:flex;justify-content:center}img{width:210mm;height:297mm}</style></head><body><img src="'+imgData+'"></body></html>');win.document.close();setTimeout(()=>{win.print();showToast('Print dialog opened')},500)}});
+    backBtn.addEventListener('click',()=>showPage('home'));
+    newBtn.addEventListener('click',()=>showPage('home'));
+    previewSection.style.display='none';
+</script>
+</body>
+</html>

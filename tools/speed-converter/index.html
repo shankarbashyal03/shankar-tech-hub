@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Speed Converter - Convert between all speed units">
+    <title>Speed Converter | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Header */
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Converter Card */
+        .converter-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--input-bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .unit-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 18px;
+        }
+
+        .select-box {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: var(--input-bg);
+            color: var(--text);
+            appearance: none;
+            cursor: pointer;
+            transition: var(--transition);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .select-box:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .swap-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-bottom: 2px;
+        }
+
+        .swap-btn:hover {
+            background: var(--accent-hover);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .convert-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .convert-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Result Box */
+        .result-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent2);
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+
+        .result-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .result-badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 500px) {
+            .unit-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .swap-btn {
+                margin: 0 auto;
+                transform: rotate(90deg);
+            }
+            .swap-btn:hover {
+                transform: rotate(270deg) scale(1.1);
+            }
+            h1 { font-size: 1.3rem; }
+            .result-value { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1><i class="fas fa-tachometer-alt"></i> Speed Converter</h1>
+        </div>
+
+        <!-- Converter Card -->
+        <div class="converter-card">
+            <div class="input-group">
+                <label>Speed Value</label>
+                <input type="number" id="inputValue" class="input-field" placeholder="Enter speed" value="1" step="any">
+            </div>
+
+            <div class="unit-row">
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>From Unit</label>
+                    <select id="fromUnit" class="select-box">
+                        <option value="kmh">km/h</option>
+                        <option value="mph">mph</option>
+                        <option value="ms">m/s</option>
+                        <option value="knot">Knots</option>
+                        <option value="ftps">ft/s</option>
+                        <option value="mach">Mach</option>
+                        <option value="c">Light (c)</option>
+                        <option value="inps">in/s</option>
+                    </select>
+                </div>
+
+                <button class="swap-btn" id="swapBtn" title="Swap units">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+
+                <div class="input-group" style="margin-bottom:0;">
+                    <label>To Unit</label>
+                    <select id="toUnit" class="select-box">
+                        <option value="mph">mph</option>
+                        <option value="kmh">km/h</option>
+                        <option value="ms">m/s</option>
+                        <option value="knot">Knots</option>
+                        <option value="ftps">ft/s</option>
+                        <option value="mach">Mach</option>
+                        <option value="c">Light (c)</option>
+                        <option value="inps">in/s</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="convert-btn" id="convertBtn">
+                <i class="fas fa-sync-alt"></i> Convert Speed
+            </button>
+
+            <!-- Result Box -->
+            <div class="result-box" id="resultBox">
+                <div class="result-value" id="resultValue">—</div>
+                <div class="result-detail" id="resultDetail"></div>
+                <div class="result-badges">
+                    <span class="badge" id="fromBadge">km/h</span>
+                    <span class="badge" id="toBadge">mph</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== SPEED FACTORS (relative to m/s) =====
+        const factors = {
+            kmh: 0.277778,
+            mph: 0.44704,
+            ms: 1,
+            knot: 0.514444,
+            ftps: 0.3048,
+            mach: 343,
+            c: 299792458,
+            inps: 0.0254
+        };
+
+        const symbols = {
+            kmh: 'km/h', mph: 'mph', ms: 'm/s', knot: 'kn',
+            ftps: 'ft/s', mach: 'Ma', c: 'c', inps: 'in/s'
+        };
+
+        function convert() {
+            const val = parseFloat(document.getElementById('inputValue').value);
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+            const resultBox = document.getElementById('resultBox');
+
+            if (isNaN(val)) {
+                document.getElementById('resultValue').textContent = 'Invalid Input';
+                document.getElementById('resultDetail').textContent = 'Enter a valid number';
+                resultBox.classList.add('show');
+                return;
+            }
+
+            if (from === to) {
+                document.getElementById('resultValue').textContent = 'Same Units';
+                document.getElementById('resultDetail').textContent = 'Select different units';
+                resultBox.classList.add('show');
+                return;
+            }
+
+            const inMs = val * factors[from];
+            const result = inMs / factors[to];
+
+            document.getElementById('resultValue').textContent = `${val} ${symbols[from]} = ${formatNum(result)} ${symbols[to]}`;
+            document.getElementById('resultDetail').textContent = 'Conversion complete';
+            document.getElementById('fromBadge').textContent = symbols[from];
+            document.getElementById('toBadge').textContent = symbols[to];
+            resultBox.classList.add('show');
+        }
+
+        function formatNum(num) {
+            if (num === 0) return '0';
+            if (num >= 1e6) return num.toExponential(4);
+            if (num >= 1000) return num.toLocaleString('en-US', { maximumFractionDigits: 4 });
+            if (num < 1e-6) return num.toExponential(6);
+            return parseFloat(num.toFixed(8)).toString();
+        }
+
+        function swapUnits() {
+            const from = document.getElementById('fromUnit');
+            const to = document.getElementById('toUnit');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convert();
+        }
+
+        // Events
+        document.getElementById('convertBtn').addEventListener('click', convert);
+        document.getElementById('swapBtn').addEventListener('click', swapUnits);
+        document.getElementById('inputValue').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') convert();
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+shankar-tools/tools/file-converter/
+│
+├── index.html                    (Main converter dashboard)
+│
+└── converter-tools/
+    ├── jpgtopng.html
+    ├── jpgtopdf.html
+    ├── jpgtoheic.html
+    ├── pngtojpg.html
+    ├── pngtopdf.html
+    ├── pngtoheic.html
+    ├── pdftojpg.html
+    ├── pdftopng.html
+    ├── pdftoheic.html
+    ├── heictojpg.html
+    ├── heictopng.html
+    └── heictopdf.html

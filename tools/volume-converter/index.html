@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Volume Converter - Convert between all volume units">
+    <title>Volume Converter | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Header */
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Converter Card */
+        .converter-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: var(--input-bg);
+            color: var(--text);
+            transition: var(--transition);
+            min-height: 48px;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .select-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        .swap-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-bottom: 5px;
+        }
+
+        .swap-btn:hover {
+            background: var(--accent-hover);
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .convert-btn, .clear-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .convert-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .convert-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .clear-btn {
+            background: var(--card-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .clear-btn:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* Result */
+        .result-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            word-break: break-all;
+        }
+
+        .result-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 500px) {
+            .select-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .swap-btn {
+                margin: 0 auto;
+                transform: rotate(90deg);
+            }
+            .swap-btn:hover {
+                transform: rotate(270deg) scale(1.1);
+            }
+            h1 { font-size: 1.3rem; }
+            .btn-row { grid-template-columns: 1fr; }
+            .result-value { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1><i class="fas fa-flask"></i> Volume Converter</h1>
+        </div>
+
+        <!-- Converter Card -->
+        <div class="converter-card">
+            <div class="input-group">
+                <label>Volume Value</label>
+                <input type="number" id="inputValue" value="1" min="0" step="any" placeholder="Enter volume">
+            </div>
+
+            <div class="select-row">
+                <div class="input-group">
+                    <label>From Unit</label>
+                    <select id="fromUnit">
+                        <option value="liter">Liters (L)</option>
+                        <option value="milliliter">Milliliters (mL)</option>
+                        <option value="gallon_us">Gallons (US)</option>
+                        <option value="gallon_uk">Gallons (UK)</option>
+                        <option value="cubic_meter">Cubic Meters (m³)</option>
+                        <option value="cubic_centimeter">Cubic Centimeters (cm³)</option>
+                        <option value="cubic_inch">Cubic Inches (in³)</option>
+                        <option value="cup">Cups (US)</option>
+                        <option value="pint_us">Pints (US)</option>
+                        <option value="pint_uk">Pints (UK)</option>
+                        <option value="quart_us">Quarts (US)</option>
+                        <option value="quart_uk">Quarts (UK)</option>
+                        <option value="fluid_ounce_us">Fluid Ounces (US)</option>
+                        <option value="fluid_ounce_uk">Fluid Ounces (UK)</option>
+                        <option value="tablespoon">Tablespoons (US)</option>
+                        <option value="teaspoon">Teaspoons (US)</option>
+                    </select>
+                </div>
+
+                <button class="swap-btn" id="swapBtn" aria-label="Swap units">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+
+                <div class="input-group">
+                    <label>To Unit</label>
+                    <select id="toUnit">
+                        <option value="milliliter">Milliliters (mL)</option>
+                        <option value="liter">Liters (L)</option>
+                        <option value="gallon_us">Gallons (US)</option>
+                        <option value="gallon_uk">Gallons (UK)</option>
+                        <option value="cubic_meter">Cubic Meters (m³)</option>
+                        <option value="cubic_centimeter">Cubic Centimeters (cm³)</option>
+                        <option value="cubic_inch">Cubic Inches (in³)</option>
+                        <option value="cup">Cups (US)</option>
+                        <option value="pint_us">Pints (US)</option>
+                        <option value="pint_uk">Pints (UK)</option>
+                        <option value="quart_us">Quarts (US)</option>
+                        <option value="quart_uk">Quarts (UK)</option>
+                        <option value="fluid_ounce_us">Fluid Ounces (US)</option>
+                        <option value="fluid_ounce_uk">Fluid Ounces (UK)</option>
+                        <option value="tablespoon">Tablespoons (US)</option>
+                        <option value="teaspoon">Teaspoons (US)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button class="convert-btn" id="convertBtn">
+                    <i class="fas fa-sync-alt"></i> Convert
+                </button>
+                <button class="clear-btn" id="clearBtn">
+                    <i class="fas fa-redo"></i> Clear
+                </button>
+            </div>
+
+            <!-- Result Box -->
+            <div class="result-box" id="resultBox">
+                <div class="result-value" id="resultValue">—</div>
+                <div class="result-detail" id="resultDetail"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== VOLUME FACTORS (to liters) =====
+        const factors = {
+            liter: 1, milliliter: 0.001, gallon_us: 3.78541, gallon_uk: 4.54609,
+            cubic_meter: 1000, cubic_centimeter: 0.001, cubic_inch: 0.0163871,
+            cup: 0.236588, pint_us: 0.473176, pint_uk: 0.568261,
+            quart_us: 0.946353, quart_uk: 1.13652, fluid_ounce_us: 0.0295735,
+            fluid_ounce_uk: 0.0284131, tablespoon: 0.0147868, teaspoon: 0.00492892
+        };
+
+        const symbols = {
+            liter: 'L', milliliter: 'mL', gallon_us: 'gal', gallon_uk: 'gal',
+            cubic_meter: 'm³', cubic_centimeter: 'cm³', cubic_inch: 'in³',
+            cup: 'cup', pint_us: 'pt', pint_uk: 'pt', quart_us: 'qt', quart_uk: 'qt',
+            fluid_ounce_us: 'fl oz', fluid_ounce_uk: 'fl oz', tablespoon: 'tbsp', teaspoon: 'tsp'
+        };
+
+        const inputVal = document.getElementById('inputValue');
+        const fromUnit = document.getElementById('fromUnit');
+        const toUnit = document.getElementById('toUnit');
+        const resultBox = document.getElementById('resultBox');
+        const resultValue = document.getElementById('resultValue');
+        const resultDetail = document.getElementById('resultDetail');
+
+        function convert() {
+            const val = parseFloat(inputVal.value);
+            if (isNaN(val) || val < 0) {
+                resultValue.textContent = 'Invalid input';
+                resultDetail.textContent = 'Please enter a valid positive number';
+                resultBox.classList.add('show');
+                return;
+            }
+
+            const inLiters = val * factors[fromUnit.value];
+            const result = inLiters / factors[toUnit.value];
+
+            resultValue.textContent = formatNum(result) + ' ' + symbols[toUnit.value];
+            resultDetail.textContent = `${val} ${symbols[fromUnit.value]} = ${formatNum(result)} ${symbols[toUnit.value]}`;
+            resultBox.classList.add('show');
+        }
+
+        function formatNum(num) {
+            if (num === 0) return '0';
+            if (num < 0.0001) return num.toExponential(4);
+            if (num >= 1000000) return num.toExponential(4);
+            return parseFloat(num.toFixed(6)).toString();
+        }
+
+        function clearAll() {
+            inputVal.value = '1';
+            resultBox.classList.remove('show');
+        }
+
+        function swapUnits() {
+            const temp = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = temp;
+            convert();
+        }
+
+        document.getElementById('convertBtn').addEventListener('click', convert);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        document.getElementById('swapBtn').addEventListener('click', swapUnits);
+        inputVal.addEventListener('keydown', (e) => { if (e.key === 'Enter') convert(); });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

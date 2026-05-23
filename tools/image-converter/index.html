@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Image Converter - Convert images between formats">
+    <title>Image Converter | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            background: var(--card);
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-area.drag-over {
+            border-color: var(--accent2);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .upload-text {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .upload-subtext {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Format Selection */
+        .format-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .format-card h3 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+        }
+
+        .format-btn {
+            padding: 14px 10px;
+            background: var(--card-alt);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+            color: var(--text);
+        }
+
+        .format-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .format-btn.selected {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .format-btn i {
+            font-size: 1.4rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .btn-convert {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-convert:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-convert:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: var(--card-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-reset:hover {
+            background: var(--border);
+        }
+
+        .btn-download {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .btn-download.show {
+            display: block;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Preview */
+        .preview-section {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .preview-section.show {
+            display: block;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .preview-box {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .preview-label {
+            padding: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--card-alt);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: var(--bg);
+            padding: 10px;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: var(--accent);
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.1rem; }
+            .preview-grid { grid-template-columns: 1fr; }
+            .btn-row { grid-template-columns: 1fr; }
+            .format-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1><i class="fas fa-image"></i> Image Converter</h1>
+        </div>
+
+        <!-- Upload Area -->
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <div class="upload-text">Drop image here or click to browse</div>
+            <div class="upload-subtext">Supports JPG, PNG, WebP, GIF, BMP</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <!-- Format Selection -->
+        <div class="format-card">
+            <h3>Select Output Format</h3>
+            <div class="format-grid" id="formatGrid">
+                <div class="format-btn selected" data-format="jpeg">
+                    <i class="fas fa-file-image"></i> JPEG
+                </div>
+                <div class="format-btn" data-format="png">
+                    <i class="fas fa-file-image"></i> PNG
+                </div>
+                <div class="format-btn" data-format="webp">
+                    <i class="fas fa-bolt"></i> WebP
+                </div>
+                <div class="format-btn" data-format="gif">
+                    <i class="fas fa-film"></i> GIF
+                </div>
+                <div class="format-btn" data-format="bmp">
+                    <i class="fas fa-save"></i> BMP
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-section" id="previewSection">
+            <div class="preview-grid">
+                <div class="preview-box">
+                    <div class="preview-label">Original</div>
+                    <img id="originalPreview" class="preview-img" alt="Original">
+                </div>
+                <div class="preview-box">
+                    <div class="preview-label">Converted</div>
+                    <img id="convertedPreview" class="preview-img" alt="Converted">
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i> Converting image...
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            <button class="btn btn-reset" id="resetBtn"><i class="fas fa-redo"></i> Reset</button>
+            <button class="btn btn-convert" id="convertBtn" disabled><i class="fas fa-exchange-alt"></i> Convert</button>
+        </div>
+        <button class="btn btn-download" id="downloadBtn"><i class="fas fa-download"></i> Download Converted Image</button>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== DOM =====
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const formatBtns = document.querySelectorAll('.format-btn');
+        const convertBtn = document.getElementById('convertBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const previewSection = document.getElementById('previewSection');
+        const originalPreview = document.getElementById('originalPreview');
+        const convertedPreview = document.getElementById('convertedPreview');
+        const loading = document.getElementById('loading');
+
+        let originalFile = null;
+        let selectedImage = null;
+        let selectedFormat = 'jpeg';
+        let convertedBlob = null;
+
+        // Upload triggers
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) loadImage(e.target.files[0]);
+        });
+
+        // Drag & Drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+        });
+
+        // Format selection
+        formatBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                formatBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedFormat = btn.dataset.format;
+                if (originalFile) convertBtn.disabled = false;
+            });
+        });
+
+        function loadImage(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                return;
+            }
+            originalFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                selectedImage = new Image();
+                selectedImage.onload = () => {
+                    originalPreview.src = e.target.result;
+                    convertedPreview.src = e.target.result;
+                    previewSection.classList.add('show');
+                    convertBtn.disabled = false;
+                    downloadBtn.classList.remove('show');
+                };
+                selectedImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function convertImage() {
+            if (!selectedImage) return;
+            loading.classList.add('show');
+            convertBtn.disabled = true;
+
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                canvas.width = selectedImage.width;
+                canvas.height = selectedImage.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(selectedImage, 0, 0);
+
+                const mimeMap = {
+                    jpeg: 'image/jpeg',
+                    png: 'image/png',
+                    webp: 'image/webp',
+                    gif: 'image/gif',
+                    bmp: 'image/bmp'
+                };
+
+                canvas.toBlob((blob) => {
+                    convertedBlob = blob;
+                    convertedPreview.src = URL.createObjectURL(blob);
+                    downloadBtn.classList.add('show');
+                    loading.classList.remove('show');
+                    convertBtn.disabled = false;
+                }, mimeMap[selectedFormat] || 'image/jpeg', 0.92);
+            }, 300);
+        }
+
+        function downloadImage() {
+            if (!convertedBlob) return;
+            const url = URL.createObjectURL(convertedBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `converted.${selectedFormat}`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function resetAll() {
+            originalFile = null;
+            selectedImage = null;
+            convertedBlob = null;
+            originalPreview.src = '';
+            convertedPreview.src = '';
+            previewSection.classList.remove('show');
+            convertBtn.disabled = true;
+            downloadBtn.classList.remove('show');
+            loading.classList.remove('show');
+            fileInput.value = '';
+            formatBtns.forEach(b => b.classList.remove('selected'));
+            formatBtns[0].classList.add('selected');
+            selectedFormat = 'jpeg';
+        }
+
+        convertBtn.addEventListener('click', convertImage);
+        resetBtn.addEventListener('click', resetAll);
+        downloadBtn.addEventListener('click', downloadImage);
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

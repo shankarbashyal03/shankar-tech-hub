@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Data Storage Converter - Convert between data units">
+    <title>Data Converter | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Header */
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Converter Card */
+        .converter-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .icon-row {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group label i {
+            color: var(--accent);
+            margin-right: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            min-height: 48px;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            cursor: pointer;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-convert {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-convert:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-reset {
+            background: var(--card-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-reset:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* Result */
+        .result-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.05));
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            word-break: break-all;
+        }
+
+        .result-placeholder {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @media (max-width: 500px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.3rem; }
+            .converter-card { padding: 20px; }
+            .btn-row { grid-template-columns: 1fr; }
+            .result-value { font-size: 1.3rem; }
+            .tool-icon { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1>Data Converter</h1>
+        </div>
+
+        <!-- Converter Card -->
+        <div class="converter-card">
+            <div class="icon-row">
+                <span class="tool-icon"><i class="fas fa-database"></i></span>
+            </div>
+            <p class="subtitle">Convert between different data storage units</p>
+
+            <div class="form-group">
+                <label><i class="fas fa-keyboard"></i> Enter Value</label>
+                <input type="number" id="inputValue" placeholder="Enter data size value" min="0" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-arrow-right"></i> From Unit</label>
+                <select id="inputUnit">
+                    <option value="bits">Bits (b)</option>
+                    <option value="bytes">Bytes (B)</option>
+                    <option value="kilobytes" selected>Kilobytes (KB)</option>
+                    <option value="megabytes">Megabytes (MB)</option>
+                    <option value="gigabytes">Gigabytes (GB)</option>
+                    <option value="terabytes">Terabytes (TB)</option>
+                    <option value="petabytes">Petabytes (PB)</option>
+                    <option value="kibibytes">Kibibytes (KiB)</option>
+                    <option value="mebibytes">Mebibytes (MiB)</option>
+                    <option value="gibibytes">Gibibytes (GiB)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-arrow-left"></i> To Unit</label>
+                <select id="outputUnit">
+                    <option value="bits">Bits (b)</option>
+                    <option value="bytes">Bytes (B)</option>
+                    <option value="kilobytes">Kilobytes (KB)</option>
+                    <option value="megabytes" selected>Megabytes (MB)</option>
+                    <option value="gigabytes">Gigabytes (GB)</option>
+                    <option value="terabytes">Terabytes (TB)</option>
+                    <option value="petabytes">Petabytes (PB)</option>
+                    <option value="kibibytes">Kibibytes (KiB)</option>
+                    <option value="mebibytes">Mebibytes (MiB)</option>
+                    <option value="gibibytes">Gibibytes (GiB)</option>
+                </select>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-convert" id="convertBtn">
+                    <i class="fas fa-sync-alt"></i> Convert
+                </button>
+                <button class="btn btn-reset" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+
+            <div class="result-box" id="resultBox">
+                <span class="result-placeholder" id="resultText">Click "Convert" to see result</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== CONVERSION FACTORS (to bytes) =====
+        const factors = {
+            bits: 1/8,
+            bytes: 1,
+            kilobytes: 1024,
+            megabytes: 1024 * 1024,
+            gigabytes: 1024 * 1024 * 1024,
+            terabytes: 1024 * 1024 * 1024 * 1024,
+            petabytes: 1024 * 1024 * 1024 * 1024 * 1024,
+            kibibytes: 1024,
+            mebibytes: 1024 * 1024,
+            gibibytes: 1024 * 1024 * 1024
+        };
+
+        const inputValue = document.getElementById('inputValue');
+        const inputUnit = document.getElementById('inputUnit');
+        const outputUnit = document.getElementById('outputUnit');
+        const resultText = document.getElementById('resultText');
+
+        function formatNum(num) {
+            if (num === 0) return '0';
+            if (num < 0.000001) return num.toExponential(6);
+            if (num < 1) return num.toFixed(8).replace(/\.?0+$/, '');
+            if (num < 1000) return num.toFixed(4).replace(/\.?0+$/, '');
+            return num.toLocaleString('en-US', { maximumFractionDigits: 4 });
+        }
+
+        function convert() {
+            const val = parseFloat(inputValue.value);
+            if (isNaN(val) || val < 0) {
+                resultText.textContent = 'Please enter a valid number';
+                resultText.className = 'result-placeholder';
+                resultText.style.color = '#ef4444';
+                return;
+            }
+            if (val === 0) {
+                resultText.textContent = '0';
+                resultText.className = 'result-value';
+                resultText.style.color = '';
+                return;
+            }
+
+            const bytes = val * factors[inputUnit.value];
+            const result = bytes / factors[outputUnit.value];
+
+            resultText.textContent = formatNum(result);
+            resultText.className = 'result-value';
+            resultText.style.color = '';
+        }
+
+        function reset() {
+            inputValue.value = '';
+            inputUnit.value = 'kilobytes';
+            outputUnit.value = 'megabytes';
+            resultText.textContent = 'Click "Convert" to see result';
+            resultText.className = 'result-placeholder';
+            resultText.style.color = '';
+            inputValue.focus();
+        }
+
+        document.getElementById('convertBtn').addEventListener('click', convert);
+        document.getElementById('resetBtn').addEventListener('click', reset);
+
+        inputValue.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') convert();
+        });
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+
+        // Init
+        reset();
+    </script>
+</body>
+</html>

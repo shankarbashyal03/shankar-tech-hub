@@ -1,0 +1,127 @@
+shankar-tools/
+│
+├── index.html
+├── manifest.json
+├── service-worker.js
+│
+├── icons/
+│   ├── logo.png
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── make-cv.png
+│   ├── cover-letter.png
+│   ├── emirates-id.png
+│   ├── police-report-uae.png
+│   ├── police-report-nepal.png
+│   ├── epassport.png
+│   ├── national-id.png
+│   ├── pan-card.png
+│   ├── voter-id.png
+│   ├── shram-renewal.png
+│   └── other-services.png
+│
+├── tools/
+│   │
+│   ├── passport-photo-maker/
+│   │   └── index.html
+│   │
+│   ├── area-converter/
+│   │   └── index.html
+│   │
+│   ├── age-calculator/
+│   │   └── index.html
+│   │
+│   ├── calendar/
+│   │   └── index.html
+│   │
+│   ├── currency-converter/
+│   │   └── index.html
+│   │
+│   ├── data-converter/
+│   │   └── index.html
+│   │
+│   ├── date-converter/
+│   │   └── index.html
+│   │
+│   ├── emi-calculator/
+│   │   └── index.html
+│   │
+│   ├── file-converter/
+│   │   ├── index.html
+│   │   └── converter-tools/
+│   │       ├── jpgtopng.html
+│   │       ├── jpgtopdf.html
+│   │       ├── jpgtoheic.html
+│   │       ├── pngtojpg.html
+│   │       ├── pngtopdf.html
+│   │       ├── pngtoheic.html
+│   │       ├── pdftojpg.html
+│   │       ├── pdftopng.html
+│   │       ├── pdftoheic.html
+│   │       ├── heictojpg.html
+│   │       ├── heictopng.html
+│   │       └── heictopdf.html
+│   │
+│   ├── image-converter/
+│   │   └── index.html
+│   │
+│   ├── file-compressor/
+│   │   └── index.html
+│   │
+│   ├── temperature-converter/
+│   │   └── index.html
+│   │
+│   ├── weight-converter/
+│   │   └── index.html
+│   │
+│   ├── volume-converter/
+│   │   └── index.html
+│   │
+│   ├── speed-converter/
+│   │   └── index.html
+│   │
+│   ├── qr-code-generator/
+│   │   └── index.html
+│   │
+│   ├── barcode-generator/
+│   │   └── index.html
+│   │
+│   └── jewellery-converter/
+│       └── index.html
+│
+├── services/
+│   ├── index.html
+│   ├── make-cv/
+│   │   └── index.html
+│   ├── cover-letter/
+│   │   └── index.html
+│   ├── emirates-id-renewal/
+│   │   └── index.html
+│   ├── police-report-uae/
+│   │   └── index.html
+│   ├── police-report-nepal/
+│   │   └── index.html
+│   ├── epassport-form/
+│   │   └── index.html
+│   ├── national-id-form/
+│   │   └── index.html
+│   ├── pan-card/
+│   │   └── index.html
+│   ├── voter-id/
+│   │   └── index.html
+│   ├── shram-renewal/
+│   │   └── index.html
+│   └── other-services/
+│       └── index.html
+│
+├── courses/
+│   └── index.html
+│
+├── downloads/
+│   └── index.html
+│
+├── contact/
+│   └── index.html
+│
+└── settings/
+    └── index.html

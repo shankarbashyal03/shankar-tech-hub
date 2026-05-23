@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Weight Converter - Convert between weight units">
+    <title>Weight Converter | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0,0,0,0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Header */
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card);
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 32px 28px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+        }
+
+        .input-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .swap-icon {
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .swap-icon i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0.6;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 25px 0 20px;
+        }
+
+        .btn {
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--card-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* Result */
+        .result-box {
+            border: 2px solid var(--accent);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.4s ease;
+            background: rgba(59,130,246,0.05);
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            word-break: break-all;
+            line-height: 1.1;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 500px) {
+            body { padding: 10px; }
+            .card { padding: 24px 18px; }
+            h1 { font-size: 1.3rem; }
+            .btn-row { grid-template-columns: 1fr; }
+            .result-value { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1>Weight Converter</h1>
+        </div>
+
+        <!-- Card -->
+        <div class="card">
+            <div class="input-group">
+                <label>Weight Value</label>
+                <input type="number" id="weightValue" value="1" min="0" step="any" placeholder="Enter weight">
+            </div>
+
+            <div class="input-group">
+                <label>From Unit</label>
+                <select id="fromUnit">
+                    <option value="kilogram">Kilogram (kg)</option>
+                    <option value="gram">Gram (g)</option>
+                    <option value="milligram">Milligram (mg)</option>
+                    <option value="pound">Pound (lb)</option>
+                    <option value="ounce">Ounce (oz)</option>
+                    <option value="stone">Stone (st)</option>
+                    <option value="usTon">US Ton</option>
+                    <option value="metricTon">Metric Ton</option>
+                    <option value="carat">Carat (ct)</option>
+                    <option value="grain">Grain (gr)</option>
+                </select>
+            </div>
+
+            <div class="swap-icon">
+                <i class="fas fa-arrows-up-down"></i>
+            </div>
+
+            <div class="input-group">
+                <label>To Unit</label>
+                <select id="toUnit">
+                    <option value="kilogram">Kilogram (kg)</option>
+                    <option value="gram">Gram (g)</option>
+                    <option value="milligram">Milligram (mg)</option>
+                    <option value="pound" selected>Pound (lb)</option>
+                    <option value="ounce">Ounce (oz)</option>
+                    <option value="stone">Stone (st)</option>
+                    <option value="usTon">US Ton</option>
+                    <option value="metricTon">Metric Ton</option>
+                    <option value="carat">Carat (ct)</option>
+                    <option value="grain">Grain (gr)</option>
+                </select>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="convertBtn">
+                    <i class="fas fa-exchange-alt"></i> Convert
+                </button>
+                <button class="btn btn-secondary" id="clearBtn">
+                    <i class="fas fa-eraser"></i> Clear
+                </button>
+            </div>
+
+            <!-- Result -->
+            <div class="result-box" id="resultBox">
+                <div class="result-value" id="resultValue">—</div>
+                <div class="result-label" id="resultLabel"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== DATA =====
+        const factors = {
+            kilogram: 1, gram: 0.001, milligram: 0.000001,
+            pound: 0.45359237, ounce: 0.028349523125,
+            stone: 6.35029318, usTon: 907.18474,
+            metricTon: 1000, carat: 0.0002, grain: 0.00006479891
+        };
+        const labels = {
+            kilogram: 'Kilogram (kg)', gram: 'Gram (g)', milligram: 'Milligram (mg)',
+            pound: 'Pound (lb)', ounce: 'Ounce (oz)', stone: 'Stone (st)',
+            usTon: 'US Ton', metricTon: 'Metric Ton', carat: 'Carat (ct)', grain: 'Grain (gr)'
+        };
+
+        function fmt(n) {
+            if (isNaN(n) || !isFinite(n)) return 'Invalid';
+            if (Math.abs(n) >= 1e12 || (Math.abs(n) < 1e-10 && n !== 0)) return n.toExponential(6);
+            const p = n.toString().split('.');
+            p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            if (p[1]) { p[1] = p[1].replace(/0+$/, '').substring(0, 8); return p[1] ? p.join('.') : p[0]; }
+            return p[0];
+        }
+
+        function convert() {
+            const v = parseFloat(document.getElementById('weightValue').value);
+            if (isNaN(v) || v < 0) {
+                document.getElementById('resultValue').textContent = '—';
+                document.getElementById('resultLabel').textContent = 'Enter a valid number';
+                document.getElementById('resultBox').classList.add('show');
+                return;
+            }
+            const from = document.getElementById('fromUnit').value;
+            const to = document.getElementById('toUnit').value;
+            const r = (v * factors[from]) / factors[to];
+            document.getElementById('resultValue').textContent = fmt(r);
+            document.getElementById('resultLabel').textContent = labels[to];
+            document.getElementById('resultBox').classList.add('show');
+        }
+
+        document.getElementById('convertBtn').addEventListener('click', convert);
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('weightValue').value = '1';
+            document.getElementById('resultBox').classList.remove('show');
+        });
+        document.getElementById('weightValue').addEventListener('keydown', e => { if (e.key === 'Enter') convert(); });
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

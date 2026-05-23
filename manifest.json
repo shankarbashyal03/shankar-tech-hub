@@ -1,0 +1,28 @@
+{
+    "name": "ShankarTech Hub",
+    "short_name": "ShankarTech",
+    "description": "Technology that helps people - Useful tools, online services, courses & notes",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#0f172a",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["productivity", "utilities", "education"],
+    "lang": "en",
+    "dir": "ltr",
+    "prefer_related_applications": false
+}

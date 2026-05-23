@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="E-Passport Form - Application form filling service for Nepali citizens.">
+    <title>E-Passport Form | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text-secondary:#94a3b8;--accent:#3b82f6;--border:#334155;--shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease}
+        body.light-mode{--bg:#f8fafc;--card:#ffffff;--text:#1e293b;--text-secondary:#475569;--border:#e2e8f0;--shadow:0 8px 30px rgba(0,0,0,0.06)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;transition:background 0.3s,color 0.3s}
+        .container{max-width:500px;width:100%;text-align:center}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px 18px;font-size:0.9rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:var(--transition);margin-bottom:30px}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:50px 30px;box-shadow:var(--shadow)}
+        .icon{width:90px;height:90px;border-radius:22px;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:#fff;margin:0 auto 25px}
+        h1{font-size:1.8rem;font-weight:800;margin-bottom:15px}
+        p{color:var(--text-secondary);font-size:1rem;line-height:1.6;margin-bottom:30px}
+        .highlight{color:var(--accent);font-weight:600}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#fff;border:none;padding:18px 40px;border-radius:35px;font-size:1.15rem;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--transition)}
+        .btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(59,130,246,0.45)}
+        @media(max-width:480px){.card{padding:35px 20px}h1{font-size:1.4rem}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Services</a>
+        <div class="card">
+            <div class="icon"><i class="fas fa-passport"></i></div>
+            <h1>E-Passport Form</h1>
+            <p>Fill the form and <span class="highlight">get your e-passport application</span>.</p>
+            <a href="https://script.google.com/macros/s/AKfycbzSYP9dSa07C1b20jVZD5lY_atdkif6JYo7fixUGRKvJ7A9qMlRKdmyfC5wuRjJBZUI/exec" class="btn" target="_blank"><i class="fas fa-edit"></i> Fill Now</a>
+        </div>
+    </div>
+    <script>
+        function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+        window.addEventListener('focus',()=>{applyTheme(localStorage.getItem('shankartech_theme')||'dark')});
+    </script>
+</body>
+</html>

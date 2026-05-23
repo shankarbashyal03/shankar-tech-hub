@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="ShankarTech Hub Services - Professional online document preparation, CV making, cover letters, and application forms for UAE and Nepal. Get documents by email.">
+    <title>Services | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--accent2:#8b5cf6;--accent3:#10b981;--border:#334155;--shadow:0 8px 30px rgba(0,0,0,0.3);--shadow-hover:0 15px 40px rgba(0,0,0,0.5);--transition:all 0.3s ease;--whatsapp:#25D366;--call:#10b981;--email:#f59e0b}
+        body.light-mode{--bg:#f8fafc;--card:#ffffff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--shadow:0 8px 30px rgba(0,0,0,0.06);--shadow-hover:0 15px 40px rgba(0,0,0,0.12)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;padding:20px;transition:background 0.3s,color 0.3s}
+        .container{max-width:1100px;width:100%;margin:10px auto;flex:1}
+        
+        .tool-header{display:flex;align-items:center;gap:15px;margin-bottom:30px;flex-wrap:wrap}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px 18px;font-size:0.9rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;transition:var(--transition);white-space:nowrap}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+        .header-content{flex:1;text-align:center;min-width:200px}
+        .header-content h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+        .header-content .subtitle{font-size:0.9rem;color:var(--text-secondary);line-height:1.5}
+
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:30px}
+        
+        .service-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:25px;transition:var(--transition);text-decoration:none;color:inherit;display:flex;flex-direction:column;position:relative;overflow:hidden}
+        .service-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover);border-color:var(--accent)}
+        .service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transform:scaleX(0);transition:transform 0.3s ease}
+        .service-card:hover::before{transform:scaleX(1)}
+        
+        .service-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:15px;color:#fff}
+        .service-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+        .service-card p{font-size:0.85rem;color:var(--text-secondary);line-height:1.5;flex-grow:1;margin-bottom:15px}
+        .service-tag{display:inline-block;padding:5px 12px;border-radius:15px;font-size:0.75rem;font-weight:600;background:rgba(59,130,246,0.15);color:var(--accent)}
+        .view-btn{background:var(--card-alt);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:0.85rem;font-weight:500;cursor:pointer;text-align:center;transition:var(--transition);margin-top:10px}
+        .view-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+        /* Floating Buttons */
+        .floating-actions{position:fixed;bottom:28px;right:24px;display:flex;flex-direction:column;gap:12px;z-index:999}
+        .float-btn{width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;font-size:1.2rem;color:#fff;box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);display:flex;align-items:center;justify-content:center;text-decoration:none}
+        .float-btn:hover{transform:scale(1.18) translateY(-4px)}
+        .float-whatsapp{background:var(--whatsapp)}.float-call{background:var(--call)}.float-email{background:var(--email)}
+
+        /* Footer */
+        .footer{background:rgba(15,23,42,0.8);border-top:1px solid var(--border);padding:2.5rem 1.5rem 0;margin-top:3rem}
+        body.light-mode .footer{background:#f1f5f9;border-top-color:#cbd5e1}
+        .footer-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;text-align:left}
+        .footer-section h4{font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;color:var(--text)}
+        .footer-section h4 i{color:var(--accent)}
+        .footer-links{list-style:none}
+        .footer-links li{margin-bottom:0.4rem}
+        .footer-links a{color:var(--text-secondary);text-decoration:none;font-size:0.85rem;transition:var(--transition);display:flex;align-items:center;gap:0.4rem}
+        .footer-links a:hover{color:var(--accent);transform:translateX(4px)}
+        .copyright-bar{text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.8rem;border-top:1px solid var(--border);margin-top:2rem;letter-spacing:0.3px}
+        .copyright-bar strong{color:var(--accent);font-weight:700}
+
+        @media(max-width:768px){.services-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}.header-content h1{font-size:1.4rem}}
+        @media(max-width:480px){.services-grid{grid-template-columns:1fr}.tool-header{flex-direction:column;align-items:stretch}.back-btn{align-self:flex-start}.floating-actions{bottom:18px;right:14px;gap:8px}.float-btn{width:40px;height:40px;font-size:1rem}.footer-content{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <div class="header-content">
+                <h1><i class="fas fa-globe"></i> Services</h1>
+                <p class="subtitle">We can do all type of online services. Fill the form and get your document by email.</p>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- Make CV -->
+            <a href="make-cv/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);"><i class="fas fa-file-alt"></i></div>
+                <h3>Make CV</h3>
+                <p>Make professional CV and get your CV by email. Professional resume creation service tailored to your needs.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Start Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Cover Letter - ✅ Fixed Icon -->
+            <a href="cover-letter/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#10b981,#3b82f6);"><i class="fas fa-file-lines"></i></div>
+                <h3>Cover Letter</h3>
+                <p>Make cover letter and get your cover letter by email. Professional cover letter tailored to your job application.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Start Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Emirates ID Renewal -->
+            <a href="emirates-id-renewal/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#009e60,#ce1126);"><i class="fas fa-id-card"></i></div>
+                <h3>Emirates ID Renewal</h3>
+                <p>Emirates ID renewal form filling and document preparation service. Quick and hassle-free process.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Police Report UAE - ✅ Fixed Icon -->
+            <a href="police-report-uae/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444);"><i class="fas fa-file-shield"></i></div>
+                <h3>Police Report UAE</h3>
+                <p>UAE police report application assistance. Quick and hassle-free process for UAE residents.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Police Report Nepal - ✅ Fixed Icon -->
+            <a href="police-report-nepal/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#dc143c,#003893);"><i class="fas fa-file-circle-check"></i></div>
+                <h3>Police Report Nepal</h3>
+                <p>Nepal police report and character certificate application assistance for Nepali citizens.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- E-Passport Form -->
+            <a href="epassport-form/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);"><i class="fas fa-passport"></i></div>
+                <h3>E-Passport Form</h3>
+                <p>Complete e-passport application form filling service for Nepali citizens. Fast and accurate.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- National ID Form -->
+            <a href="national-id-form/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);"><i class="fas fa-address-card"></i></div>
+                <h3>National ID Form</h3>
+                <p>National identity card application assistance for Nepali citizens. Simplified process.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- PAN Card -->
+            <a href="pan-card/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="fas fa-credit-card"></i></div>
+                <h3>PAN Card</h3>
+                <p>Permanent Account Number (PAN) card application assistance for Nepali citizens.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Voter ID -->
+            <a href="voter-id/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#10b981,#84cc16);"><i class="fas fa-check-to-slot"></i></div>
+                <h3>Voter ID</h3>
+                <p>Voter ID registration and application assistance for eligible Nepali voters.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Shram Renewal -->
+            <a href="shram-renewal/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);"><i class="fas fa-arrows-rotate"></i></div>
+                <h3>Shram Renewal</h3>
+                <p>Shram (labor) permit renewal assistance for Nepali workers. Easy and quick process.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Apply Now <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <!-- Other Services -->
+            <a href="other-services/index.html" class="service-card">
+                <div class="service-icon" style="background:linear-gradient(135deg,#64748b,#475569);"><i class="fas fa-ellipsis"></i></div>
+                <h3>Other Services</h3>
+                <p>Need something else? Check our other document and application services available.</p>
+                <span class="service-tag">Online Service</span>
+                <div class="view-btn">Explore <i class="fas fa-arrow-right"></i></div>
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-compass"></i> Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="../courses/index.html"><i class="fas fa-chevron-right"></i> Courses</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../contact/index.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="../settings/index.html"><i class="fas fa-chevron-right"></i> Settings</a></li>
+                    <li><a href="../settings/index.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-handshake"></i> Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="https://wa.me/971553134655" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+                    <li><a href="tel:0553134655"><i class="fas fa-phone-alt"></i> Call</a></li>
+                    <li><a href="mailto:sbvianet03@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            © <strong>Shankar Bashyal @2060</strong> | ShankarTech Hub | Technology that helps people
+        </div>
+    </footer>
+
+    <div class="floating-actions">
+        <a href="https://wa.me/971553134655" target="_blank" class="float-btn float-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:0553134655" class="float-btn float-call" aria-label="Call"><i class="fas fa-phone-alt"></i></a>
+        <a href="mailto:sbvianet03@gmail.com" class="float-btn float-email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <script>
+        function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+        window.addEventListener('focus',()=>{applyTheme(localStorage.getItem('shankartech_theme')||'dark')});
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('../service-worker.js').catch(()=>{})}
+    </script>
+</body>
+</html>

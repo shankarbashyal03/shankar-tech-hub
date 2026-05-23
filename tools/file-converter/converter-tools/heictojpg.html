@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Convert HEIC images to JPG for maximum compatibility on all devices. Fast, free, and secure online converter.">
+    <title>HEIC to JPG Converter | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--success:#10b981;--error:#ef4444;--border:#334155;--input-bg:#0f172a;--shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease}
+        body.light-mode{--bg:#f8fafc;--card:#fff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--input-bg:#f8fafc;--shadow:0 8px 30px rgba(0,0,0,0.06)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;transition:background 0.3s,color 0.3s}
+        .converter-container{max-width:600px;width:100%}
+        .tool-header{display:flex;align-items:center;gap:15px;margin-bottom:25px;flex-wrap:wrap}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px 18px;font-size:0.9rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;transition:var(--transition);white-space:nowrap}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+        h1{font-size:1.5rem;font-weight:800;color:var(--accent);flex:1;text-align:center}
+        .converter-card{background:var(--card);border-radius:16px;padding:30px;border:1px solid var(--border);box-shadow:var(--shadow)}
+        .conversion-badge{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px}
+        .from-format,.to-format{padding:10px 22px;border-radius:25px;font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:1px}
+        .from-format{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+        .to-format{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+        .upload-area{border:2px dashed var(--border);border-radius:16px;padding:40px 20px;text-align:center;cursor:pointer;transition:var(--transition);background:var(--input-bg);margin-bottom:20px}
+        .upload-area:hover,.upload-area.dragover{border-color:var(--accent);background:rgba(59,130,246,0.05)}
+        .upload-icon{font-size:3rem;margin-bottom:10px;color:var(--accent)}
+        .upload-text{font-size:1rem;color:var(--text-secondary);margin-bottom:5px}
+        .upload-hint{font-size:0.8rem;color:var(--text-muted)}
+        .file-name{margin-top:10px;color:var(--accent);font-weight:500;word-break:break-all;display:none}
+        input[type="file"]{display:none}
+        .preview-container{display:none;margin:20px 0;text-align:center}
+        .preview-container img{max-width:100%;max-height:300px;border-radius:12px;box-shadow:var(--shadow)}
+        .btn-group{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
+        .btn{padding:14px 20px;border:none;border-radius:12px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px}
+        .convert-btn{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff}
+        .convert-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px rgba(59,130,246,0.4)}
+        .convert-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+        .clear-btn{background:var(--card-alt);color:var(--text);border:1px solid var(--border)}
+        .clear-btn:hover{background:var(--border);transform:translateY(-2px)}
+        .status-message{text-align:center;margin-top:15px;font-size:0.9rem;color:var(--text-secondary);min-height:20px}
+        .status-message.success{color:var(--success)}.status-message.error{color:var(--error)}
+        @media(max-width:480px){.btn-group{grid-template-columns:1fr}.converter-card{padding:20px}h1{font-size:1.2rem}}
+    </style>
+</head>
+<body>
+    <div class="converter-container">
+        <div class="tool-header">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1>HEIC to JPG Converter</h1>
+        </div>
+        <div class="converter-card">
+            <div class="conversion-badge">
+                <span class="from-format">HEIC</span>
+                <i class="fas fa-arrow-right" style="color:var(--accent);font-size:1.2rem"></i>
+                <span class="to-format">JPG</span>
+            </div>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <div class="upload-text">Click or drag & drop your HEIC file here</div>
+                <div class="upload-hint">Supports .heic, .heif files</div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+            <input type="file" id="fileInput" accept=".heic,.heif">
+            <div class="preview-container" id="previewContainer"><img id="previewImage" alt="Preview"></div>
+            <div class="btn-group">
+                <button class="btn convert-btn" id="convertBtn" disabled><i class="fas fa-sync-alt"></i> Convert & Download</button>
+                <button class="btn clear-btn" id="clearBtn"><i class="fas fa-redo"></i> Clear</button>
+            </div>
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+    </div>
+    <script>
+        function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+        window.addEventListener('focus',()=>{applyTheme(localStorage.getItem('shankartech_theme')||'dark')});
+        const ua=document.getElementById('uploadArea'),fi=document.getElementById('fileInput'),fn=document.getElementById('fileName'),pc=document.getElementById('previewContainer'),pi=document.getElementById('previewImage'),cb=document.getElementById('convertBtn'),cl=document.getElementById('clearBtn'),sm=document.getElementById('statusMessage');let sf=null;
+        function hf(f){if(!f)return;const e=f.name.split('.').pop().toLowerCase();if(!['heic','heif'].includes(e)){ss('Please select a valid HEIC file.','error');return}sf=f;fn.textContent=f.name;fn.style.display='block';cb.disabled=false;ss('');const r=new FileReader();r.onload=e=>{pi.src=e.target.result;pc.style.display='block'};r.readAsDataURL(f)}
+        function ss(m,t=''){sm.textContent=m;sm.className='status-message';if(t)sm.classList.add(t)}
+        ua.addEventListener('click',()=>fi.click());ua.addEventListener('dragover',e=>{e.preventDefault();ua.classList.add('dragover')});ua.addEventListener('dragleave',()=>{ua.classList.remove('dragover')});ua.addEventListener('drop',e=>{e.preventDefault();ua.classList.remove('dragover');if(e.dataTransfer.files.length>0)hf(e.dataTransfer.files[0])});fi.addEventListener('change',e=>{if(e.target.files.length>0)hf(e.target.files[0])});
+        cb.addEventListener('click',async()=>{if(!sf)return;cb.disabled=true;ss('Converting HEIC to JPG...','');try{const i=new Image(),u=URL.createObjectURL(sf);await new Promise((res,rej)=>{i.onload=res;i.onerror=rej;i.src=u});const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const x=c.getContext('2d');x.drawImage(i,0,0);URL.revokeObjectURL(u);const b=await new Promise(res=>c.toBlob(res,'image/jpeg',0.95));const du=URL.createObjectURL(b),a=document.createElement('a');a.href=du;a.download=`${sf.name.replace(/\.[^/.]+$/,'')}_converted.jpg`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(du);ss('✅ Conversion successful! Download started.','success')}catch(e){console.error(e);ss('❌ Conversion failed. HEIC may not be fully supported in this browser.','error')}finally{cb.disabled=false}});
+        cl.addEventListener('click',()=>{sf=null;fi.value='';fn.textContent='';fn.style.display='none';pc.style.display='none';pi.src='';cb.disabled=true;ss('')});
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('../../../service-worker.js').catch(()=>{})}
+    </script>
+</body>
+</html>

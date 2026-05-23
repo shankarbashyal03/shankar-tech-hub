@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="ShankarTech Hub - Settings">
+    <title>Settings | ShankarTech Hub</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../icons/logo.png">
+    <link rel="icon" type="image/png" href="../icons/logo.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: rgba(30, 41, 59, 0.85);
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --border: rgba(51, 65, 85, 0.5);
+            --danger: #ef4444;
+            --transition: all 0.3s ease;
+        }
+
+        .light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.06) 0%, transparent 60%);
+            color: var(--text);
+            min-height: 100vh;
+            padding-top: 80px;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        .header {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(24px);
+            padding: 0.9rem 2rem;
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .light-mode .header {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-fallback {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        .main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .settings-group {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .settings-group h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+        }
+
+        .settings-group h3 i { color: var(--accent); }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .setting-item:last-child { border-bottom: none; }
+
+        .setting-item:hover { opacity: 0.8; }
+
+        .setting-item i { color: var(--text-secondary); margin-right: 0.8rem; }
+
+        .setting-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        /* Theme Toggle Switch */
+        .theme-toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .theme-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .theme-label.active { color: var(--accent); }
+
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 30px;
+            background: #334155;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--border);
+        }
+
+        .toggle-switch.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .toggle-switch.active .toggle-knob {
+            left: 27px;
+        }
+
+        .toggle-icons {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 9999;
+            animation: fadeInUp 0.3s ease;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .footer strong { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .header { padding: 0.7rem 1rem; }
+            .page-title { font-size: 1.4rem; }
+            .settings-group { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="../index.html" class="logo-area">
+                <img src="../icons/logo.png" alt="Logo" class="logo-img"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-fallback" style="display:none;">ST</div>
+                <div class="logo-text">
+                    <h1>ShankarTech Hub</h1>
+                    <span>Technology that helps people</span>
+                </div>
+            </a>
+            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <h2 class="page-title">Settings</h2>
+
+        <!-- Appearance -->
+        <div class="settings-group">
+            <h3><i class="fas fa-palette"></i> Appearance</h3>
+            <div class="setting-item">
+                <span class="setting-left">
+                    <i class="fas fa-moon"></i> Theme Mode
+                </span>
+                <div class="theme-toggle-wrapper">
+                    <span class="theme-label" id="darkLabel">🌙 Dark</span>
+                    <div class="toggle-switch" id="themeToggle" onclick="toggleTheme()">
+                        <div class="toggle-knob"></div>
+                    </div>
+                    <span class="theme-label" id="lightLabel">☀️ Light</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="settings-group">
+            <h3><i class="fas fa-database"></i> Data Management</h3>
+            <div class="setting-item" onclick="clearAllData()">
+                <span class="setting-left"><i class="fas fa-trash-alt"></i> Delete All Data</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="setting-item" onclick="backupData()">
+                <span class="setting-left"><i class="fas fa-download"></i> Backup Data</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="setting-item" onclick="restoreData()">
+                <span class="setting-left"><i class="fas fa-upload"></i> Restore Backup</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="settings-group">
+            <h3><i class="fas fa-info-circle"></i> About</h3>
+            <div class="setting-item">
+                <span class="setting-left"><i class="fas fa-code"></i> Version</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">1.0.0</span>
+            </div>
+            <div class="setting-item">
+                <span class="setting-left"><i class="fas fa-user"></i> Developer</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">Shankar Bashyal</span>
+            </div>
+            <div class="setting-item" onclick="showPrivacy()">
+                <span class="setting-left"><i class="fas fa-shield-alt"></i> Privacy Policy</span>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="settings-group">
+            <h3><i class="fas fa-address-book"></i> Contact Details</h3>
+            <div class="setting-item">
+                <span class="setting-left"><i class="fab fa-whatsapp"></i> WhatsApp</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">+971 55 313 4655</span>
+            </div>
+            <div class="setting-item">
+                <span class="setting-left"><i class="fas fa-phone-alt"></i> Phone</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">0553134655</span>
+            </div>
+            <div class="setting-item">
+                <span class="setting-left"><i class="fas fa-envelope"></i> Email</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">sbvianet03@gmail.com</span>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <button class="btn-danger" onclick="clearAllData()">
+            <i class="fas fa-trash-alt"></i> Delete All Data
+        </button>
+        <button class="btn-outline" onclick="backupData()">
+            <i class="fas fa-download"></i> Backup Data
+        </button>
+    </main>
+
+    <footer class="footer">
+        © <strong>Shankar Bashyal @2060</strong> | ShankarTech Hub | Technology that helps people
+    </footer>
+
+    <script>
+        // ===== THEME MANAGEMENT =====
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').classList.add('active');
+                document.getElementById('darkLabel').classList.remove('active');
+                document.getElementById('lightLabel').classList.add('active');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f8fafc');
+            } else {
+                document.body.classList.remove('light-mode');
+                document.getElementById('themeToggle').classList.remove('active');
+                document.getElementById('darkLabel').classList.add('active');
+                document.getElementById('lightLabel').classList.remove('active');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+            }
+            localStorage.setItem('shankartech_theme', theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('shankartech_theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            showToast(newTheme === 'dark' ? '🌙 Dark mode activated' : '☀️ Light mode activated');
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('shankartech_theme') || 'dark';
+        applyTheme(savedTheme);
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
+        }
+
+        // ===== DATA MANAGEMENT =====
+        function clearAllData() {
+            if (confirm('⚠️ Are you sure you want to delete ALL data?\n\nThis includes pinned tools, settings, and all stored information. This cannot be undone.')) {
+                const theme = localStorage.getItem('shankartech_theme');
+                localStorage.clear();
+                if (theme) localStorage.setItem('shankartech_theme', theme);
+                showToast('✅ All data cleared successfully!');
+            }
+        }
+
+        function backupData() {
+            const data = { ...localStorage };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'shankartech-backup-' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('✅ Backup downloaded successfully!');
+        }
+
+        function restoreData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        const theme = localStorage.getItem('shankartech_theme');
+                        localStorage.clear();
+                        Object.keys(data).forEach(key => {
+                            localStorage.setItem(key, data[key]);
+                        });
+                        if (theme && !data.shankartech_theme) {
+                            localStorage.setItem('shankartech_theme', theme);
+                        }
+                        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+                        showToast('✅ Data restored successfully!');
+                    } catch (err) {
+                        showToast('❌ Invalid backup file!');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function showPrivacy() {
+            const content = `
+📜 PRIVACY POLICY
+
+ShankarTech Hub respects your privacy.
+
+🔹 All data is stored locally on your device
+🔹 We do not collect personal information
+🔹 No data is shared with third parties
+🔹 You can delete all data anytime
+
+📞 Contact: sbvianet03@gmail.com
+📱 WhatsApp: +971 55 313 4655
+
+© Shankar Bashyal @2060
+            `.trim();
+            alert(content);
+        }
+    </script>
+</body>
+</html>

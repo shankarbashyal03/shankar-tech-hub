@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Photo Maker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: white;
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .slideshow-container {
+            max-width: 380px;
+            margin: 0 auto 25px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 3px solid #e2e8f0;
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .slides-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            min-height: 200px;
+            object-fit: cover;
+        }
+
+        .start-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            width: 100%;
+            text-align: center;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.6);
+        }
+
+        .privacy-note {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .privacy-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .privacy-text {
+            font-size: 0.85rem;
+            color: #92400e;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 16px;
+                border-radius: 22px;
+            }
+            h1 { font-size: 1.4rem; }
+            .start-button { padding: 14px 28px; font-size: 1rem; }
+            .slideshow-container { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <span class="logo">📸</span>
+        <h1>Passport Photo Maker</h1>
+        <p class="subtitle">Create passport size photos on A4 sheet instantly</p>
+
+        <div class="slideshow-container" id="slideshowContainer">
+            <div class="slides-track" id="slidesTrack">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <img src="" alt="Preview 1" id="slideImg1">
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <img src="" alt="Preview 2" id="slideImg2">
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <img src="" alt="Preview 3" id="slideImg3">
+                </div>
+            </div>
+        </div>
+
+        <div class="privacy-note">
+            <span class="privacy-icon">🔒</span>
+            <span class="privacy-text">We do not store your photos. All processing happens locally on your device.</span>
+        </div>
+
+        <a href="maker.html" class="start-button">
+            🚀 Let's Get Started
+        </a>
+
+    </div>
+
+    <script>
+        // Try different formats for each thumbnail
+        function loadThumbnail(num) {
+            const img = document.getElementById('slideImg' + num);
+            const formats = ['jpg', 'png', 'jpeg', 'webp'];
+            let formatIndex = 0;
+            
+            function tryNextFormat() {
+                if (formatIndex >= formats.length) {
+                    // All formats failed - show colored placeholder
+                    const colors = ['#e0e7ff', '#fef3c7', '#dbeafe'];
+                    const labels = ['Photo 1', 'Photo 2', 'Photo 3'];
+                    img.src = 'data:image/svg+xml,' + encodeURIComponent(
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="530">' +
+                        '<rect fill="' + colors[num-1] + '" width="400" height="530"/>' +
+                        '<text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#6366f1" font-size="20" font-weight="bold">' + labels[num-1] + '</text>' +
+                        '<text x="50%" y="58%" text-anchor="middle" dy=".3em" fill="#6366f1" font-size="14">Add thumbnail' + num + '.jpg</text>' +
+                        '</svg>'
+                    );
+                    return;
+                }
+                
+                const testImg = new Image();
+                testImg.onload = function() {
+                    img.src = 'thumbnail' + num + '.' + formats[formatIndex];
+                };
+                testImg.onerror = function() {
+                    formatIndex++;
+                    tryNextFormat();
+                };
+                testImg.src = 'thumbnail' + num + '.' + formats[formatIndex];
+            }
+            
+            tryNextFormat();
+        }
+
+        // Load all thumbnails
+        loadThumbnail(1);
+        loadThumbnail(2);
+        loadThumbnail(3);
+
+        // Slideshow logic
+        const track = document.getElementById('slidesTrack');
+        const totalSlides = 3;
+        let currentIndex = 0;
+        let autoSlide;
+
+        function goToSlide(index) {
+            currentIndex = index;
+            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlide);
+            autoSlide = setInterval(nextSlide, 1000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlide);
+        }
+
+        // Start slideshow
+        goToSlide(0);
+        startAutoSlide();
+
+        // Hover pause
+        document.getElementById('slideshowContainer').addEventListener('mouseenter', stopAutoSlide);
+        document.getElementById('slideshowContainer').addEventListener('mouseleave', startAutoSlide);
+
+        // Touch swipe
+        let touchStartX = 0;
+        document.getElementById('slideshowContainer').addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            stopAutoSlide();
+        });
+
+        document.getElementById('slideshowContainer').addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+            startAutoSlide();
+        });
+    </script>
+
+</body>
+</html>

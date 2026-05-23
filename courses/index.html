@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="ShankarTech Hub - Courses & Learning Resources">
+    <title>Courses & Notes | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --accent3: #f59e0b;
+            --purple: #8b5cf6;
+            --border: #334155;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 25px;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .cat-tab {
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .cat-tab:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .cat-tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 18px;
+        }
+
+        .course-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .course-card.cat-web::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .course-card.cat-mobile::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .course-card.cat-marketing::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .course-card.cat-design::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .course-card.cat-data::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .course-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 14px;
+        }
+
+        .icon-web { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .icon-mobile { background: linear-gradient(135deg, #10b981, #059669); }
+        .icon-marketing { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .icon-design { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .icon-data { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+        .course-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .course-card p {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-free {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent2);
+        }
+
+        .badge-soon {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent3);
+        }
+
+        .badge-new {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--purple);
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .course-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Notes Section */
+        .notes-section {
+            margin-top: 35px;
+            background: var(--card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .notes-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .note-card {
+            background: var(--card-alt);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .note-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .note-card h4 {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .note-card p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .note-card .note-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.2rem; }
+            .hero h2 { font-size: 1.5rem; }
+            .course-grid { grid-template-columns: 1fr; }
+            .notes-grid { grid-template-columns: 1fr; }
+            .header-actions { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1><i class="fas fa-graduation-cap"></i> Courses & Notes</h1>
+            <div class="header-actions">
+                <a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="../contact/index.html" class="nav-link"><i class="fas fa-phone"></i> Contact</a>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <h2>Learn & Grow</h2>
+            <p>Access quality courses and study materials to enhance your skills.</p>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="cat-tab active" data-cat="all">All Courses</button>
+            <button class="cat-tab" data-cat="web">Web Dev</button>
+            <button class="cat-tab" data-cat="mobile">Mobile</button>
+            <button class="cat-tab" data-cat="marketing">Marketing</button>
+            <button class="cat-tab" data-cat="design">Design</button>
+            <button class="cat-tab" data-cat="data">Data</button>
+        </div>
+
+        <!-- Course Grid -->
+        <div class="course-grid" id="courseGrid"></div>
+
+        <!-- Notes Section -->
+        <div class="notes-section">
+            <h2><i class="fas fa-sticky-note"></i> My Notes</h2>
+            <div class="notes-grid" id="notesGrid">
+                <div class="note-card" onclick="addNote()">
+                    <h4 style="color:var(--accent);">+ Add New Note</h4>
+                    <p>Click to create a new study note</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+        window.addEventListener('focus', () => {
+            applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        });
+
+        // ===== COURSES DATA =====
+        const courses = [
+            { name: "Web Development Basics", desc: "HTML, CSS, JavaScript fundamentals for beginners.", icon: "fa-laptop-code", cat: "web", iconClass: "icon-web", cardClass: "cat-web", badge: "free", lessons: 24, hours: 12 },
+            { name: "React.js Masterclass", desc: "Build modern web apps with React, Hooks & Redux.", icon: "fa-react", cat: "web", iconClass: "icon-web", cardClass: "cat-web", badge: "new", lessons: 36, hours: 18 },
+            { name: "Node.js Backend", desc: "Server-side development with Node, Express & MongoDB.", icon: "fa-server", cat: "web", iconClass: "icon-web", cardClass: "cat-web", badge: "free", lessons: 20, hours: 10 },
+            { name: "Flutter Mobile Apps", desc: "Cross-platform mobile apps with Flutter & Dart.", icon: "fa-mobile-alt", cat: "mobile", iconClass: "icon-mobile", cardClass: "cat-mobile", badge: "new", lessons: 30, hours: 15 },
+            { name: "React Native", desc: "Build iOS & Android apps with React Native.", icon: "fa-mobile", cat: "mobile", iconClass: "icon-mobile", cardClass: "cat-mobile", badge: "soon", lessons: 28, hours: 14 },
+            { name: "Digital Marketing 101", desc: "SEO, SEM, Social Media & Email marketing strategies.", icon: "fa-bullhorn", cat: "marketing", iconClass: "icon-marketing", cardClass: "cat-marketing", badge: "free", lessons: 18, hours: 9 },
+            { name: "Google Ads Mastery", desc: "Create high-converting Google Ads campaigns.", icon: "fa-ad", cat: "marketing", iconClass: "icon-marketing", cardClass: "cat-marketing", badge: "soon", lessons: 22, hours: 11 },
+            { name: "UI/UX Design Fundamentals", desc: "Design beautiful interfaces with Figma & Adobe XD.", icon: "fa-palette", cat: "design", iconClass: "icon-design", cardClass: "cat-design", badge: "new", lessons: 20, hours: 10 },
+            { name: "Graphic Design Basics", desc: "Learn Photoshop, Illustrator & design principles.", icon: "fa-pen-nib", cat: "design", iconClass: "icon-design", cardClass: "cat-design", badge: "free", lessons: 16, hours: 8 },
+            { name: "Data Science with Python", desc: "Pandas, NumPy, Matplotlib & machine learning intro.", icon: "fa-chart-bar", cat: "data", iconClass: "icon-data", cardClass: "cat-data", badge: "soon", lessons: 32, hours: 16 },
+            { name: "SQL for Beginners", desc: "Master database queries and management.", icon: "fa-database", cat: "data", iconClass: "icon-data", cardClass: "cat-data", badge: "free", lessons: 14, hours: 7 },
+            { name: "Excel Advanced", desc: "Formulas, PivotTables, VBA & data analysis.", icon: "fa-table", cat: "data", iconClass: "icon-data", cardClass: "cat-data", badge: "free", lessons: 12, hours: 6 }
+        ];
+
+        let activeCat = 'all';
+
+        // ===== RENDER COURSES =====
+        function renderCourses(filter) {
+            const grid = document.getElementById('courseGrid');
+            const filtered = filter === 'all' ? courses : courses.filter(c => c.cat === filter);
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="course-card ${c.cardClass}" onclick="openCourse('${c.name}')">
+                    <div class="course-icon ${c.iconClass}"><i class="fas ${c.icon}"></i></div>
+                    <h3>${c.name}</h3>
+                    <p>${c.desc}</p>
+                    <div class="course-meta">
+                        <span class="badge badge-${c.badge}">${c.badge === 'soon' ? 'Coming Soon' : c.badge === 'new' ? 'New' : 'Free'}</span>
+                        <div class="course-stats">
+                            <span><i class="fas fa-book"></i> ${c.lessons}</span>
+                            <span><i class="fas fa-clock"></i> ${c.hours}h</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">No courses found in this category.</p>';
+            }
+        }
+
+        // ===== CATEGORY TABS =====
+        document.querySelectorAll('.cat-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                activeCat = this.dataset.cat;
+                renderCourses(activeCat);
+            });
+        });
+
+        // ===== NOTES (LocalStorage) =====
+        function getNotes() {
+            return JSON.parse(localStorage.getItem('courseNotes') || '[]');
+        }
+
+        function saveNotes(notes) {
+            localStorage.setItem('courseNotes', JSON.stringify(notes));
+        }
+
+        function renderNotes() {
+            const grid = document.getElementById('notesGrid');
+            const notes = getNotes();
+
+            const noteCards = notes.map((n, i) => `
+                <div class="note-card" onclick="editNote(${i})">
+                    <h4>${n.title || 'Untitled Note'}</h4>
+                    <p>${n.content ? n.content.substring(0, 60) + '...' : 'No content'}</p>
+                    <div class="note-date">${n.date || ''}</div>
+                </div>
+            `).join('');
+
+            grid.innerHTML = noteCards + `
+                <div class="note-card" onclick="addNote()">
+                    <h4 style="color:var(--accent);">+ Add New Note</h4>
+                    <p>Click to create a new study note</p>
+                </div>
+            `;
+        }
+
+        window.addNote = function() {
+            const title = prompt('Note Title:');
+            if (title === null) return;
+            const content = prompt('Note Content:');
+            if (content === null) return;
+            const notes = getNotes();
+            notes.unshift({
+                title: title || 'Untitled',
+                content: content || '',
+                date: new Date().toLocaleDateString()
+            });
+            saveNotes(notes);
+            renderNotes();
+        };
+
+        window.editNote = function(index) {
+            const notes = getNotes();
+            const note = notes[index];
+            if (!note) return;
+            const action = confirm(`Note: ${note.title}\n\n${note.content}\n\nClick OK to edit, Cancel to delete.`);
+            if (action) {
+                const newTitle = prompt('Edit Title:', note.title);
+                if (newTitle !== null) note.title = newTitle || 'Untitled';
+                const newContent = prompt('Edit Content:', note.content);
+                if (newContent !== null) note.content = newContent || '';
+                note.date = new Date().toLocaleDateString();
+                saveNotes(notes);
+            } else {
+                notes.splice(index, 1);
+                saveNotes(notes);
+            }
+            renderNotes();
+        };
+
+        window.openCourse = function(name) {
+            alert(`📚 "${name}"\n\nThis course will be available soon!\nCheck back for updates.`);
+        };
+
+        // Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../service-worker.js').catch(() => {});
+        }
+
+        // Init
+        renderCourses('all');
+        renderNotes();
+    </script>
+</body>
+</html>
