@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Professional Notes Editor - Rich text editing, tables, attachments, voice recording, export to PDF, DOC, JPG">
+    <title>Edit Note | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--accent-hover:#2563eb;--accent2:#10b981;--danger:#ef4444;--warning:#f59e0b;--border:#334155;--input-bg:#0f172a;--shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease}
+        body.light-mode{--bg:#f8fafc;--card:#ffffff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--input-bg:#f8fafc;--shadow:0 8px 30px rgba(0,0,0,0.06)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;transition:background 0.3s,color 0.3s}
+        .container{max-width:1100px;margin:0 auto;width:100%;padding:15px;flex:1;display:flex;flex-direction:column}
+
+        .tool-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:0.85rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;text-decoration:none;transition:var(--transition);white-space:nowrap}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+        h1{font-size:1.3rem;font-weight:800;color:var(--accent);flex:1;text-align:center;min-width:150px}
+        .header-actions{display:flex;gap:6px;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;font-weight:600;font-size:0.8rem;cursor:pointer;transition:var(--transition);border:none;white-space:nowrap}
+        .btn-accent{background:var(--accent);color:#fff}.btn-accent:hover{background:var(--accent-hover)}
+        .btn-success{background:var(--accent2);color:#fff}.btn-success:hover{opacity:0.9}
+        .btn-warning{background:var(--warning);color:#000}.btn-warning:hover{opacity:0.9}
+        .btn-danger{background:var(--danger);color:#fff}.btn-danger:hover{opacity:0.9}
+        .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-outline:hover{background:var(--card-alt)}
+
+        .title-input{width:100%;padding:12px 16px;font-size:1.3rem;font-weight:700;background:var(--card);border:1px solid var(--border);border-radius:10px 10px 0 0;color:var(--text);outline:none}
+        .title-input:focus{border-color:var(--accent)}
+
+        .meta-bar{display:flex;gap:8px;padding:8px 12px;background:var(--card-alt);border:1px solid var(--border);border-top:none;font-size:0.75rem;color:var(--text-secondary);flex-wrap:wrap;align-items:center}
+        .meta-bar span{display:flex;align-items:center;gap:4px}
+
+        .editor-toolbar{display:flex;gap:2px;flex-wrap:wrap;padding:6px 8px;background:var(--card-alt);border:1px solid var(--border);border-top:none;align-items:center;position:sticky;top:0;z-index:10}
+        .editor-toolbar button,.editor-toolbar select{height:28px;padding:0 6px;border:1px solid var(--border);border-radius:4px;background:var(--card);cursor:pointer;font-size:0.68rem;display:inline-flex;align-items:center;gap:2px;transition:var(--transition);color:var(--text);font-family:'Segoe UI',sans-serif;white-space:nowrap}
+        .editor-toolbar button:hover,.editor-toolbar select:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .editor-toolbar button.active-tool{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .editor-toolbar .divider{width:1px;height:20px;background:var(--border);margin:0 3px;flex-shrink:0}
+        .editor-toolbar input[type="color"]{width:26px;height:26px;border:1px solid var(--border);border-radius:4px;cursor:pointer;padding:2px;background:var(--card)}
+
+        .editor-body{border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:16px 20px;min-height:350px;font-size:0.9rem;line-height:1.8;outline:none;background:var(--card);overflow-y:auto;flex:1}
+        .editor-body:focus{border-color:var(--accent)}
+        .editor-body table{width:100%;border-collapse:collapse;margin:10px 0}
+        .editor-body table td,.editor-body table th{border:1px solid var(--border);padding:8px 12px;min-width:40px}
+        .editor-body img{max-width:100%;border-radius:8px;margin:8px 0}
+        .editor-body audio{width:100%;margin:8px 0}
+        .editor-body .file-attach{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--card-alt);border:1px solid var(--border);border-radius:8px;margin:4px;cursor:pointer;font-size:0.85rem;color:var(--accent);text-decoration:none}
+        .editor-body ul,.editor-body ol{padding-left:24px;margin:6px 0}
+        .editor-body input[type="checkbox"]{margin-right:6px;transform:scale(1.2)}
+
+        .attach-bar{display:flex;gap:6px;padding:8px 0;flex-wrap:wrap}
+        .attach-btn{padding:8px 12px;border:1px dashed var(--border);background:var(--card);border-radius:8px;cursor:pointer;font-size:0.78rem;transition:var(--transition);color:var(--text-secondary);display:flex;align-items:center;gap:5px}
+        .attach-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .attach-btn.recording{background:var(--danger);color:#fff;border-color:var(--danger);animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4)}50%{box-shadow:0 0 0 10px rgba(239,68,68,0)}}
+
+        .table-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:2000}
+        .table-modal-overlay.show{display:flex}
+        .table-modal{background:var(--card);border-radius:14px;padding:24px;border:1px solid var(--border);max-width:380px;width:90%}
+        .table-modal h3{margin-bottom:16px;color:var(--accent)}
+        .table-modal .form-row{display:flex;gap:10px;margin-bottom:12px}
+        .table-modal input{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:6px;background:var(--input-bg);color:var(--text);font-size:0.85rem}
+
+        .export-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;z-index:2000}
+        .export-modal-overlay.show{display:flex}
+        .export-modal{background:var(--card);border-radius:14px;padding:24px;border:1px solid var(--border);max-width:350px;width:90%}
+        .export-modal h3{margin-bottom:14px;color:var(--accent)}
+        .export-modal .btn{width:100%;margin-bottom:8px;justify-content:center}
+
+        .toast{position:fixed;top:20px;right:20px;background:var(--accent2);color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;z-index:3000;animation:slideIn 0.3s ease;font-size:0.85rem;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+        .toast-error{background:var(--danger)}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+        @media(max-width:768px){.editor-toolbar{gap:1px;padding:4px}.editor-toolbar button,.editor-toolbar select{height:24px;padding:0 4px;font-size:0.6rem}.title-input{font-size:1.1rem}.editor-body{padding:12px;min-height:250px}.header-actions .btn{padding:7px 10px;font-size:0.7rem}h1{font-size:1rem}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <a href="index.html" class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1><i class="fas fa-sticky-note"></i> Edit Note</h1>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="saveNote('draft')"><i class="fas fa-save"></i> Draft</button>
+                <button class="btn btn-success" onclick="saveNote('saved')"><i class="fas fa-check"></i> Save</button>
+                <button class="btn btn-warning" onclick="showExportModal()"><i class="fas fa-download"></i> Export</button>
+                <button class="btn btn-danger" onclick="deleteNote()"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        </div>
+
+        <input type="text" class="title-input" id="noteTitle" placeholder="Note title..." oninput="autoSave()">
+        <div class="meta-bar">
+            <span id="noteDate">📅 Today</span>
+            <span id="noteTime">🕐 Now</span>
+            <span id="saveStatus">💾 Auto-saved</span>
+        </div>
+
+        <div class="attach-bar">
+            <button class="attach-btn" onclick="document.getElementById('imageInput').click()"><i class="fas fa-image"></i> Photo</button>
+            <button class="attach-btn" onclick="document.getElementById('fileInput').click()"><i class="fas fa-paperclip"></i> File</button>
+            <button class="attach-btn" id="recordBtn" onclick="toggleRecording()"><i class="fas fa-microphone"></i> Voice</button>
+            <button class="attach-btn" onclick="showTableModal()"><i class="fas fa-table"></i> Table</button>
+            <span id="recordingTimer" style="display:none;color:var(--danger);font-weight:700;font-size:0.8rem;align-self:center">🔴 00:00</span>
+            <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="insertImage(event)" multiple>
+            <input type="file" id="fileInput" accept="*/*" style="display:none" onchange="attachFile(event)" multiple>
+        </div>
+
+        <div class="editor-toolbar" id="editorToolbar">
+            <select onchange="execCmd('fontName',this.value)" style="max-width:80px;font-size:0.62rem">
+                <option value="Segoe UI">Segoe</option><option value="Arial">Arial</option><option value="Times New Roman">Times</option><option value="Courier New">Courier</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Trebuchet MS">Trebuchet</option>
+            </select>
+            <select onchange="execCmd('fontSize',this.value)" style="width:42px;font-size:0.62rem">
+                <option value="1">8</option><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">16</option><option value="6">18</option><option value="7">20</option>
+            </select>
+            <div class="divider"></div>
+            <button onclick="execCmd('bold')"><b>B</b></button>
+            <button onclick="execCmd('italic')"><i>I</i></button>
+            <button onclick="execCmd('underline')"><u>U</u></button>
+            <button onclick="execCmd('strikeThrough')"><s>S</s></button>
+            <input type="color" onchange="execCmd('foreColor',this.value)" value="#f1f5f9" title="Text Color">
+            <button onclick="execCmd('backColor','#ffff00')" title="Highlight"><i class="fas fa-highlighter"></i></button>
+            <div class="divider"></div>
+            <button onclick="execCmd('justifyLeft')"><i class="fas fa-align-left"></i></button>
+            <button onclick="execCmd('justifyCenter')"><i class="fas fa-align-center"></i></button>
+            <button onclick="execCmd('justifyRight')"><i class="fas fa-align-right"></i></button>
+            <div class="divider"></div>
+            <button onclick="execCmd('insertUnorderedList')">•≡</button>
+            <button onclick="execCmd('insertOrderedList')">1≡</button>
+            <button onclick="insertCheckbox()">☑</button>
+            <div class="divider"></div>
+            <button onclick="execCmd('undo')"><i class="fas fa-undo"></i></button>
+            <button onclick="execCmd('redo')"><i class="fas fa-redo"></i></button>
+        </div>
+
+        <div class="editor-body" id="editorBody" contenteditable="true" oninput="autoSave()"></div>
+    </div>
+
+    <!-- Table Modal -->
+    <div class="table-modal-overlay" id="tableModal">
+        <div class="table-modal">
+            <h3><i class="fas fa-table"></i> Insert Table</h3>
+            <div class="form-row"><div class="form-group" style="flex:1"><label style="font-size:0.8rem;color:var(--text-secondary)">Rows</label><input type="number" id="tableRows" value="3" min="1" max="20"></div><div class="form-group" style="flex:1"><label style="font-size:0.8rem;color:var(--text-secondary)">Columns</label><input type="number" id="tableCols" value="3" min="1" max="10"></div></div>
+            <button class="btn btn-accent" style="width:100%;justify-content:center" onclick="insertTable()">Insert Table</button>
+            <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:6px" onclick="closeTableModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="export-modal-overlay" id="exportModal">
+        <div class="export-modal">
+            <h3><i class="fas fa-download"></i> Export Note</h3>
+            <button class="btn btn-accent" onclick="exportNote('pdf')"><i class="fas fa-file-pdf"></i> Save as PDF</button>
+            <button class="btn btn-outline" onclick="exportNote('txt')"><i class="fas fa-file-alt"></i> Save as TXT</button>
+            <button class="btn btn-outline" onclick="exportNote('doc')"><i class="fas fa-file-word"></i> Save as DOC</button>
+            <button class="btn btn-outline" onclick="exportNote('html')"><i class="fas fa-file-code"></i> Save as HTML</button>
+            <button class="btn btn-warning" onclick="exportNote('jpg')"><i class="fas fa-image"></i> Save as JPG</button>
+            <button class="btn btn-outline" style="background:var(--card-alt);color:var(--text)" onclick="closeExportModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        function applyTheme(t){document.body.classList.toggle('light-mode',t==='light')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+
+        var NOTES_KEY='pro_notes_v2',notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+        var currentNoteId=null,autoSaveTimeout=null,mediaRecorder=null,audioChunks=[],recordingSeconds=0,recordingInterval=null;
+
+        // Load note
+        var params=new URLSearchParams(window.location.search);
+        var id=params.get('id');
+        if(id){var note=notes.find(function(n){return n.id===id});if(note){currentNoteId=id;document.getElementById('noteTitle').value=note.title;document.getElementById('editorBody').innerHTML=note.content;updateMeta(note.updatedAt);}}
+
+        // Back button - auto save
+        document.getElementById('backBtn').addEventListener('click',function(e){
+            if(currentNoteId){saveNoteImmediate();}
+        });
+
+        function execCmd(cmd,val){var ed=document.getElementById('editorBody');ed.focus();document.execCommand(cmd,false,val||null);autoSave();updateToolbar();}
+        function updateToolbar(){
+            document.querySelectorAll('.editor-toolbar button').forEach(function(b){
+                var oc=b.getAttribute('onclick');if(!oc)return;
+                var m=oc.match(/'(\w+)'/);if(!m)return;
+                if(['bold','italic','underline','strikeThrough'].includes(m[1])){b.classList.toggle('active-tool',document.queryCommandState(m[1]));}
+            });
+        }
+        document.getElementById('editorBody').addEventListener('keyup',updateToolbar);
+        document.getElementById('editorBody').addEventListener('click',updateToolbar);
+
+        function autoSave(){
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout=function(){saveNoteImmediate();};
+            setTimeout(autoSaveTimeout,800);
+            document.getElementById('saveStatus').textContent='💾 Saving...';
+        }
+
+        function saveNoteImmediate(){
+            if(!currentNoteId){
+                currentNoteId=Date.now().toString();
+                var n={id:currentNoteId,title:'Untitled Note',content:'',status:'draft',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+                notes.unshift(n);
+            }
+            var note=notes.find(function(n){return n.id===currentNoteId});
+            if(note){note.title=document.getElementById('noteTitle').value||'Untitled Note';note.content=document.getElementById('editorBody').innerHTML;note.updatedAt=new Date().toISOString();updateMeta(note.updatedAt);}
+            localStorage.setItem(NOTES_KEY,JSON.stringify(notes));
+            document.getElementById('saveStatus').textContent='💾 Saved';
+        }
+
+        function saveNote(status){
+            saveNoteImmediate();
+            var note=notes.find(function(n){return n.id===currentNoteId});
+            if(note){note.status=status;localStorage.setItem(NOTES_KEY,JSON.stringify(notes));}
+            document.getElementById('saveStatus').textContent=status==='draft'?'📝 Draft saved':'✅ Saved';
+            showToast(status==='draft'?'📝 Saved as draft':'✅ Note saved!');
+        }
+
+        function updateMeta(iso){
+            var d=new Date(iso);
+            document.getElementById('noteDate').textContent='📅 '+d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+            document.getElementById('noteTime').textContent='🕐 '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+        }
+
+        function deleteNote(){
+            if(!currentNoteId)return;
+            if(confirm('Delete this note permanently?')){notes=notes.filter(function(n){return n.id!==currentNoteId});localStorage.setItem(NOTES_KEY,JSON.stringify(notes));showToast('🗑️ Deleted');setTimeout(function(){window.location.href='index.html'},500);}
+        }
+
+        // Image
+        function insertImage(e){
+            var files=e.target.files;if(!files.length)return;
+            Array.from(files).forEach(function(f){
+                if(!f.type.startsWith('image/'))return;
+                var r=new FileReader();r.onload=function(ev){
+                    var img=document.createElement('img');img.src=ev.target.result;img.style.maxWidth='100%';img.style.borderRadius='8px';
+                    document.getElementById('editorBody').appendChild(img);autoSave();showToast('🖼️ Image inserted');
+                };r.readAsDataURL(f);
+            });e.target.value='';
+        }
+
+        // File attachment
+        function attachFile(e){
+            var files=e.target.files;if(!files.length)return;
+            Array.from(files).forEach(function(f){
+                var r=new FileReader();r.onload=function(ev){
+                    var a=document.createElement('a');a.href=ev.target.result;a.download=f.name;a.className='file-attach';
+                    a.innerHTML='<i class="fas fa-paperclip"></i> '+f.name+' ('+formatSize(f.size)+')';a.title='Click to download';
+                    document.getElementById('editorBody').appendChild(a);autoSave();showToast('📎 File attached');
+                };r.readAsDataURL(f);
+            });e.target.value='';
+        }
+        function formatSize(b){return b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(2)+' MB';}
+
+        // Voice recording
+        async function toggleRecording(){
+            if(mediaRecorder&&mediaRecorder.state==='recording'){stopRecording();return;}
+            try{
+                var stream=await navigator.mediaDevices.getUserMedia({audio:true});
+                mediaRecorder=new MediaRecorder(stream,{mimeType:'audio/webm'});audioChunks=[];
+                mediaRecorder.ondataavailable=function(e){if(e.data.size>0)audioChunks.push(e.data);};
+                mediaRecorder.onstop=function(){
+                    var blob=new Blob(audioChunks,{type:'audio/webm'});
+                    var r=new FileReader();r.onload=function(ev){
+                        var audio=document.createElement('audio');audio.controls=true;audio.src=ev.target.result;audio.style.width='100%';
+                        document.getElementById('editorBody').appendChild(audio);autoSave();showToast('🎙️ Voice added');
+                    };r.readAsDataURL(blob);
+                    stream.getTracks().forEach(function(t){t.stop()});
+                };
+                mediaRecorder.start();
+                document.getElementById('recordBtn').classList.add('recording');document.getElementById('recordBtn').innerHTML='<i class="fas fa-stop"></i> Stop';
+                document.getElementById('recordingTimer').style.display='block';recordingSeconds=0;
+                document.getElementById('recordingTimer').textContent='🔴 00:00';
+                recordingInterval=setInterval(function(){recordingSeconds++;var m=Math.floor(recordingSeconds/60),s=recordingSeconds%60;document.getElementById('recordingTimer').textContent='🔴 '+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},1000);
+            }catch(err){showToast('🎤 Microphone denied','error');}
+        }
+        function stopRecording(){
+            if(mediaRecorder)mediaRecorder.stop();
+            document.getElementById('recordBtn').classList.remove('recording');document.getElementById('recordBtn').innerHTML='<i class="fas fa-microphone"></i> Voice';
+            document.getElementById('recordingTimer').style.display='none';clearInterval(recordingInterval);
+        }
+
+        // Table
+        function showTableModal(){document.getElementById('tableModal').classList.add('show');}
+        function closeTableModal(){document.getElementById('tableModal').classList.remove('show');}
+        function insertTable(){
+            var rows=parseInt(document.getElementById('tableRows').value)||3;
+            var cols=parseInt(document.getElementById('tableCols').value)||3;
+            var t='<table>';
+            for(var r=0;r<rows;r++){t+='<tr>';for(var c=0;c<cols;c++){t+='<td>&nbsp;</td>';}t+='</tr>';}
+            t+='</table>';
+            document.execCommand('insertHTML',false,t);closeTableModal();autoSave();showToast('📊 Table inserted');
+        }
+
+        // Checkbox
+        function insertCheckbox(){document.execCommand('insertHTML',false,'<input type="checkbox"> ');autoSave();}
+
+        // Export
+        function showExportModal(){document.getElementById('exportModal').classList.add('show');}
+        function closeExportModal(){document.getElementById('exportModal').classList.remove('show');}
+        function exportNote(format){
+            var title=document.getElementById('noteTitle').value||'note';
+            var content=document.getElementById('editorBody').innerHTML;
+            closeExportModal();
+            if(format==='txt'){var t=title+'\n\n'+stripHtml(content);var b=new Blob([t],{type:'text/plain'});saveAs(b,title+'.txt');showToast('📄 Exported as TXT');}
+            else if(format==='html'){var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title></head><body><h1>'+title+'</h1>'+content+'</body></html>';var b=new Blob([h],{type:'text/html'});saveAs(b,title+'.html');showToast('📄 Exported as HTML');}
+            else if(format==='doc'){var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title></head><body><h1>'+title+'</h1>'+content+'</body></html>';var b=new Blob([h],{type:'application/msword'});saveAs(b,title+'.doc');showToast('📄 Exported as DOC');}
+            else if(format==='pdf'){var{jsPDF}=window.jspdf;var doc=new jsPDF('p','mm','a4');doc.setFontSize(18);doc.text(title,20,20);
+                var d=document.createElement('div');d.innerHTML=content;d.style.padding='20px';d.style.maxWidth='170mm';d.style.position='absolute';d.style.left='-9999px';document.body.appendChild(d);
+                html2canvas(d,{scale:2}).then(function(c){document.body.removeChild(d);
+                    var w=170,h=c.height*w/c.width;doc.addImage(c.toDataURL('image/jpeg',0.9),'JPEG',20,25,w,h);doc.save(title+'.pdf');showToast('📄 Exported as PDF');
+                });
+            }
+            else if(format==='jpg'){
+                var d=document.createElement('div');d.innerHTML='<h1 style="color:#2563EB">'+title+'</h1>'+content;d.style.padding='20px';d.style.background='#fff';d.style.position='absolute';d.style.left='-9999px';document.body.appendChild(d);
+                html2canvas(d,{scale:2,backgroundColor:'#fff'}).then(function(c){document.body.removeChild(d);c.toBlob(function(b){saveAs(b,title+'.jpg')},'image/jpeg',0.95);showToast('🖼️ Exported as JPG');});
+            }
+        }
+        function stripHtml(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent||d.innerText||'';}
+
+        function showToast(m,t){var s=document.createElement('div');s.className='toast'+(t==='error'?' toast-error':'');s.textContent=m;document.body.appendChild(s);setTimeout(function(){s.remove()},2500);}
+
+        // Auto-save on page leave
+        window.addEventListener('beforeunload',function(){if(currentNoteId)saveNoteImmediate();});
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('../../../service-worker.js').catch(function(){})}
+    </script>
+</body>
+</html>

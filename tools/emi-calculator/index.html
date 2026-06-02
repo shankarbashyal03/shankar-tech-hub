@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="EMI Calculator - Simple & Compound Interest EMI Calculator">
+    <title>EMI Calculator | ShankarTech Hub</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --card-alt: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent2: #10b981;
+            --accent3: #f59e0b;
+            --danger: #ef4444;
+            --border: #334155;
+            --input-bg: #0f172a;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --card-alt: #f1f5f9;
+            --text: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --input-bg: #f8fafc;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 15px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent);
+            flex: 1;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 35px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-calculate {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-calculate:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-clear {
+            background: var(--card-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-clear:hover {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .result-item {
+            background: var(--card-alt);
+            padding: 14px 16px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .result-label {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .result-value.interest {
+            color: var(--accent3);
+        }
+
+        .result-value.total {
+            color: var(--accent2);
+        }
+
+        .summary-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .summary-toggle input {
+            display: none;
+        }
+
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background: var(--border);
+            border-radius: 12px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: var(--transition);
+        }
+
+        .summary-toggle input:checked + .toggle-switch {
+            background: var(--accent);
+        }
+
+        .summary-toggle input:checked + .toggle-switch::after {
+            left: 22px;
+        }
+
+        .footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 1rem 0;
+            margin-top: 25px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .footer-section h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-section h4 i {
+            color: var(--accent);
+            font-size: 0.75rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.78rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-hover);
+            transform: translateX(3px);
+        }
+
+        .copyright-bar {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1.2rem;
+        }
+
+        .copyright-bar strong {
+            color: var(--accent-hover);
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent2);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            font-size: 0.8rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 400px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.1rem; }
+            .card { padding: 15px; }
+            .btn { padding: 10px; font-size: 0.8rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <h1><i class="fas fa-calculator"></i> EMI Calc</h1>
+        </div>
+
+        <!-- Input Card -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-sliders"></i> Loan Details</div>
+
+            <div class="form-group">
+                <label>Loan Amount</label>
+                <input type="number" id="loanAmount" placeholder="Enter amount" min="0" step="any">
+            </div>
+
+            <div class="form-group">
+                <label>Interest Rate (% per year)</label>
+                <input type="number" id="interestRate" placeholder="Enter rate" min="0" step="any">
+            </div>
+
+            <div class="form-group">
+                <label>Loan Tenure (months)</label>
+                <input type="number" id="loanTenure" placeholder="Enter months" min="1" step="1">
+            </div>
+
+            <div class="form-group">
+                <label>Interest Type</label>
+                <select id="interestType">
+                    <option value="simple">Simple Interest</option>
+                    <option value="compound">Compound Interest</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Currency Symbol (optional)</label>
+                <input type="text" id="currencySymbol" placeholder="e.g. $, ₹, €, £" maxlength="5">
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-clear" id="clearBtn">
+                    <i class="fas fa-undo"></i> Clear
+                </button>
+                <button class="btn btn-calculate" id="calculateBtn">
+                    <i class="fas fa-calculator"></i> Calculate
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="card results" id="resultsCard">
+            <div class="card-title"><i class="fas fa-chart-pie"></i> EMI Summary</div>
+
+            <label class="summary-toggle">
+                <input type="checkbox" id="summaryOnly" checked>
+                <div class="toggle-switch"></div>
+                <span>Summary View Only</span>
+            </label>
+
+            <div id="summaryResults">
+                <div class="result-item">
+                    <span class="result-label">Monthly EMI</span>
+                    <span class="result-value" id="resultEMI">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Interest</span>
+                    <span class="result-value interest" id="resultInterest">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Payment</span>
+                    <span class="result-value total" id="resultTotal">-</span>
+                </div>
+            </div>
+
+            <div id="detailedResults" style="display:none;">
+                <div class="result-item">
+                    <span class="result-label">Monthly EMI</span>
+                    <span class="result-value" id="detailEMI">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Principal Amount</span>
+                    <span class="result-value" id="detailPrincipal">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Interest</span>
+                    <span class="result-value interest" id="detailInterest">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Payment</span>
+                    <span class="result-value total" id="detailTotal">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Interest Type</span>
+                    <span class="result-value" id="detailType" style="font-size:0.9rem;">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-compass"></i> Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="../../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="../../services/index.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="../../courses/index.html"><i class="fas fa-chevron-right"></i> Courses</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../../downloads/index.html"><i class="fas fa-chevron-right"></i> Downloads</a></li>
+                    <li><a href="../../contact/index.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="../../settings/index.html"><i class="fas fa-chevron-right"></i> Settings</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright-bar">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub</div>
+    </footer>
+
+    <script>
+        // ===== THEME SYNC =====
+        function applyTheme(theme) {
+            if (theme === 'light') document.body.classList.add('light-mode');
+            else document.body.classList.remove('light-mode');
+        }
+        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') applyTheme(e.newValue || 'dark');
+        });
+
+        // ===== DOM ELEMENTS =====
+        const loanAmountInput = document.getElementById('loanAmount');
+        const interestRateInput = document.getElementById('interestRate');
+        const loanTenureInput = document.getElementById('loanTenure');
+        const interestTypeSelect = document.getElementById('interestType');
+        const currencySymbolInput = document.getElementById('currencySymbol');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultsCard = document.getElementById('resultsCard');
+        const summaryOnlyCheckbox = document.getElementById('summaryOnly');
+        const summaryResults = document.getElementById('summaryResults');
+        const detailedResults = document.getElementById('detailedResults');
+
+        // ===== FORMAT CURRENCY =====
+        function formatCurrency(amount) {
+            const symbol = currencySymbolInput.value.trim();
+            const formatted = amount.toLocaleString('en-US', { 
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2 
+            });
+            return symbol ? symbol + formatted : formatted;
+        }
+
+        // ===== CALCULATE SIMPLE INTEREST EMI =====
+        function calculateSimpleEMI(principal, annualRate, months) {
+            const ratePerMonth = annualRate / 100;
+            const totalInterest = (principal * ratePerMonth * months) / 12;
+            const totalAmount = principal + totalInterest;
+            const emi = totalAmount / months;
+            return { emi, totalInterest, totalAmount };
+        }
+
+        // ===== CALCULATE COMPOUND INTEREST EMI =====
+        function calculateCompoundEMI(principal, annualRate, months) {
+            const monthlyRate = annualRate / 12 / 100;
+            
+            if (monthlyRate === 0) {
+                const emi = principal / months;
+                return { emi, totalInterest: 0, totalAmount: principal };
+            }
+            
+            const emi = principal * monthlyRate * Math.pow(1 + monthlyRate, months) / 
+                       (Math.pow(1 + monthlyRate, months) - 1);
+            const totalAmount = emi * months;
+            const totalInterest = totalAmount - principal;
+            
+            return { emi, totalInterest, totalAmount };
+        }
+
+        // ===== RENDER RESULTS =====
+        function renderResults() {
+            const principal = parseFloat(loanAmountInput.value);
+            const annualRate = parseFloat(interestRateInput.value);
+            const months = parseInt(loanTenureInput.value);
+            const interestType = interestTypeSelect.value;
+
+            if (!principal || !annualRate || !months || principal <= 0 || annualRate < 0 || months <= 0) {
+                showToast('⚠️ Please fill all fields correctly');
+                return;
+            }
+
+            let result;
+            if (interestType === 'simple') {
+                result = calculateSimpleEMI(principal, annualRate, months);
+            } else {
+                result = calculateCompoundEMI(principal, annualRate, months);
+            }
+
+            // Summary view
+            document.getElementById('resultEMI').textContent = formatCurrency(result.emi);
+            document.getElementById('resultInterest').textContent = formatCurrency(result.totalInterest);
+            document.getElementById('resultTotal').textContent = formatCurrency(result.totalAmount);
+
+            // Detailed view
+            document.getElementById('detailEMI').textContent = formatCurrency(result.emi);
+            document.getElementById('detailPrincipal').textContent = formatCurrency(principal);
+            document.getElementById('detailInterest').textContent = formatCurrency(result.totalInterest);
+            document.getElementById('detailTotal').textContent = formatCurrency(result.totalAmount);
+            document.getElementById('detailType').textContent = interestType === 'simple' ? 'Simple Interest' : 'Compound Interest';
+
+            resultsCard.classList.add('show');
+            toggleView();
+            
+            // Scroll to results on mobile
+            if (window.innerWidth < 600) {
+                resultsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // ===== TOGGLE VIEW =====
+        function toggleView() {
+            if (summaryOnlyCheckbox.checked) {
+                summaryResults.style.display = 'block';
+                detailedResults.style.display = 'none';
+            } else {
+                summaryResults.style.display = 'none';
+                detailedResults.style.display = 'block';
+            }
+        }
+
+        summaryOnlyCheckbox.addEventListener('change', toggleView);
+
+        // ===== CLEAR ALL =====
+        function clearAll() {
+            loanAmountInput.value = '';
+            interestRateInput.value = '';
+            loanTenureInput.value = '';
+            currencySymbolInput.value = '';
+            interestTypeSelect.value = 'simple';
+            resultsCard.classList.remove('show');
+            showToast('🗑️ Cleared!');
+        }
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.className = 'toast';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
+        }
+
+        // ===== EVENT LISTENERS =====
+        calculateBtn.addEventListener('click', renderResults);
+        clearBtn.addEventListener('click', clearAll);
+
+        // Calculate on Enter
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.activeElement.tagName === 'INPUT') {
+                e.preventDefault();
+                renderResults();
+            }
+        });
+
+        // ===== SERVICE WORKER =====
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../../service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

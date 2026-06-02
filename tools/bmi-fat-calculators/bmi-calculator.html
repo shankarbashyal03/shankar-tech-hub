@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="BMI Calculator - Check your Body Mass Index with chart & suggestions">
+    <title>BMI Calculator | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{
+            --bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;
+            --text-muted:#64748b;--accent:#3b82f6;--accent-hover:#2563eb;--accent2:#10b981;
+            --accent3:#f59e0b;--danger:#ef4444;--border:#334155;--input-bg:#0f172a;
+            --shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease;
+            --underweight:#60a5fa;--normal:#10b981;--overweight:#f59e0b;--obese:#ef4444;
+        }
+        body.light-mode{
+            --bg:#f8fafc;--card:#fff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;
+            --text-muted:#94a3b8;--border:#e2e8f0;--input-bg:#f8fafc;--shadow:0 8px 30px rgba(0,0,0,0.06);
+        }
+        body{
+            background:var(--bg);color:var(--text);min-height:100vh;padding:15px;transition:background 0.3s,color 0.3s;
+        }
+        .container{max-width:500px;margin:0 auto}
+        .tool-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+        .back-btn{
+            background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;
+            padding:10px 14px;font-size:0.82rem;cursor:pointer;text-decoration:none;transition:var(--transition);
+            display:flex;align-items:center;gap:6px;white-space:nowrap;
+        }
+        .back-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+        h1{font-size:1.2rem;font-weight:800;color:var(--accent)}
+        .card{
+            background:var(--card);border-radius:14px;border:1px solid var(--border);padding:18px;
+            box-shadow:var(--shadow);margin-bottom:14px;
+        }
+        .card-title{font-size:0.95rem;font-weight:700;margin-bottom:14px;color:var(--accent);display:flex;align-items:center;gap:8px}
+        .form-group{margin-bottom:12px}
+        .form-group label{display:block;font-size:0.78rem;font-weight:600;margin-bottom:4px;color:var(--text-secondary)}
+        .form-group input{
+            width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;
+            background:var(--input-bg);color:var(--text);font-size:0.9rem;transition:var(--transition);
+        }
+        .form-group input:focus{outline:none;border-color:var(--accent)}
+        .btn-row{display:flex;gap:8px;margin-top:12px}
+        .btn{
+            flex:1;padding:11px;border:none;border-radius:10px;font-weight:600;font-size:0.85rem;
+            cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:6px;
+        }
+        .btn-calculate{background:var(--accent);color:#fff}
+        .btn-calculate:hover{background:var(--accent-hover);transform:translateY(-1px)}
+        .btn-clear{background:var(--card-alt);color:var(--text);border:1px solid var(--border)}
+        .btn-clear:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
+        .result{display:none}
+        .result.show{display:block}
+
+        .bmi-display{
+            text-align:center;padding:20px;border-radius:12px;margin-bottom:14px;color:#fff;
+            position:relative;overflow:hidden;
+        }
+        .bmi-number{font-size:2.5rem;font-weight:900;line-height:1;position:relative;z-index:1}
+        .bmi-category{font-size:1rem;font-weight:700;margin-top:4px;position:relative;z-index:1}
+        .bmi-range{font-size:0.75rem;opacity:0.85;margin-top:2px;position:relative;z-index:1}
+
+        .chart-toggle{
+            display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;
+            padding:8px 12px;background:var(--card-alt);border-radius:10px;font-size:0.78rem;
+            font-weight:600;color:var(--accent);user-select:none;transition:var(--transition);
+        }
+        .chart-toggle:hover{background:var(--border)}
+        .chart-toggle i{transition:var(--transition)}
+        .chart-toggle.open i{transform:rotate(180deg)}
+        .chart-content{display:none;margin-bottom:14px}
+        .chart-content.show{display:block}
+
+        .chart-bar-container{margin-bottom:8px}
+        .chart-bar{display:flex;height:32px;border-radius:16px;overflow:hidden;margin-bottom:6px;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+        .chart-segment{transition:var(--transition);position:relative}
+        .chart-segment.underweight{background:var(--underweight)}
+        .chart-segment.normal{background:var(--normal)}
+        .chart-segment.overweight{background:var(--overweight)}
+        .chart-segment.obese{background:var(--obese)}
+        .chart-segment.active{box-shadow:inset 0 0 0 3px rgba(255,255,255,0.5)}
+        .chart-labels{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);padding:0 2px}
+        .indicator-wrapper{position:relative;height:24px;margin:8px 0}
+        .indicator-line{
+            position:absolute;top:0;width:3px;height:24px;background:var(--text);border-radius:3px;
+            transform:translateX(-50%);transition:left 0.6s cubic-bezier(0.4,0,0.2,1);z-index:2;
+        }
+        .indicator-label{
+            position:absolute;top:-20px;transform:translateX(-50%);font-size:0.7rem;font-weight:700;
+            white-space:nowrap;transition:left 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        .scale-visual{display:flex;gap:4px;margin:10px 0}
+        .scale-step{flex:1;text-align:center;padding:8px 4px;border-radius:8px;font-size:0.62rem;font-weight:600;color:#fff;opacity:0.5;transition:var(--transition)}
+        .scale-step.active{opacity:1;transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+        .scale-step.uw{background:var(--underweight)}.scale-step.nm{background:var(--normal)}
+        .scale-step.ow{background:var(--overweight)}.scale-step.ob{background:var(--obese)}
+
+        .suggestions-card{
+            background:var(--card-alt);border-radius:12px;padding:14px;margin-top:12px;border:1px solid var(--border);
+        }
+        .suggestions-card h4{font-size:0.85rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .suggestion-list{list-style:none}
+        .suggestion-list li{
+            padding:7px 0;font-size:0.75rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:8px;
+            border-bottom:1px solid var(--border);
+        }
+        .suggestion-list li:last-child{border-bottom:none}
+        .suggestion-list li i{color:var(--accent2);margin-top:2px;flex-shrink:0;font-size:0.7rem}
+        .suggestion-list li i.warn{color:var(--accent3)}
+        .suggestion-list li i.danger{color:var(--danger)}
+
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+        .detail-item{
+            background:var(--card-alt);padding:10px;border-radius:8px;text-align:center;border:1px solid var(--border);
+        }
+        .detail-label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+        .detail-value{font-size:0.95rem;font-weight:700;color:var(--accent)}
+
+        .footer{
+            background:var(--card);border-top:1px solid var(--border);padding:1rem 0.8rem 0;
+            border-radius:14px 14px 0 0;margin-top:20px;
+        }
+        .footer-content{max-width:500px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+        .footer-section h4{font-size:0.75rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+        .footer-links{list-style:none}.footer-links li{margin-bottom:0.2rem}
+        .footer-links a{color:var(--text-secondary);text-decoration:none;font-size:0.68rem;transition:var(--transition)}
+        .footer-links a:hover{color:var(--accent);transform:translateX(3px)}
+        .copyright-bar{text-align:center;padding:0.7rem;color:var(--text-muted);font-size:0.65rem;border-top:1px solid var(--border);margin-top:0.8rem}
+        .copyright-bar strong{color:var(--accent);font-weight:700}
+        .toast{position:fixed;top:15px;right:15px;background:var(--accent2);color:#fff;padding:10px 16px;border-radius:8px;font-weight:600;z-index:2000;animation:slideIn 0.3s ease;font-size:0.78rem}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+        @media(max-width:400px){h1{font-size:1rem}.bmi-number{font-size:2rem}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1><i class="fas fa-weight-scale"></i> BMI Calculator</h1>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-sliders"></i> Your Details</div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="gender"><option value="male">Male</option><option value="female">Female</option></select>
+            </div>
+            <div class="form-group">
+                <label>Age (years)</label>
+                <input type="number" id="age" placeholder="Enter age" min="1" max="120">
+            </div>
+            <div class="form-group">
+                <label>Height (cm)</label>
+                <input type="number" id="height" placeholder="e.g. 170" min="50" max="250" step="any">
+            </div>
+            <div class="form-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="weight" placeholder="e.g. 65" min="10" max="300" step="any">
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-clear" id="clearBtn"><i class="fas fa-undo"></i> Clear</button>
+                <button class="btn btn-calculate" id="calcBtn"><i class="fas fa-calculator"></i> Calculate</button>
+            </div>
+        </div>
+
+        <div class="card result" id="resultCard">
+            <div class="card-title"><i class="fas fa-chart-bar"></i> Your BMI Report</div>
+            
+            <div class="bmi-display" id="bmiDisplay">
+                <div class="bmi-number" id="bmiValue">-</div>
+                <div class="bmi-category" id="bmiCategory">-</div>
+                <div class="bmi-range" id="bmiRange">-</div>
+            </div>
+
+            <!-- Chart Toggle -->
+            <div class="chart-toggle" id="chartToggle">
+                <span><i class="fas fa-chart-line"></i> See Chart</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <!-- Chart Content -->
+            <div class="chart-content" id="chartContent">
+                <div class="chart-bar-container">
+                    <div class="chart-bar">
+                        <div class="chart-segment underweight" style="width:18.5%" id="segUW">18.5</div>
+                        <div class="chart-segment normal" style="width:31.5%" id="segNM">25</div>
+                        <div class="chart-segment overweight" style="width:15%" id="segOW">30</div>
+                        <div class="chart-segment obese" style="width:35%" id="segOB">40+</div>
+                    </div>
+                    <div class="chart-labels">
+                        <span>Under</span><span>Normal</span><span>Over</span><span>Obese</span>
+                    </div>
+                </div>
+                <div class="indicator-wrapper">
+                    <div class="indicator-label" id="indicatorLabel">▼ You</div>
+                    <div class="indicator-line" id="indicatorLine" style="left:50%"></div>
+                </div>
+                <div class="scale-visual">
+                    <div class="scale-step uw" id="stepUW"><18.5<br>Under</div>
+                    <div class="scale-step nm" id="stepNM">18.5-25<br>Normal</div>
+                    <div class="scale-step ow" id="stepOW">25-30<br>Over</div>
+                    <div class="scale-step ob" id="stepOB">30+<br>Obese</div>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-item"><div class="detail-label">Your BMI</div><div class="detail-value" id="detailBMI">-</div></div>
+                <div class="detail-item"><div class="detail-label">Healthy Range</div><div class="detail-value">18.5-24.9</div></div>
+                <div class="detail-item"><div class="detail-label">Ideal Weight</div><div class="detail-value" id="detailIdeal">-</div></div>
+                <div class="detail-item"><div class="detail-label">Weight Status</div><div class="detail-value" id="detailStatus">-</div></div>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="suggestions-card" id="suggestionsCard">
+                <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                <ul class="suggestion-list" id="suggestionList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-compass"></i> Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="../../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Calculators</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="body-fat-calculator.html"><i class="fas fa-chevron-right"></i> Body Fat</a></li>
+                    <li><a href="../../contact/index.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright-bar">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub</div>
+    </footer>
+
+    <script>
+        function applyTheme(t){document.body.classList.toggle('light-mode',t==='light')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+
+        function showToast(m){
+            const t=document.createElement('div');t.className='toast';t.textContent=m;
+            document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+        }
+
+        // Chart toggle
+        document.getElementById('chartToggle').addEventListener('click',function(){
+            this.classList.toggle('open');
+            document.getElementById('chartContent').classList.toggle('show');
+        });
+
+        function getBMICategory(bmi){
+            if(bmi<16)return{cat:'Severely Underweight',color:'#4a90d9',range:'< 16',level:'uw'};
+            if(bmi<18.5)return{cat:'Underweight',color:'var(--underweight)',range:'16 - 18.4',level:'uw'};
+            if(bmi<25)return{cat:'Normal Weight',color:'var(--normal)',range:'18.5 - 24.9',level:'nm'};
+            if(bmi<30)return{cat:'Overweight',color:'var(--overweight)',range:'25 - 29.9',level:'ow'};
+            if(bmi<35)return{cat:'Obese Class I',color:'#e8762d',range:'30 - 34.9',level:'ob'};
+            if(bmi<40)return{cat:'Obese Class II',color:'#d9442d',range:'35 - 39.9',level:'ob'};
+            return{cat:'Obese Class III',color:'var(--obese)',range:'40+',level:'ob'};
+        }
+
+        function getSuggestions(bmi,gender,age){
+            const suggestions=[];
+            if(bmi<16){
+                suggestions.push({icon:'danger',text:'Consult a doctor immediately. Severe underweight can indicate malnutrition.'});
+                suggestions.push({icon:'danger',text:'Increase calorie intake with nutrient-dense foods like nuts, avocados, whole grains.'});
+                suggestions.push({icon:'warn',text:'Eat 5-6 smaller meals throughout the day instead of 3 large ones.'});
+            }else if(bmi<18.5){
+                suggestions.push({icon:'warn',text:'Aim to gain weight gradually. Target 0.5kg per week.'});
+                suggestions.push({icon:'',text:'Include protein-rich foods: eggs, chicken, fish, lentils, dairy.'});
+                suggestions.push({icon:'',text:'Add healthy fats: olive oil, nuts, seeds, peanut butter.'});
+                suggestions.push({icon:'',text:'Do strength training 3-4 times/week to build muscle mass.'});
+            }else if(bmi<25){
+                suggestions.push({icon:'',text:'Great job! Your weight is in the healthy range.'});
+                suggestions.push({icon:'',text:'Maintain with balanced diet: fruits, vegetables, lean proteins, whole grains.'});
+                suggestions.push({icon:'',text:'Exercise 150 minutes/week (mix of cardio & strength).'});
+                suggestions.push({icon:'',text:'Stay hydrated: drink 8-10 glasses of water daily.'});
+            }else if(bmi<30){
+                suggestions.push({icon:'warn',text:'Aim to lose 5-10% of body weight for health benefits.'});
+                suggestions.push({icon:'',text:'Create calorie deficit of 500 calories/day through diet & exercise.'});
+                suggestions.push({icon:'',text:'Focus on: vegetables, lean proteins, cut sugary drinks & processed foods.'});
+                suggestions.push({icon:'',text:'Walk 30-45 minutes daily + strength training twice/week.'});
+            }else{
+                suggestions.push({icon:'danger',text:'Consult a healthcare provider for a personalized weight loss plan.'});
+                suggestions.push({icon:'warn',text:'Start with low-impact exercises: walking, swimming, cycling.'});
+                suggestions.push({icon:'',text:'Cut processed foods, sugar, and refined carbs completely.'});
+                suggestions.push({icon:'',text:'Track calories and aim for 1-2 lbs weight loss per week.'});
+                suggestions.push({icon:'',text:'Consider working with a dietitian for meal planning.'});
+            }
+            return suggestions;
+        }
+
+        document.getElementById('calcBtn').addEventListener('click',()=>{
+            const h=parseFloat(document.getElementById('height').value)/100;
+            const w=parseFloat(document.getElementById('weight').value);
+            const gender=document.getElementById('gender').value;
+            const age=parseInt(document.getElementById('age').value)||25;
+
+            if(!h||!w||h<=0||w<=0){showToast('⚠️ Fill height & weight');return}
+            
+            const bmi=w/(h*h);
+            const{cat,color,range,level}=getBMICategory(bmi);
+            const idealMin=(18.5*h*h).toFixed(1);
+            const idealMax=(24.9*h*h).toFixed(1);
+
+            // Show results
+            document.getElementById('resultCard').classList.add('show');
+            document.getElementById('bmiDisplay').style.background=color+'33';
+            document.getElementById('bmiValue').textContent=bmi.toFixed(1);
+            document.getElementById('bmiValue').style.color=color;
+            document.getElementById('bmiCategory').textContent=cat;
+            document.getElementById('bmiCategory').style.color=color;
+            document.getElementById('bmiRange').textContent='BMI Range: '+range;
+
+            // Details
+            document.getElementById('detailBMI').textContent=bmi.toFixed(1);
+            document.getElementById('detailBMI').style.color=color;
+            document.getElementById('detailIdeal').textContent=idealMin+' - '+idealMax+' kg';
+            document.getElementById('detailStatus').textContent=cat;
+            document.getElementById('detailStatus').style.color=color;
+
+            // Chart indicator
+            let pos=Math.min(Math.max((bmi/40)*100,2),98);
+            document.getElementById('indicatorLine').style.left=pos+'%';
+            document.getElementById('indicatorLabel').style.left=pos+'%';
+            document.getElementById('indicatorLabel').style.color=color;
+
+            // Highlight scale
+            document.querySelectorAll('.scale-step').forEach(s=>s.classList.remove('active'));
+            document.getElementById('step'+level.toUpperCase()).classList.add('active');
+
+            // Highlight chart segment
+            document.querySelectorAll('.chart-segment').forEach(s=>s.classList.remove('active'));
+            const segMap={uw:'segUW',nm:'segNM',ow:'segOW',ob:'segOB'};
+            document.getElementById(segMap[level]).classList.add('active');
+
+            // Suggestions
+            const suggestions=getSuggestions(bmi,gender,age);
+            document.getElementById('suggestionList').innerHTML=suggestions.map(s=>
+                `<li><i class="fas fa-${s.icon==='danger'?'exclamation-circle':s.icon==='warn'?'exclamation-triangle':'check-circle'} ${s.icon}"></i>${s.text}</li>`
+            ).join('');
+
+            document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});
+        });
+
+        document.getElementById('clearBtn').addEventListener('click',()=>{
+            document.getElementById('gender').value='male';
+            document.getElementById('age').value='';
+            document.getElementById('height').value='';
+            document.getElementById('weight').value='';
+            document.getElementById('resultCard').classList.remove('show');
+            document.getElementById('chartContent').classList.remove('show');
+            document.getElementById('chartToggle').classList.remove('open');
+        });
+
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('../../service-worker.js').catch(()=>{});
+        }
+    </script>
+</body>
+</html>

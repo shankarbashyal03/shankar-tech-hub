@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Build your professional cover letter with CoverLetterPro. 6 unique templates, photo upload, rich text editing, export as PDF & JPG.">
+    <title>Cover Letter Builder | ShankarTech Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:wght@400;500&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600&family=Nunito:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root{--primary:#2563EB;--primary-dark:#1E40AF;--accent:#10B981;--bg-light:#F8FAFF;--white:#FFFFFF;--text-dark:#1E293B;--text-muted:#64748B;--border:#E2E8F0;--gradient:linear-gradient(135deg,#2563EB 0%,#7C3AED 100%);--radius:12px;--radius-sm:8px;--shadow:0 4px 6px rgba(0,0,0,0.05);--shadow-lg:0 20px 50px rgba(0,0,0,0.1);--max-width:1400px;--nav-height:60px}
+        *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;color:var(--text-dark);background:#F1F5F9;line-height:1.6;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+        h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.25}a{text-decoration:none;color:inherit}
+        .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+        .navbar{position:sticky;top:0;z-index:1000;height:var(--nav-height);background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between;height:100%;gap:10px}
+        .back-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg-light);border:1px solid var(--border);border-radius:8px;font-weight:500;font-size:0.85rem;cursor:pointer;transition:all 0.3s;color:var(--text-dark);white-space:nowrap;flex-shrink:0;text-decoration:none}
+        .back-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .logo{display:flex;align-items:center;gap:8px;font-family:'Poppins',sans-serif;font-weight:700;font-size:1.15rem;color:var(--text-dark);flex-shrink:0}.logo i{font-size:1.3rem;color:var(--primary)}
+        .nav-links{display:flex;align-items:center;gap:18px;list-style:none}.nav-links a{font-weight:500;font-size:0.85rem;color:var(--text-muted);transition:color 0.2s}.nav-links a:hover,.nav-links a.active{color:var(--primary)}.nav-links a.active{font-weight:600}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:var(--radius-sm);font-family:'Poppins',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.3s;border:2px solid transparent;white-space:nowrap;text-decoration:none}
+        .btn-success{background:var(--accent);color:var(--white);border-color:var(--accent)}.btn-success:hover{background:#059669}
+        .btn-warning{background:#F59E0B;color:var(--white);border-color:#F59E0B}.btn-warning:hover{background:#D97706}
+        .btn-info{background:#8B5CF6;color:var(--white);border-color:#8B5CF6}.btn-info:hover{background:#7C3AED}
+        .btn-outline{background:transparent;color:var(--primary);border-color:var(--primary)}.btn-outline:hover{background:var(--primary);color:var(--white)}
+        .btn-sm{padding:5px 10px;font-size:0.75rem}.btn-xs{padding:3px 8px;font-size:0.65rem;border-radius:4px}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;background:none;border:none;padding:8px}
+        .hamburger span{display:block;width:24px;height:2px;background:var(--text-dark);border-radius:3px;transition:all 0.3s}
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+        .builder-wrap{display:flex;height:calc(100vh - var(--nav-height));gap:16px;padding:16px;background:#E2E8F0}
+        .form-panel{width:42%;overflow-y:auto;background:var(--white);border-radius:14px;border:1px solid var(--border);padding:20px 24px;box-shadow:var(--shadow)}
+        .preview-panel{width:58%;overflow-y:auto;background:#E2E8F0;display:flex;flex-direction:column;align-items:center;padding:16px;gap:10px}
+
+        .form-group{margin-bottom:10px}.form-group label{display:block;font-weight:600;font-size:0.78rem;margin-bottom:3px;color:var(--text-dark)}
+        .form-input{width:100%;padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Inter',sans-serif;font-size:0.83rem;color:var(--text-dark);transition:border-color 0.2s;background:var(--white)}
+        .form-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.06)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+        .photo-upload-wrap{display:none;align-items:center;gap:14px;margin-bottom:12px;padding:10px 12px;background:var(--bg-light);border-radius:8px;border:1px solid var(--border)}
+        .photo-upload-wrap.show{display:flex}
+        .photo-preview-circle{width:60px;height:60px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.1rem;flex-shrink:0;border:3px solid var(--border);overflow:hidden;position:relative}
+        .photo-preview-circle img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+        .photo-upload-btn{position:relative;overflow:hidden;cursor:pointer}.photo-upload-btn input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+
+        .editor-toolbar{display:flex;gap:2px;flex-wrap:wrap;padding:6px 7px;background:var(--bg-light);border:1.5px solid var(--border);border-radius:var(--radius-sm) var(--radius-sm) 0 0;border-bottom:none;align-items:center;position:sticky;top:0;z-index:10}
+        .editor-toolbar button,.editor-toolbar select{height:26px;padding:0 5px;border:1px solid var(--border);border-radius:4px;background:var(--white);cursor:pointer;font-size:0.65rem;display:inline-flex;align-items:center;gap:1px;transition:all 0.15s;font-family:'Inter',sans-serif;color:var(--text-dark);white-space:nowrap}
+        .editor-toolbar button:hover,.editor-toolbar select:hover{background:var(--bg-light);border-color:var(--primary)}
+        .editor-toolbar button.active-btn{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .editor-toolbar .divider{width:1px;height:20px;background:var(--border);margin:0 2px;flex-shrink:0}
+        .editor-toolbar input[type="color"]{width:22px;height:22px;border:1px solid var(--border);border-radius:4px;cursor:pointer;padding:1px}
+        .editor-body{border:1.5px solid var(--border);border-top:none;border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:14px 16px;min-height:260px;font-size:0.85rem;line-height:1.8;outline:none;background:var(--white);overflow-y:auto}
+        .editor-body:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.05)}.editor-body p{margin-bottom:6px}
+
+        .section-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-top:14px;margin-bottom:6px;padding-top:10px;border-top:1px solid var(--border)}
+
+        .tpl-selector-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}
+        .tpl-card{border:2px solid var(--border);border-radius:var(--radius-sm);padding:8px;cursor:pointer;transition:all 0.2s;text-align:center;font-size:0.72rem;font-weight:600;background:var(--white)}
+        .tpl-card:hover{border-color:var(--primary)}.tpl-card.selected{border-color:var(--primary);background:rgba(37,99,235,0.06);color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+        .tpl-mini{height:44px;border-radius:4px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:700;color:#fff}
+        .tpl-classic-bg{background:#1a3a6b}.tpl-modern-bg{background:#2563EB}.tpl-minimal-bg{background:#64748B}.tpl-executive-bg{background:#1E293B}.tpl-green-bg{background:#10B981}.tpl-creative-bg{background:linear-gradient(135deg,#7C3AED,#4C1D95)}
+
+        .cl-pages-stack{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}.cl-page-wrapper{position:relative;width:210mm;flex-shrink:0}
+        .cl-page-card{width:210mm;min-height:297mm;background:var(--white);box-shadow:0 8px 40px rgba(0,0,0,0.12);position:relative;font-family:'Inter',sans-serif;overflow:hidden;border-radius:3px;padding:0}
+        .cl-page-label{text-align:center;font-size:0.62rem;color:var(--text-muted);font-weight:500;margin-bottom:4px}
+
+        .export-btns{width:100%;max-width:210mm;display:flex;gap:8px}
+        .export-btns .btn{flex:1;justify-content:center;padding:9px;font-size:0.8rem}
+
+        .mobile-toggle{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:500;gap:4px;background:var(--white);border-radius:50px;padding:4px;box-shadow:var(--shadow-lg)}
+        .mobile-toggle button{padding:9px 20px;border-radius:50px;border:none;font-weight:600;font-size:0.8rem;cursor:pointer;background:transparent;color:var(--text-muted)}.mobile-toggle button.active{background:var(--primary);color:white}
+
+        .footer{background:#1E293B;color:#CBD5E1;padding:36px 20px 18px;margin-top:auto}
+        .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:24px;max-width:1000px;margin:0 auto 24px}
+        .footer-col h4{color:#fff;font-size:0.88rem;margin-bottom:11px;text-transform:uppercase;letter-spacing:0.5px}
+        .footer-col ul{list-style:none}.footer-col ul li{margin-bottom:6px}
+        .footer-col ul li a{color:#CBD5E1;text-decoration:none;font-size:0.8rem;transition:color 0.2s;display:flex;align-items:center;gap:5px}
+        .footer-col ul li a:hover{color:#fff}.footer-col .logo-text{font-size:1.15rem;font-weight:800;color:#3b82f6;margin-bottom:5px}
+        .footer-col p{font-size:0.8rem;line-height:1.6;color:#94a3b8}
+        .footer-bottom{text-align:center;padding-top:16px;border-top:1px solid #334155;font-size:0.76rem;color:#64748B;max-width:1000px;margin:0 auto}.footer-bottom strong{color:#3b82f6}
+
+        @media(max-width:1024px){.builder-wrap{flex-direction:column;height:auto;gap:12px;padding:12px}.form-panel{width:100%}.preview-panel{width:100%}.cl-page-wrapper,.cl-page-card{width:100%;max-width:210mm;margin:0 auto}}
+        @media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.form-panel{display:none}.form-panel.show-mobile{display:block}.preview-panel{display:none}.preview-panel.show-mobile{display:flex}.mobile-toggle{display:flex}.form-row,.form-row-3{grid-template-columns:1fr}.cl-page-card{transform:scale(0.45);transform-origin:top center;margin-bottom:-200px}.builder-wrap{padding:8px;gap:8px}.form-panel{padding:14px 16px}.tpl-selector-grid{grid-template-columns:repeat(3,1fr)}}
+        @media print{html,body{background:white!important;margin:0!important;padding:0!important}.navbar,.form-panel,.mobile-toggle,.cl-page-label,.footer,.export-btns{display:none!important}.builder-wrap{display:block!important;height:auto!important;margin:0!important;padding:0!important}.preview-panel{width:210mm!important;padding:0!important;margin:0 auto!important;background:white!important;display:block!important;overflow:visible!important}.cl-pages-stack{gap:0!important}.cl-page-wrapper{width:210mm!important}.cl-page-card{width:210mm!important;min-height:297mm!important;box-shadow:none!important;transform:none!important;margin:0!important;border-radius:0!important;padding:0!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:A4;margin:0!important}}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="index.html" class="logo"><i class="fa-solid fa-envelope"></i> CoverLetterPro</a>
+            <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="templates.html">Templates</a></li><li><a href="builder.html" class="active">Builder</a></li></ul>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <div class="mobile-toggle" id="mobileToggle"><button class="active" data-panel="form"><i class="fa-solid fa-pen-to-square"></i> Edit</button><button data-panel="preview"><i class="fa-solid fa-eye"></i> Preview</button></div>
+
+    <div class="builder-wrap">
+        <div class="form-panel show-mobile" id="formPanel">
+            <h3 style="font-size:1rem;margin-bottom:2px"><i class="fa-solid fa-user" style="color:var(--primary)"></i> Your Information</h3>
+            <div class="form-row"><div class="form-group"><label>Full Name</label><input type="text" class="form-input" id="fullName" value="Michael Anderson" oninput="updatePreview()"></div><div class="form-group"><label>Job Title</label><input type="text" class="form-input" id="jobTitle" value="Full Stack Software Engineer" oninput="updatePreview()"></div></div>
+            <div class="form-row"><div class="form-group"><label>Email</label><input type="email" class="form-input" id="email" value="michael.anderson@email.com" oninput="updatePreview()"></div><div class="form-group"><label>Phone</label><input type="tel" class="form-input" id="phone" value="(512) 555-0187" oninput="updatePreview()"></div></div>
+            <div class="form-row"><div class="form-group"><label>Location</label><input type="text" class="form-input" id="location" value="Austin, Texas, USA" oninput="updatePreview()"></div><div class="form-group"><label>LinkedIn</label><input type="text" class="form-input" id="linkedin" value="linkedin.com/in/michaelanderson" oninput="updatePreview()"></div></div>
+
+            <!-- PHOTO UPLOAD - shown only for templates with photo -->
+            <div class="photo-upload-wrap" id="photoUploadSection">
+                <div class="photo-preview-circle" id="photoPreview"><span id="photoInitials">MA</span></div>
+                <div>
+                    <label class="btn btn-outline btn-sm photo-upload-btn">📷 Upload Photo<input type="file" id="photoUpload" accept="image/*" onchange="handlePhotoUpload(event)"></label>
+                    <p style="font-size:0.62rem;color:var(--text-muted);margin-top:3px">JPG/PNG, max 2MB</p>
+                    <button class="btn btn-xs" style="background:#EF4444;color:#fff;border:none;margin-top:3px;cursor:pointer" onclick="removePhoto()">Remove</button>
+                </div>
+            </div>
+
+            <h3 style="font-size:1rem;margin-top:14px;margin-bottom:2px"><i class="fa-solid fa-building" style="color:var(--primary)"></i> Recipient</h3>
+            <div class="form-row"><div class="form-group"><label>Hiring Manager</label><input type="text" class="form-input" id="recipientName" value="Hiring Manager" oninput="updatePreview()"></div><div class="form-group"><label>Company</label><input type="text" class="form-input" id="companyName" value="TechSphere Solutions" oninput="updatePreview()"></div></div>
+            <div class="form-group"><label>Company Address</label><input type="text" class="form-input" id="companyAddress" value="123 Tech Drive, Austin, TX 78701" oninput="updatePreview()"></div>
+            <h3 style="font-size:1rem;margin-top:14px;margin-bottom:2px"><i class="fa-solid fa-file-lines" style="color:var(--primary)"></i> Letter Details</h3>
+            <div class="form-row-3"><div class="form-group"><label>Date</label><input type="text" class="form-input" id="letterDate" value="January 15, 2025" oninput="updatePreview()"></div><div class="form-group"><label>Subject</label><input type="text" class="form-input" id="subjectLine" value="Senior Software Engineer Position" oninput="updatePreview()"></div><div class="form-group"><label>Salutation</label><input type="text" class="form-input" id="salutation" value="Dear Hiring Manager," oninput="updatePreview()"></div></div>
+            <div class="form-group"><label>Closing</label><input type="text" class="form-input" id="closingWord" value="Best regards," oninput="updatePreview()"></div>
+            <div class="section-label">✍️ Body Content</div>
+            <div class="editor-toolbar">
+                <select onchange="execCmd('fontName',this.value)" style="max-width:80px;font-size:0.6rem">
+                    <option value="Inter">Inter</option><option value="Poppins">Poppins</option><option value="Lora">Lora</option><option value="Roboto Mono">Mono</option><option value="Playfair Display">Playfair</option><option value="Merriweather">Merriweather</option><option value="Georgia">Georgia</option><option value="Times New Roman">Times</option><option value="Arial">Arial</option><option value="Courier New">Courier</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="Calibri">Calibri</option><option value="Cambria">Cambria</option><option value="Segoe UI">Segoe UI</option>
+                </select>
+                <select onchange="execCmd('fontSize',this.value)" style="width:38px;font-size:0.6rem"><option value="1">8</option><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">16</option><option value="6">18</option><option value="7">20</option></select>
+                <div class="divider"></div>
+                <button onclick="execCmd('bold')" title="Bold"><b>B</b></button><button onclick="execCmd('italic')" title="Italic"><i>I</i></button><button onclick="execCmd('underline')" title="Underline"><u>U</u></button>
+                <input type="color" onchange="execCmd('foreColor',this.value)" value="#475569" title="Text Color">
+                <div class="divider"></div>
+                <button onclick="execCmd('justifyLeft')"><i class="fa-solid fa-align-left"></i></button><button onclick="execCmd('justifyCenter')"><i class="fa-solid fa-align-center"></i></button><button onclick="execCmd('justifyRight')"><i class="fa-solid fa-align-right"></i></button>
+                <div class="divider"></div>
+                <button onclick="execCmd('insertUnorderedList')">•≡</button><button onclick="execCmd('insertOrderedList')">1≡</button>
+                <div class="divider"></div>
+                <button onclick="execCmd('undo')"><i class="fa-solid fa-undo"></i></button><button onclick="execCmd('redo')"><i class="fa-solid fa-redo"></i></button>
+            </div>
+            <div class="editor-body" id="editorBody" contenteditable="true" oninput="updatePreview()">
+                <p>I am writing to express my strong interest in the Senior Software Engineer role at TechSphere Solutions. With over 8 years of experience in full-stack development and cloud architecture, I am excited about the opportunity to contribute to your innovative team.</p>
+                <p>In my current role at TechSphere Solutions, I lead the development of enterprise SaaS applications serving over 500,000 active users. I designed and implemented a microservices architecture using Node.js and AWS that improved application performance by 40%. I also mentor a team of 6 engineers and have implemented CI/CD pipelines that reduced deployment times by 50%.</p>
+                <p>I am eager to bring my technical expertise and leadership skills to TechSphere Solutions. I would welcome the opportunity to discuss how my background and experience align with your team's needs. Thank you for your time and consideration.</p>
+            </div>
+        </div>
+
+        <div class="preview-panel show-mobile" id="previewPanel">
+            <div style="width:100%;max-width:210mm;background:var(--white);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow);margin-bottom:2px">
+                <div style="font-size:0.72rem;font-weight:600;margin-bottom:6px;color:var(--text-dark)">Choose Template:</div>
+                <div class="tpl-selector-grid">
+                    <div class="tpl-card selected" data-template="green" onclick="selectTemplate('green',this)"><div class="tpl-mini tpl-green-bg">GF</div>Green Fresh</div>
+                    <div class="tpl-card" data-template="classic" onclick="selectTemplate('classic',this)"><div class="tpl-mini tpl-classic-bg">CP</div>Classic</div>
+                    <div class="tpl-card" data-template="modern" onclick="selectTemplate('modern',this)"><div class="tpl-mini tpl-modern-bg">MB</div>Modern Blue</div>
+                    <div class="tpl-card" data-template="minimal" onclick="selectTemplate('minimal',this)"><div class="tpl-mini tpl-minimal-bg">MC</div>Minimal</div>
+                    <div class="tpl-card" data-template="executive" onclick="selectTemplate('executive',this)"><div class="tpl-mini tpl-executive-bg">ED</div>Executive</div>
+                    <div class="tpl-card" data-template="creative" onclick="selectTemplate('creative',this)"><div class="tpl-mini tpl-creative-bg">CP</div>Creative</div>
+                </div>
+            </div>
+            <div class="export-btns">
+                <button class="btn btn-success" onclick="saveAsPDF()"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                <button class="btn btn-warning" onclick="saveAsJPG()"><i class="fa-solid fa-image"></i> JPG</button>
+                <button class="btn btn-info" onclick="printCL()"><i class="fa-solid fa-print"></i> Print</button>
+            </div>
+            <div class="cl-pages-stack" id="clPagesStack"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col"><div class="logo-text">⚡ ShankarTech Hub</div><p>Technology that helps people.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="../../../index.html"><i class="fas fa-chevron-right"></i> Home</a></li><li><a href="index.html"><i class="fas fa-chevron-right"></i> CoverLetterPro</a></li><li><a href="templates.html"><i class="fas fa-chevron-right"></i> Templates</a></li></ul></div>
+            <div class="footer-col"><h4>Contact</h4><ul><li><a href="https://wa.me/971553134655"><i class="fab fa-whatsapp"></i> WhatsApp</a></li><li><a href="tel:0553134655"><i class="fas fa-phone-alt"></i> Call</a></li><li><a href="mailto:sbvianet03@gmail.com"><i class="fas fa-envelope"></i> Email</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub</div>
+    </footer>
+
+    <script>
+    var currentTemplate='green';
+    var photoData=null;
+    var tplNames={green:'Green Fresh',classic:'Classic Professional',modern:'Modern Blue',minimal:'Minimal Clean',executive:'Executive Dark',creative:'Creative Purple'};
+    var tplHasPhoto={green:false,classic:false,modern:true,minimal:false,executive:true,creative:true};
+
+    function execCmd(cmd,val){var ed=document.getElementById('editorBody');ed.focus();document.execCommand(cmd,false,val||null);updatePreview();}
+    function selectTemplate(tpl,el){
+        currentTemplate=tpl;
+        document.querySelectorAll('.tpl-card').forEach(function(c){c.classList.remove('selected')});
+        el.classList.add('selected');
+        document.getElementById('photoUploadSection').classList.toggle('show',tplHasPhoto[tpl]);
+        updatePreview();
+    }
+    function handlePhotoUpload(e){
+        var f=e.target.files[0];if(!f)return;
+        var r=new FileReader();
+        r.onload=function(ev){photoData=ev.target.result;document.getElementById('photoPreview').innerHTML='<img src="'+photoData+'" alt="Photo">';updatePreview();};
+        r.readAsDataURL(f);
+    }
+    function removePhoto(){
+        photoData=null;document.getElementById('photoUpload').value='';
+        document.getElementById('photoPreview').innerHTML='<span id="photoInitials">'+(document.getElementById('fullName').value.split(' ').map(function(n){return n[0]}).join(''))+'</span>';
+        updatePreview();
+    }
+    function getData(){
+        return{
+            name:document.getElementById('fullName').value,job:document.getElementById('jobTitle').value,
+            email:document.getElementById('email').value,phone:document.getElementById('phone').value,
+            location:document.getElementById('location').value,linkedin:document.getElementById('linkedin').value,
+            recipient:document.getElementById('recipientName').value,company:document.getElementById('companyName').value,
+            companyAddr:document.getElementById('companyAddress').value,date:document.getElementById('letterDate').value,
+            subject:document.getElementById('subjectLine').value,salutation:document.getElementById('salutation').value,
+            body:document.getElementById('editorBody').innerHTML,closingWord:document.getElementById('closingWord').value,
+            photoData:photoData
+        };
+    }
+    function getCB(d){var c='';if(d.email)c+='📧 '+d.email+'<br>';if(d.phone)c+='📞 '+d.phone+'<br>';if(d.location)c+='📍 '+d.location+'<br>';if(d.linkedin)c+='🔗 '+d.linkedin+'<br>';return c;}
+    function getCI(d){return [d.email,d.phone,d.location,d.linkedin].filter(Boolean).join(' • ');}
+    function getSig(d){return'<div style="margin-top:18px"><div style="font-style:italic">'+d.closingWord+'</div><div style="margin-top:22px;font-weight:700;font-size:1.1rem">'+d.name+'</div><div style="color:#475569;font-size:0.8rem">'+d.job+'</div></div>';}
+    function getBody(d){return'<div style="font-size:0.8rem;color:#475569;line-height:1.8">'+d.body+'</div>';}
+    function getIni(d){return d.name.split(' ').map(function(n){return n[0]}).join('');}
+    function getPhotoHTML(d,size,fsize,border){
+        var s=size||52;var f=fsize||'1rem';var b=border||'0.25';
+        if(d.photoData)return'<img src="'+d.photoData+'" alt="Photo" style="width:'+s+'px;height:'+s+'px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,'+b+');flex-shrink:0">';
+        return'<div style="width:'+s+'px;height:'+s+'px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:'+f+';border:2px solid rgba(255,255,255,'+b+');flex-shrink:0">'+getIni(d)+'</div>';
+    }
+
+    function buildCLHTML(d){
+        var body=getBody(d),sig=getSig(d),cb=getCB(d),ci=getCI(d);
+        // GREEN FRESH - NO PHOTO
+        if(currentTemplate==='green'){
+            return'<div style="padding:40px 44px;min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="border-left:5px solid #10B981;padding-left:18px;margin-bottom:20px">'+
+                '<div style="font-size:1.3rem;font-weight:700;color:#1E293B">'+d.name+'</div>'+
+                '<div style="font-size:0.85rem;color:#10B981;font-weight:500">'+d.job+'</div>'+
+                '<div style="font-size:0.75rem;color:#64748B;margin-top:6px;line-height:1.5">'+cb+'</div></div>'+
+                '<div style="font-size:0.8rem;color:#64748B;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;line-height:1.6;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'<br>'+d.companyAddr+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div>';
+        }
+        // CLASSIC - NO PHOTO
+        if(currentTemplate==='classic'){
+            return'<div style="padding:44px 48px;min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="text-align:right;color:#1a3a6b;font-size:1.15rem;font-weight:600;margin-bottom:4px">'+d.name+'</div>'+
+                '<div style="text-align:right;font-size:0.8rem;color:#475569;line-height:1.5;margin-bottom:14px">'+cb+'</div>'+
+                '<div style="height:1.5px;background:#1a3a6b;margin:14px 0"></div>'+
+                '<div style="font-size:0.8rem;color:#64748B;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;line-height:1.6;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'<br>'+d.companyAddr+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div>';
+        }
+        // MODERN BLUE - WITH PHOTO
+        if(currentTemplate==='modern'){
+            return'<div style="min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="background:#2563EB;color:#fff;padding:26px 40px;display:flex;align-items:center;gap:16px">'+
+                getPhotoHTML(d,52,'1rem','0.25')+
+                '<div><div style="font-size:1.35rem;font-weight:700">'+d.name+'</div><div style="font-size:0.9rem;opacity:0.9">'+d.job+'</div><div style="font-size:0.75rem;opacity:0.75;margin-top:8px">'+ci+'</div></div></div>'+
+                '<div style="padding:30px 40px">'+
+                '<div style="font-size:0.8rem;color:#64748B;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;line-height:1.6;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div></div>';
+        }
+        // MINIMAL - NO PHOTO
+        if(currentTemplate==='minimal'){
+            return'<div style="padding:50px 52px;text-align:center;min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="font-size:1.5rem;font-weight:700;color:#1E293B">'+d.name+'</div>'+
+                '<div style="font-size:0.85rem;color:#64748B;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">'+d.job+'</div>'+
+                '<div style="font-size:0.75rem;color:#64748B;line-height:1.5;margin-bottom:10px">'+ci+'</div>'+
+                '<div style="width:45px;height:1.5px;background:#64748B;margin:10px auto 16px"></div>'+
+                '<div style="text-align:left">'+
+                '<div style="font-size:0.78rem;color:#64748B;text-align:right;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;line-height:1.6;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div></div>';
+        }
+        // EXECUTIVE DARK - WITH PHOTO
+        if(currentTemplate==='executive'){
+            return'<div style="min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="background:#1E293B;color:#fff;padding:24px 40px;display:flex;align-items:center;gap:16px">'+
+                getPhotoHTML(d,52,'1rem','0.25')+
+                '<div><div style="font-size:1.2rem;font-weight:700">'+d.name+'</div><div style="font-size:0.8rem;opacity:0.8">'+d.job+'</div><div style="font-size:0.68rem;opacity:0.6;margin-top:4px">'+d.email+' • '+d.phone+'</div></div></div>'+
+                '<div style="padding:30px 40px">'+
+                '<div style="font-size:0.8rem;color:#64748B;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;line-height:1.6;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'</div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.8rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div></div>';
+        }
+        // CREATIVE PURPLE - WITH PHOTO
+        if(currentTemplate==='creative'){
+            return'<div style="display:flex;min-height:297mm;background:#fff;font-family:\'Inter\',sans-serif">'+
+                '<div style="width:28%;background:linear-gradient(180deg,#7C3AED,#4C1D95);color:#fff;padding:30px 16px;display:flex;flex-direction:column;align-items:center;gap:10px">'+
+                getPhotoHTML(d,54,'1rem','0.3')+
+                '<div style="font-size:0.95rem;font-weight:700;text-align:center;line-height:1.2">'+d.name+'</div>'+
+                '<div style="font-size:0.7rem;opacity:0.85;text-align:center">'+d.job+'</div>'+
+                '<div style="font-size:0.6rem;opacity:0.7;text-align:center;line-height:1.4;margin-top:8px">'+cb+'</div></div>'+
+                '<div style="flex:1;padding:30px 26px">'+
+                '<div style="font-size:0.75rem;color:#64748B;margin-bottom:10px">'+d.date+'</div>'+
+                '<div style="font-size:0.78rem;color:#475569;line-height:1.5;margin-bottom:10px">'+d.recipient+'<br>'+d.company+'</div>'+
+                '<div style="font-size:0.78rem;color:#475569;margin-bottom:10px"><b>Re: '+d.subject+'</b></div>'+
+                '<div style="font-size:0.78rem;color:#475569;margin-bottom:16px">'+d.salutation+'</div>'+body+sig+'</div></div>';
+        }
+        return'<div style="padding:40px;min-height:297mm;background:#fff">'+body+sig+'</div>';
+    }
+
+    function updatePreview(){
+        var d=getData();var hasPhoto=tplHasPhoto[currentTemplate];
+        var ini=d.name.split(' ').map(function(n){return n[0]}).join('');
+        if(!photoData){document.getElementById('photoPreview').innerHTML='<span id="photoInitials">'+ini+'</span>';}
+        document.getElementById('photoUploadSection').classList.toggle('show',hasPhoto);
+        document.getElementById('clPagesStack').innerHTML='<div class="cl-page-wrapper"><div class="cl-page-label">Cover Letter — '+tplNames[currentTemplate]+' '+(hasPhoto?'(📷 Photo)':'(📄 No Photo)')+'</div><div class="cl-page-card">'+buildCLHTML(d)+'</div></div>';
+    }
+    function saveAsPDF(){updatePreview();window.print();}
+    function printCL(){updatePreview();window.print();}
+    function saveAsJPG(){
+        var cards=document.querySelectorAll('.cl-page-card');if(cards.length===0)return;
+        html2canvas(cards[0],{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false}).then(function(canvas){
+            var link=document.createElement('a');link.download='cover-letter.jpg';link.href=canvas.toDataURL('image/jpeg',0.95);link.click();
+        });
+    }
+    document.getElementById('editorBody').addEventListener('keydown',function(e){
+        if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.execCommand('insertHTML',false,'<p><br></p>');updatePreview();}
+    });
+    var hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+    hamburger.addEventListener('click',function(){hamburger.classList.toggle('active');navLinks.style.display=navLinks.style.display==='flex'?'none':'flex';navLinks.style.position='fixed';navLinks.style.top='60px';navLinks.style.right='0';navLinks.style.background='#fff';navLinks.style.padding='18px';navLinks.style.boxShadow='0 20px 50px rgba(0,0,0,0.15)';navLinks.style.borderRadius='0 0 12px 12px';navLinks.style.flexDirection='column';navLinks.style.gap='14px';navLinks.style.zIndex='999'});
+    document.querySelectorAll('#mobileToggle button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#mobileToggle button').forEach(function(x){x.classList.remove('active')});b.classList.add('active');document.getElementById('formPanel').classList.toggle('show-mobile',b.getAttribute('data-panel')==='form');document.getElementById('previewPanel').classList.toggle('show-mobile',b.getAttribute('data-panel')==='preview')})});
+    var params=new URLSearchParams(window.location.search);
+    var tpl=params.get('template');
+    if(tpl&&tplNames[tpl]){currentTemplate=tpl;document.querySelectorAll('.tpl-card').forEach(function(c){c.classList.remove('selected');if(c.getAttribute('data-template')===tpl)c.classList.add('selected');});}
+    updatePreview();
+    if('serviceWorker' in navigator){navigator.serviceWorker.register('../../../service-worker.js').catch(function(){})}
+    </script>
+</body>
+</html>

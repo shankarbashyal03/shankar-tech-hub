@@ -1,0 +1,163 @@
+shankar-tools/
+│
+├── 📄 index.html                              ✅ MAIN HOMEPAGE (22 tools + 11 services)
+├── 📄 manifest.json                           ✅ PWA Manifest
+├── 📄 service-worker.js                       ✅ Offline Support
+│
+├── 📁 privacy/
+│   └── 📄 index.html                          ✅ Privacy Policy
+│
+├── 📁 icons/
+│   ├── logo.png
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── make-cv.png
+│   ├── cover-letter.png
+│   ├── emirates-id.png
+│   ├── police-report-uae.png
+│   ├── police-report-nepal.png
+│   ├── epassport.png
+│   ├── national-id.png
+│   ├── pan-card.png
+│   ├── voter-id.png
+│   ├── shram-renewal.png
+│   └── other-services.png
+│
+├── 📁 tools/                                  ← 22 FREE TOOLS
+│   │
+│   ├── 📁 age-calculator/
+│   │   └── index.html
+│   │
+│   ├── 📁 area-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 barcode-generator/
+│   │   └── index.html                        ✅ DONE
+│   │
+│   ├── 📁 bmi-fat-calculators/
+│   │   └── index.html                        🆕 TO BUILD
+│   │
+│   ├── 📁 calendar/
+│   │   └── index.html                        ✅ DONE
+│   │
+│   ├── 📁 cover-letter-maker/                ✅ DONE
+│   │   ├── index.html
+│   │   ├── templates.html
+│   │   ├── builder.html
+│   │   ├── pricing.html
+│   │   ├── faq.html
+│   │   └── about.html
+│   │
+│   ├── 📁 currency-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 cv-maker-free/                     ✅ DONE
+│   │   ├── index.html
+│   │   ├── templates.html
+│   │   └── builder.html
+│   │
+│   ├── 📁 data-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 date-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 emi-calculator/
+│   │   └── index.html
+│   │
+│   ├── 📁 file-compressor/
+│   │   └── index.html
+│   │
+│   ├── 📁 file-converter/
+│   │   ├── index.html
+│   │   └── 📁 converter-tools/
+│   │       ├── jpgtopng.html
+│   │       ├── jpgtopdf.html
+│   │       ├── jpgtoheic.html
+│   │       ├── pngtojpg.html
+│   │       ├── pngtopdf.html
+│   │       ├── pngtoheic.html
+│   │       ├── pdftojpg.html
+│   │       ├── pdftopng.html
+│   │       ├── pdftoheic.html
+│   │       ├── heictojpg.html
+│   │       ├── heictopng.html
+│   │       └── heictopdf.html
+│   │
+│   ├── 📁 image-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 jewellery-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 passport-photo-maker/
+│   │   └── index.html
+│   │
+│   ├── 📁 professional-notes/                ✅ DONE
+│   │   ├── index.html
+│   │   ├── editor.html
+│   │   └── preview.html
+│   │
+│   ├── 📁 qr-code-generator/
+│   │   └── index.html
+│   │
+│   ├── 📁 speed-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 temperature-converter/
+│   │   └── index.html
+│   │
+│   ├── 📁 volume-converter/
+│   │   └── index.html
+│   │
+│   └── 📁 weight-converter/
+│       └── index.html
+│
+├── 📁 services/                               ← 11 PAID/FORM SERVICES
+│   │
+│   ├── 📄 index.html
+│   │
+│   ├── 📁 make-cv/
+│   │   └── index.html                        ✅ DONE
+│   │
+│   ├── 📁 cover-letter/
+│   │   └── index.html
+│   │
+│   ├── 📁 emirates-id-renewal/
+│   │   └── index.html
+│   │
+│   ├── 📁 police-report-uae/
+│   │   └── index.html
+│   │
+│   ├── 📁 police-report-nepal/
+│   │   └── index.html
+│   │
+│   ├── 📁 epassport-form/
+│   │   └── index.html
+│   │
+│   ├── 📁 national-id-form/
+│   │   └── index.html
+│   │
+│   ├── 📁 pan-card/
+│   │   └── index.html
+│   │
+│   ├── 📁 voter-id/
+│   │   └── index.html
+│   │
+│   ├── 📁 shram-renewal/
+│   │   └── index.html
+│   │
+│   └── 📁 other-services/
+│       └── index.html
+│
+├── 📁 courses/
+│   └── 📄 index.html
+│
+├── 📁 downloads/
+│   └── 📄 index.html
+│
+├── 📁 contact/
+│   └── 📄 index.html
+│
+└── 📁 settings/
+    └── 📄 index.html                          ✅ DONE

@@ -1,0 +1,14 @@
+shankar-tools/
+│
+├── 📁 services/
+│   └── 📁 cover-letter/
+│       └── 📄 index.html                    ← Paid + Free options page
+│
+└── 📁 tools/
+    └── 📁 cover-letter-maker/               ← FREE COVER LETTER MAKER
+        ├── 📄 index.html                    ← Landing page with 6 template previews
+        ├── 📄 templates.html                ← Full 12 templates gallery
+        ├── 📄 builder.html                  ← Cover letter builder (Form + Live Preview)
+        ├── 📄 pricing.html                  ← Pricing plans
+        ├── 📄 faq.html                      ← FAQ page
+        └── 📄 about.html                    ← About page

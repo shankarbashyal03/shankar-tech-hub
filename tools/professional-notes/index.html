@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Professional Notes - Create, edit, and manage your notes with rich formatting">
+    <title>Professional Notes | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--accent-hover:#2563eb;--accent2:#10b981;--danger:#ef4444;--warning:#f59e0b;--border:#334155;--input-bg:#0f172a;--shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease}
+        body.light-mode{--bg:#f8fafc;--card:#ffffff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--input-bg:#f8fafc;--shadow:0 8px 30px rgba(0,0,0,0.06)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;padding:20px;transition:background 0.3s,color 0.3s}
+        .container{max-width:900px;margin:0 auto}
+
+        .tool-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:11px 18px;font-size:0.9rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;text-decoration:none;transition:var(--transition);white-space:nowrap}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+        h1{font-size:1.5rem;font-weight:800;color:var(--accent);flex:1;text-align:center}
+
+        .tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--card);border-radius:12px;padding:4px;border:1px solid var(--border)}
+        .tab-btn{flex:1;padding:10px;border:none;background:transparent;color:var(--text-secondary);border-radius:10px;cursor:pointer;font-weight:600;font-size:0.85rem;transition:var(--transition)}
+        .tab-btn.active{background:var(--accent);color:#fff}
+        .tab-btn .count{font-size:0.7rem;opacity:0.7;margin-left:4px}
+
+        .search-bar{width:100%;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.85rem;margin-bottom:16px;transition:var(--transition)}
+        .search-bar:focus{outline:none;border-color:var(--accent)}
+
+        .notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+        .note-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:var(--transition);position:relative}
+        .note-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--accent)}
+        .note-card h3{font-size:0.95rem;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .note-card .preview{font-size:0.78rem;color:var(--text-secondary);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
+        .note-card .meta{font-size:0.7rem;color:var(--text-muted);display:flex;align-items:center;gap:10px}
+        .note-card .badge{padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:600}
+        .badge-draft{background:rgba(245,158,11,0.2);color:var(--warning)}
+        .badge-saved{background:rgba(16,185,129,0.2);color:var(--accent2)}
+        .note-card .actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:var(--transition)}
+        .note-card:hover .actions{opacity:1}
+        .icon-btn{width:28px;height:28px;border:none;background:var(--card-alt);border-radius:6px;cursor:pointer;font-size:0.7rem;color:var(--text-secondary);transition:var(--transition);display:flex;align-items:center;justify-content:center}
+        .icon-btn:hover{background:var(--danger);color:#fff}
+        .icon-btn.edit-btn:hover{background:var(--accent);color:#fff}
+
+        .add-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:var(--transition);margin-top:16px}
+        .add-btn:hover{background:var(--accent-hover);transform:translateY(-2px)}
+
+        .empty-state{text-align:center;padding:40px;color:var(--text-muted);grid-column:1/-1}
+        .empty-state i{font-size:3rem;opacity:0.2;display:block;margin-bottom:12px}
+
+        .toast{position:fixed;top:20px;right:20px;background:var(--accent2);color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;z-index:2000;animation:slideIn 0.3s ease;font-size:0.85rem;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+        @media(max-width:600px){body{padding:10px}h1{font-size:1.2rem}.notes-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <a href="../../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1><i class="fas fa-sticky-note"></i> Professional Notes</h1>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="all">All Notes <span class="count" id="allCount">(0)</span></button>
+            <button class="tab-btn" data-tab="drafts">Drafts <span class="count" id="draftCount">(0)</span></button>
+            <button class="tab-btn" data-tab="saved">Saved <span class="count" id="savedCount">(0)</span></button>
+        </div>
+
+        <input type="text" class="search-bar" placeholder="🔍 Search notes..." id="searchInput" oninput="renderNotes()">
+
+        <div class="notes-grid" id="notesGrid"></div>
+
+        <button class="add-btn" onclick="createNewNote()"><i class="fas fa-plus-circle"></i> Create New Note</button>
+    </div>
+
+    <script>
+        function applyTheme(t){if(t==='light')document.body.classList.add('light-mode');else document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+        window.addEventListener('focus',()=>{applyTheme(localStorage.getItem('shankartech_theme')||'dark')});
+
+        var NOTES_KEY='pro_notes_v2';
+        var notes=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');
+        var activeTab='all';
+
+        function saveNotes(){localStorage.setItem(NOTES_KEY,JSON.stringify(notes));updateCounts();}
+        function updateCounts(){
+            document.getElementById('allCount').textContent='('+notes.length+')';
+            document.getElementById('draftCount').textContent='('+notes.filter(n=>n.status==='draft').length+')';
+            document.getElementById('savedCount').textContent='('+notes.filter(n=>n.status==='saved').length+')';
+        }
+
+        function createNewNote(){
+            var note={id:Date.now().toString(),title:'Untitled Note',content:'',status:'draft',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+            notes.unshift(note);saveNotes();renderNotes();
+            window.location.href='editor.html?id='+note.id;
+        }
+
+        function deleteNote(id,e){e.stopPropagation();
+            if(confirm('Delete this note?')){notes=notes.filter(n=>n.id!==id);saveNotes();renderNotes();showToast('🗑️ Note deleted');}
+        }
+
+        function renderNotes(){
+            var search=document.getElementById('searchInput').value.toLowerCase();
+            var filtered=notes.filter(function(n){
+                var matchSearch=n.title.toLowerCase().includes(search)||stripHtml(n.content).toLowerCase().includes(search);
+                if(activeTab==='all')return matchSearch;
+                if(activeTab==='drafts')return n.status==='draft'&&matchSearch;
+                if(activeTab==='saved')return n.status==='saved'&&matchSearch;
+                return matchSearch;
+            });
+            var grid=document.getElementById('notesGrid');
+            if(filtered.length===0){grid.innerHTML='<div class="empty-state"><i class="fas fa-sticky-note"></i><p>No notes found</p></div>';return;}
+            grid.innerHTML=filtered.map(function(n){
+                var preview=stripHtml(n.content).substring(0,100)||'Empty note...';
+                var date=new Date(n.updatedAt);
+                var dateStr=date.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+                var timeStr=date.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+                return'<div class="note-card" onclick="window.location.href=\'editor.html?id='+n.id+'\'">'+
+                    '<div class="actions">'+
+                    '<button class="icon-btn edit-btn" onclick="event.stopPropagation();window.location.href=\'editor.html?id='+n.id+'\'"><i class="fas fa-edit"></i></button>'+
+                    '<button class="icon-btn" onclick="deleteNote(\''+n.id+'\',event)"><i class="fas fa-trash"></i></button></div>'+
+                    '<h3>'+escapeHtml(n.title)+'</h3><div class="preview">'+preview+'</div>'+
+                    '<div class="meta"><span class="badge '+(n.status==='draft'?'badge-draft':'badge-saved')+'">'+(n.status==='draft'?'📝 Draft':'✅ Saved')+'</span><span>'+dateStr+'</span><span>'+timeStr+'</span></div></div>';
+            }).join('');
+        }
+
+        function stripHtml(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent||d.innerText||'';}
+        function escapeHtml(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+        function showToast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2500);}
+
+        document.querySelectorAll('.tab-btn').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.tab-btn').forEach(function(x){x.classList.remove('active')});b.classList.add('active');activeTab=b.dataset.tab;renderNotes();})});
+        updateCounts();renderNotes();
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('../../../service-worker.js').catch(function(){})}
+    </script>
+</body>
+</html>

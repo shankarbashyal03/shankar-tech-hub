@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Body Fat Calculator - US Navy Method with visual charts & suggestions">
+    <title>Body Fat Calculator | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+        :root{
+            --bg:#0f172a;--card:#1e293b;--card-alt:#334155;--text:#f1f5f9;--text-secondary:#94a3b8;
+            --text-muted:#64748b;--accent:#3b82f6;--accent-hover:#2563eb;--accent2:#10b981;
+            --accent3:#f59e0b;--danger:#ef4444;--border:#334155;--input-bg:#0f172a;
+            --shadow:0 8px 30px rgba(0,0,0,0.3);--transition:all 0.3s ease;
+            --essential:#60a5fa;--athletes:#10b981;--fitness:#34d399;--average:#f59e0b;--obese:#ef4444;
+        }
+        body.light-mode{
+            --bg:#f8fafc;--card:#fff;--card-alt:#f1f5f9;--text:#1e293b;--text-secondary:#475569;
+            --text-muted:#94a3b8;--border:#e2e8f0;--input-bg:#f8fafc;--shadow:0 8px 30px rgba(0,0,0,0.06);
+        }
+        body{
+            background:var(--bg);color:var(--text);min-height:100vh;padding:15px;transition:background 0.3s,color 0.3s;
+        }
+        .container{max-width:500px;margin:0 auto}
+        .tool-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+        .back-btn{
+            background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;
+            padding:10px 14px;font-size:0.82rem;cursor:pointer;text-decoration:none;transition:var(--transition);
+            display:flex;align-items:center;gap:6px;white-space:nowrap;
+        }
+        .back-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+        h1{font-size:1.2rem;font-weight:800;color:var(--accent)}
+        .card{
+            background:var(--card);border-radius:14px;border:1px solid var(--border);padding:18px;
+            box-shadow:var(--shadow);margin-bottom:14px;
+        }
+        .card-title{font-size:0.95rem;font-weight:700;margin-bottom:14px;color:var(--accent);display:flex;align-items:center;gap:8px}
+        .form-group{margin-bottom:12px}
+        .form-group label{display:flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:600;margin-bottom:4px;color:var(--text-secondary)}
+        .optional-badge{
+            font-size:0.6rem;background:var(--card-alt);color:var(--text-muted);padding:2px 8px;
+            border-radius:10px;font-weight:400;font-style:italic;
+        }
+        .form-group input,.form-group select{
+            width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;
+            background:var(--input-bg);color:var(--text);font-size:0.9rem;transition:var(--transition);
+        }
+        .form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent)}
+        .form-group input.optional-input{border-style:dashed;border-color:var(--border)}
+        .form-group input.optional-input:focus{border-style:solid;border-color:var(--accent)}
+        .btn-row{display:flex;gap:8px;margin-top:12px}
+        .btn{
+            flex:1;padding:11px;border:none;border-radius:10px;font-weight:600;font-size:0.85rem;
+            cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:6px;
+        }
+        .btn-calculate{background:var(--accent);color:#fff}
+        .btn-calculate:hover{background:var(--accent-hover);transform:translateY(-1px)}
+        .btn-clear{background:var(--card-alt);color:var(--text);border:1px solid var(--border)}
+        .btn-clear:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
+        .method-info{
+            display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--card-alt);
+            border-radius:10px;margin-bottom:14px;font-size:0.72rem;color:var(--text-secondary);
+        }
+        .method-info i{color:var(--accent3);font-size:0.9rem}
+        .result{display:none}
+        .result.show{display:block}
+
+        /* Category Banner */
+        .category-banner{
+            text-align:center;padding:20px 16px;border-radius:14px;margin-bottom:14px;color:#fff;
+            position:relative;overflow:hidden;
+        }
+        .category-banner::before{
+            content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;
+            background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);
+        }
+        .cat-icon{font-size:2.5rem;margin-bottom:6px;position:relative;z-index:1}
+        .cat-title{font-size:1.2rem;font-weight:800;position:relative;z-index:1}
+        .cat-subtitle{font-size:0.75rem;opacity:0.9;margin-top:4px;position:relative;z-index:1}
+
+        /* Chart Toggle */
+        .chart-toggle{
+            display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;
+            padding:10px 14px;background:var(--card-alt);border-radius:12px;font-size:0.8rem;
+            font-weight:600;color:var(--accent);user-select:none;transition:var(--transition);
+            border:1px solid transparent;
+        }
+        .chart-toggle:hover{background:var(--border);border-color:var(--accent)}
+        .chart-toggle i.arrow{transition:transform 0.3s ease;margin-left:auto}
+        .chart-toggle.open i.arrow{transform:rotate(180deg)}
+        .chart-content{display:none;margin-bottom:14px}
+        .chart-content.show{display:block}
+
+        /* Gauge Chart */
+        .gauge-wrapper{
+            background:var(--card-alt);border-radius:14px;padding:20px 15px 10px;margin-bottom:12px;
+            border:1px solid var(--border);
+        }
+        .gauge-container{
+            position:relative;width:220px;height:130px;margin:0 auto 5px;overflow:hidden;
+        }
+        .gauge-bg{
+            position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+            width:200px;height:100px;border-radius:100px 100px 0 0;
+            background:conic-gradient(
+                from 180deg,
+                #60a5fa 0deg 28.8deg,
+                #10b981 28.8deg 72deg,
+                #34d399 72deg 90deg,
+                #f59e0b 90deg 126deg,
+                #ef4444 126deg 180deg
+            );
+            box-shadow:0 4px 20px rgba(0,0,0,0.3);
+        }
+        .gauge-cover{
+            position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+            width:140px;height:70px;border-radius:70px 70px 0 0;background:var(--card-alt);
+            z-index:1;
+        }
+        .gauge-needle{
+            position:absolute;bottom:-2px;left:50%;width:4px;height:75px;
+            background:linear-gradient(to top,var(--text),var(--accent));
+            transform-origin:bottom center;transform:translateX(-50%) rotate(-90deg);
+            border-radius:4px;z-index:2;transition:transform 1s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow:0 0 10px rgba(0,0,0,0.3);
+        }
+        .gauge-needle::after{
+            content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);
+            width:10px;height:10px;background:var(--accent);border-radius:50%;
+            box-shadow:0 0 15px var(--accent);
+        }
+        .gauge-needle::before{
+            content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+            width:16px;height:16px;background:var(--text);border-radius:50%;z-index:3;
+            border:3px solid var(--card-alt);
+        }
+        .gauge-center-text{
+            position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;
+            text-align:center;
+        }
+        .gauge-percent{font-size:2.2rem;font-weight:900;line-height:1;color:var(--accent2)}
+        .gauge-label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+        .gauge-labels{
+            display:flex;justify-content:space-between;padding:0 15px;margin-top:2px;font-size:0.6rem;
+            color:var(--text-muted);
+        }
+
+        /* Donut Chart */
+        .donut-wrapper{
+            background:var(--card-alt);border-radius:14px;padding:16px;margin-bottom:12px;
+            border:1px solid var(--border);
+        }
+        .donut-title{font-size:0.78rem;font-weight:700;margin-bottom:12px;color:var(--text-secondary);text-align:center}
+        .donut-container{display:flex;align-items:center;gap:24px;justify-content:center;flex-wrap:wrap}
+        .donut-chart{
+            width:150px;height:150px;border-radius:50%;position:relative;flex-shrink:0;
+            box-shadow:0 0 30px rgba(0,0,0,0.3),inset 0 0 20px rgba(0,0,0,0.2);
+        }
+        .donut-inner{
+            position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+            width:85px;height:85px;background:var(--card-alt);border-radius:50%;
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            box-shadow:inset 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .donut-percent{font-size:1.5rem;font-weight:900;color:var(--accent2)}
+        .donut-label{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+        .donut-legend{display:flex;flex-direction:column;gap:10px}
+        .legend-item{
+            display:flex;align-items:center;gap:10px;padding:8px 12px;
+            background:var(--card);border-radius:8px;font-size:0.75rem;
+        }
+        .legend-dot{width:14px;height:14px;border-radius:5px;flex-shrink:0}
+        .legend-info{display:flex;flex-direction:column}
+        .legend-name{font-weight:600;color:var(--text)}
+        .legend-value{font-size:0.68rem;color:var(--text-secondary)}
+
+        /* Scale Visualization */
+        .scale-wrapper{
+            background:var(--card-alt);border-radius:14px;padding:14px;margin-bottom:12px;
+            border:1px solid var(--border);
+        }
+        .scale-title{font-size:0.78rem;font-weight:700;margin-bottom:10px;color:var(--text-secondary);text-align:center}
+        .scale-visual{display:flex;gap:5px}
+        .scale-step{
+            flex:1;text-align:center;padding:10px 4px;border-radius:10px;font-size:0.6rem;
+            font-weight:600;color:#fff;opacity:0.35;transition:all 0.3s ease;position:relative;
+        }
+        .scale-step.active{opacity:1;transform:scale(1.08);box-shadow:0 6px 20px rgba(0,0,0,0.4);z-index:2}
+        .scale-step .step-icon{font-size:1rem;display:block;margin-bottom:3px}
+        .scale-step.es{background:var(--essential)}.scale-step.at{background:var(--athletes)}
+        .scale-step.fi{background:var(--fitness)}.scale-step.av{background:var(--average)}
+        .scale-step.ob{background:var(--obese)}
+
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+        .detail-item{
+            background:var(--card-alt);padding:12px 10px;border-radius:10px;text-align:center;border:1px solid var(--border);
+        }
+        .detail-label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+        .detail-value{font-size:1rem;font-weight:700;color:var(--accent);margin-top:2px}
+
+        .method-used{
+            text-align:center;font-size:0.65rem;color:var(--text-muted);margin-top:10px;font-style:italic;
+            padding:6px 12px;background:var(--card-alt);border-radius:20px;display:inline-block;width:100%;
+        }
+
+        /* Suggestions */
+        .suggestions-card{
+            background:var(--card-alt);border-radius:12px;padding:14px;margin-top:12px;border:1px solid var(--border);
+        }
+        .suggestions-card h4{font-size:0.85rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .suggestion-list{list-style:none}
+        .suggestion-list li{
+            padding:7px 0;font-size:0.75rem;color:var(--text-secondary);display:flex;align-items:flex-start;gap:8px;
+            border-bottom:1px solid var(--border);
+        }
+        .suggestion-list li:last-child{border-bottom:none}
+        .suggestion-list li i{color:var(--accent2);margin-top:2px;flex-shrink:0;font-size:0.7rem}
+        .suggestion-list li i.warn{color:var(--accent3)}
+        .suggestion-list li i.danger{color:var(--danger)}
+
+        .footer{
+            background:var(--card);border-top:1px solid var(--border);padding:1rem 0.8rem 0;
+            border-radius:14px 14px 0 0;margin-top:20px;
+        }
+        .footer-content{max-width:500px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+        .footer-section h4{font-size:0.75rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+        .footer-links{list-style:none}.footer-links li{margin-bottom:0.2rem}
+        .footer-links a{color:var(--text-secondary);text-decoration:none;font-size:0.68rem;transition:var(--transition)}
+        .footer-links a:hover{color:var(--accent);transform:translateX(3px)}
+        .copyright-bar{text-align:center;padding:0.7rem;color:var(--text-muted);font-size:0.65rem;border-top:1px solid var(--border);margin-top:0.8rem}
+        .copyright-bar strong{color:var(--accent);font-weight:700}
+        .toast{position:fixed;top:15px;right:15px;background:var(--accent2);color:#fff;padding:10px 16px;border-radius:8px;font-weight:600;z-index:2000;animation:slideIn 0.3s ease;font-size:0.78rem}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+        @media(max-width:400px){
+            h1{font-size:1rem}
+            .donut-chart{width:120px;height:120px}
+            .donut-inner{width:65px;height:65px}
+            .donut-percent{font-size:1.2rem}
+            .gauge-container{width:180px;height:110px}
+            .gauge-bg{width:160px;height:80px;border-radius:80px 80px 0 0}
+            .gauge-cover{width:110px;height:55px;border-radius:55px 55px 0 0}
+            .gauge-percent{font-size:1.6rem}
+            .cat-icon{font-size:2rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool-header">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1><i class="fas fa-person"></i> Body Fat Calculator</h1>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-sliders"></i> Your Measurements</div>
+            
+            <div class="method-info">
+                <i class="fas fa-info-circle"></i>
+                <span>US Navy Method for accuracy. Neck & waist optional - leave blank for BMI-based estimation.</span>
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <select id="gender"><option value="male">Male</option><option value="female">Female</option></select>
+            </div>
+            <div class="form-group">
+                <label>Age (years)</label>
+                <input type="number" id="age" placeholder="Enter age" min="18" max="80">
+            </div>
+            <div class="form-group">
+                <label>Height (cm) *</label>
+                <input type="number" id="height" placeholder="e.g. 170" min="100" max="250" step="any">
+            </div>
+            <div class="form-group">
+                <label>Weight (kg) *</label>
+                <input type="number" id="weight" placeholder="e.g. 70" min="30" max="300" step="any">
+            </div>
+            <div class="form-group">
+                <label>
+                    Neck Circumference (cm)
+                    <span class="optional-badge">optional</span>
+                </label>
+                <input type="number" id="neck" class="optional-input" placeholder="e.g. 38 (leave blank to skip)" min="20" max="60" step="any">
+            </div>
+            <div class="form-group">
+                <label>
+                    Waist Circumference (cm)
+                    <span class="optional-badge">optional</span>
+                </label>
+                <input type="number" id="waist" class="optional-input" placeholder="e.g. 80 (leave blank to skip)" min="40" max="150" step="any">
+            </div>
+            <div class="form-group" id="hipGroup" style="display:none">
+                <label>
+                    Hip Circumference (cm)
+                    <span class="optional-badge">optional</span>
+                </label>
+                <input type="number" id="hip" class="optional-input" placeholder="e.g. 95 (leave blank to skip)" min="50" max="160" step="any">
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-clear" id="clearBtn"><i class="fas fa-undo"></i> Clear</button>
+                <button class="btn btn-calculate" id="calcBtn"><i class="fas fa-calculator"></i> Calculate</button>
+            </div>
+        </div>
+
+        <div class="card result" id="resultCard">
+            <div class="card-title"><i class="fas fa-chart-pie"></i> Your Body Fat Report</div>
+            
+            <!-- Category Banner -->
+            <div class="category-banner" id="categoryBanner">
+                <div class="cat-icon" id="catIcon">💪</div>
+                <div class="cat-title" id="catTitle">-</div>
+                <div class="cat-subtitle" id="catSubtitle">-</div>
+            </div>
+
+            <!-- Chart Toggle -->
+            <div class="chart-toggle" id="chartToggle">
+                <span><i class="fas fa-chart-line"></i> See Charts</span>
+                <i class="fas fa-chevron-down arrow"></i>
+            </div>
+
+            <!-- Chart Content -->
+            <div class="chart-content" id="chartContent">
+                <!-- Gauge -->
+                <div class="gauge-wrapper">
+                    <div class="gauge-container">
+                        <div class="gauge-bg"></div>
+                        <div class="gauge-cover"></div>
+                        <div class="gauge-needle" id="gaugeNeedle"></div>
+                        <div class="gauge-center-text">
+                            <div class="gauge-percent" id="gaugePercent">-</div>
+                            <div class="gauge-label">Body Fat</div>
+                        </div>
+                    </div>
+                    <div class="gauge-labels">
+                        <span>Essential</span><span>Athletes</span><span>Fitness</span><span>Average</span><span>Obese</span>
+                    </div>
+                </div>
+
+                <!-- Scale -->
+                <div class="scale-wrapper">
+                    <div class="scale-title">📊 Category Scale</div>
+                    <div class="scale-visual">
+                        <div class="scale-step es" id="stepES"><span class="step-icon">🫀</span>Essential</div>
+                        <div class="scale-step at" id="stepAT"><span class="step-icon">🏃</span>Athletes</div>
+                        <div class="scale-step fi" id="stepFI"><span class="step-icon">💪</span>Fitness</div>
+                        <div class="scale-step av" id="stepAV"><span class="step-icon">🚶</span>Average</div>
+                        <div class="scale-step ob" id="stepOB"><span class="step-icon">⚠️</span>Obese</div>
+                    </div>
+                </div>
+
+                <!-- Donut -->
+                <div class="donut-wrapper">
+                    <div class="donut-title">🍩 Body Composition</div>
+                    <div class="donut-container">
+                        <div class="donut-chart" id="donutChart">
+                            <div class="donut-inner">
+                                <span class="donut-percent" id="donutPercent">-</span>
+                                <span class="donut-label">Fat %</span>
+                            </div>
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background:#ef4444"></div>
+                                <div class="legend-info">
+                                    <span class="legend-name">Fat Mass</span>
+                                    <span class="legend-value" id="legendFat">-</span>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background:#3b82f6"></div>
+                                <div class="legend-info">
+                                    <span class="legend-name">Lean Mass</span>
+                                    <span class="legend-value" id="legendLean">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-item"><div class="detail-label">Body Fat %</div><div class="detail-value" id="detailFat">-</div></div>
+                <div class="detail-item"><div class="detail-label">Fat Mass</div><div class="detail-value" id="detailFatMass">-</div></div>
+                <div class="detail-item"><div class="detail-label">Lean Mass</div><div class="detail-value" id="detailLeanVal">-</div></div>
+                <div class="detail-item"><div class="detail-label">BMI</div><div class="detail-value" id="detailBMI">-</div></div>
+            </div>
+
+            <div class="method-used" id="methodUsed">-</div>
+
+            <!-- Suggestions -->
+            <div class="suggestions-card" id="suggestionsCard">
+                <h4><i class="fas fa-lightbulb"></i> Recommendations</h4>
+                <ul class="suggestion-list" id="suggestionList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-compass"></i> Navigate</h4>
+                <ul class="footer-links">
+                    <li><a href="../../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Calculators</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="bmi-calculator.html"><i class="fas fa-chevron-right"></i> BMI Calc</a></li>
+                    <li><a href="../../contact/index.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright-bar">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub</div>
+    </footer>
+
+    <script>
+        function applyTheme(t){document.body.classList.toggle('light-mode',t==='light')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+        window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
+
+        document.getElementById('gender').addEventListener('change',function(){
+            document.getElementById('hipGroup').style.display=this.value==='female'?'block':'none';
+        });
+
+        // Chart toggle
+        document.getElementById('chartToggle').addEventListener('click',function(){
+            this.classList.toggle('open');
+            document.getElementById('chartContent').classList.toggle('show');
+        });
+
+        function showToast(m){
+            const t=document.createElement('div');t.className='toast';t.textContent=m;
+            document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+        }
+
+        function getFatCategory(bf,gender){
+            if(gender==='male'){
+                if(bf<6)return{cat:'Essential Fat',color:'#60a5fa',icon:'🫀',level:'es',desc:'Minimum body fat required for basic health'};
+                if(bf<14)return{cat:'Athletes',color:'#10b981',icon:'🏃',level:'at',desc:'Excellent fitness & athletic build'};
+                if(bf<18)return{cat:'Fitness',color:'#34d399',icon:'💪',level:'fi',desc:'Good fitness level, healthy range'};
+                if(bf<25)return{cat:'Average',color:'#f59e0b',icon:'🚶',level:'av',desc:'Acceptable but room for improvement'};
+                return{cat:'Obese',color:'#ef4444',icon:'⚠️',level:'ob',desc:'Health risks - consider fitness plan'};
+            }else{
+                if(bf<14)return{cat:'Essential Fat',color:'#60a5fa',icon:'🫀',level:'es',desc:'Minimum body fat required for basic health'};
+                if(bf<21)return{cat:'Athletes',color:'#10b981',icon:'🏃',level:'at',desc:'Excellent fitness & athletic build'};
+                if(bf<25)return{cat:'Fitness',color:'#34d399',icon:'💪',level:'fi',desc:'Good fitness level, healthy range'};
+                if(bf<32)return{cat:'Average',color:'#f59e0b',icon:'🚶',level:'av',desc:'Acceptable but room for improvement'};
+                return{cat:'Obese',color:'#ef4444',icon:'⚠️',level:'ob',desc:'Health risks - consider fitness plan'};
+            }
+        }
+
+        function getSuggestions(level){
+            const s={
+                es:[
+                    {icon:'danger',text:'Essential fat is critical for hormone function & organ protection.'},
+                    {icon:'warn',text:'Do NOT try to lose more fat - this is minimum required level.'},
+                    {icon:'',text:'Focus on nutrient-dense foods: eggs, fish, nuts, avocados.'},
+                    {icon:'',text:'Maintain balanced diet with adequate healthy fats.'}
+                ],
+                at:[
+                    {icon:'',text:'Excellent! You have an athletic body fat percentage.'},
+                    {icon:'',text:'Maintain current fitness routine & balanced nutrition.'},
+                    {icon:'',text:'Ensure adequate protein intake (1.6-2g per kg body weight).'},
+                    {icon:'',text:'Continue mixing cardio & strength training.'}
+                ],
+                fi:[
+                    {icon:'',text:'Great shape! You are in the fitness zone.'},
+                    {icon:'',text:'To reach athlete level: reduce 2-4% more body fat.'},
+                    {icon:'',text:'Focus on HIIT workouts 2-3 times per week.'},
+                    {icon:'',text:'Track macros: 40% protein, 35% carbs, 25% fats.'}
+                ],
+                av:[
+                    {icon:'warn',text:'You are in the average range. Small changes can improve.'},
+                    {icon:'',text:'Aim to lose 5-8% body fat for better health markers.'},
+                    {icon:'',text:'Walk 10,000 steps daily + strength training 3x/week.'},
+                    {icon:'',text:'Cut processed foods & sugary drinks. Increase protein intake.'}
+                ],
+                ob:[
+                    {icon:'danger',text:'High body fat increases risk of diabetes & heart disease.'},
+                    {icon:'warn',text:'Consult doctor before starting any intense exercise program.'},
+                    {icon:'',text:'Start with daily 30-min walks & bodyweight exercises.'},
+                    {icon:'',text:'Create 500-calorie daily deficit through diet changes.'},
+                    {icon:'',text:'Focus on whole foods: vegetables, lean proteins, cut all sugar.'}
+                ]
+            };
+            return s[level]||s.av;
+        }
+
+        function estimateFatFromBMI(bmi,age,gender){
+            let bf=(1.20*bmi)+(0.23*age)-10.8*(gender==='male'?1:0)-5.4;
+            return Math.max(2,Math.min(bf,50));
+        }
+
+        document.getElementById('calcBtn').addEventListener('click',()=>{
+            const gender=document.getElementById('gender').value;
+            const age=parseFloat(document.getElementById('age').value);
+            const h=parseFloat(document.getElementById('height').value);
+            const w=parseFloat(document.getElementById('weight').value);
+            const neck=parseFloat(document.getElementById('neck').value)||0;
+            const waist=parseFloat(document.getElementById('waist').value)||0;
+            const hip=(gender==='female'?parseFloat(document.getElementById('hip').value)||0:0);
+
+            if(!h||!w||!age){showToast('⚠️ Fill height, weight & age');return;}
+
+            let bf,method;
+            if(neck>0 && waist>0 && (gender==='male'||hip>0)){
+                if(gender==='male'){
+                    bf=86.010*Math.log10(waist-neck)-70.041*Math.log10(h)+36.76;
+                }else{
+                    bf=163.205*Math.log10(waist+hip-neck)-97.684*Math.log10(h)-78.387;
+                }
+                bf=Math.max(2,Math.min(bf,50));
+                method='🎯 Calculated via US Navy Method (higher accuracy)';
+            }else{
+                const bmi=w/((h/100)*(h/100));
+                bf=estimateFatFromBMI(bmi,age,gender);
+                method='📊 Estimated from BMI (add neck & waist for Navy Method accuracy)';
+            }
+
+            const fatMass=(bf/100)*w;
+            const leanMass=w-fatMass;
+            const bmi=w/((h/100)*(h/100));
+            const{cat,color,icon,level,desc}=getFatCategory(bf,gender);
+
+            document.getElementById('resultCard').classList.add('show');
+
+            // Category Banner
+            const banner=document.getElementById('categoryBanner');
+            banner.style.background=`linear-gradient(135deg,${color}dd,${color}99)`;
+            document.getElementById('catIcon').textContent=icon;
+            document.getElementById('catTitle').textContent=cat;
+            document.getElementById('catSubtitle').textContent=desc;
+
+            // Gauge
+            const needleAngle=(bf/40)*180-90;
+            document.getElementById('gaugeNeedle').style.transform=`translateX(-50%) rotate(${needleAngle}deg)`;
+            document.getElementById('gaugePercent').textContent=bf.toFixed(1)+'%';
+            document.getElementById('gaugePercent').style.color=color;
+
+            // Scale
+            document.querySelectorAll('.scale-step').forEach(s=>s.classList.remove('active'));
+            document.getElementById('step'+level.toUpperCase()).classList.add('active');
+
+            // Donut
+            document.getElementById('donutPercent').textContent=bf.toFixed(1)+'%';
+            document.getElementById('donutPercent').style.color=color;
+            document.getElementById('donutChart').style.background=
+                `conic-gradient(#ef4444 0deg ${bf*3.6}deg,#3b82f6 ${bf*3.6}deg 360deg)`;
+            document.getElementById('legendFat').textContent=fatMass.toFixed(1)+' kg';
+            document.getElementById('legendLean').textContent=leanMass.toFixed(1)+' kg';
+
+            // Details
+            document.getElementById('detailFat').textContent=bf.toFixed(1)+'%';
+            document.getElementById('detailFat').style.color=color;
+            document.getElementById('detailFatMass').textContent=fatMass.toFixed(1)+' kg';
+            document.getElementById('detailLeanVal').textContent=leanMass.toFixed(1)+' kg';
+            document.getElementById('detailBMI').textContent=bmi.toFixed(1);
+            document.getElementById('methodUsed').textContent=method;
+
+            // Suggestions
+            const suggestions=getSuggestions(level);
+            document.getElementById('suggestionList').innerHTML=suggestions.map(s=>
+                `<li><i class="fas fa-${s.icon==='danger'?'exclamation-circle':s.icon==='warn'?'exclamation-triangle':'check-circle'} ${s.icon}"></i>${s.text}</li>`
+            ).join('');
+
+            document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});
+        });
+
+        document.getElementById('clearBtn').addEventListener('click',()=>{
+            document.getElementById('gender').value='male';
+            document.getElementById('age').value='';
+            document.getElementById('height').value='';
+            document.getElementById('weight').value='';
+            document.getElementById('neck').value='';
+            document.getElementById('waist').value='';
+            document.getElementById('hip').value='';
+            document.getElementById('hipGroup').style.display='none';
+            document.getElementById('resultCard').classList.remove('show');
+            document.getElementById('chartContent').classList.remove('show');
+            document.getElementById('chartToggle').classList.remove('open');
+        });
+
+        if('serviceWorker' in navigator){
+            navigator.serviceWorker.register('../../service-worker.js').catch(()=>{});
+        }
+    </script>
+</body>
+</html>

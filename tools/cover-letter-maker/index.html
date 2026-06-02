@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Free Cover Letter Builder - Create professional cover letters in minutes. Multiple templates, instant PDF download.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Free Cover Letter Builder | ShankarTech Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{--primary:#2563EB;--primary-dark:#1E40AF;--accent:#10B981;--bg-light:#F8FAFF;--white:#FFFFFF;--text-dark:#1E293B;--text-muted:#64748B;--border:#E2E8F0;--gradient:linear-gradient(135deg,#2563EB 0%,#7C3AED 100%);--radius:12px;--radius-sm:8px;--shadow:0 4px 6px rgba(0,0,0,0.05);--shadow-lg:0 20px 50px rgba(0,0,0,0.1);--shadow-xl:0 25px 60px rgba(37,99,235,0.15);--max-width:1200px;--nav-height:64px}
+        *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;color:var(--text-dark);background:var(--white);line-height:1.6;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+        h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:700;line-height:1.25}a{text-decoration:none;color:inherit}
+        .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+
+        .navbar{position:sticky;top:0;z-index:1000;height:var(--nav-height);background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+        .navbar .container{display:flex;align-items:center;justify-content:space-between;height:100%;gap:10px}
+        .back-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg-light);border:1px solid var(--border);border-radius:8px;font-weight:500;font-size:0.85rem;cursor:pointer;transition:all 0.3s;color:var(--text-dark);white-space:nowrap;flex-shrink:0;text-decoration:none}
+        .back-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .logo{display:flex;align-items:center;gap:8px;font-family:'Poppins',sans-serif;font-weight:700;font-size:1.15rem;color:var(--text-dark);flex-shrink:0}.logo i{font-size:1.3rem;color:var(--primary)}
+        .nav-links{display:flex;align-items:center;gap:18px;list-style:none}.nav-links a{font-weight:500;font-size:0.85rem;color:var(--text-muted);transition:color 0.2s}.nav-links a:hover,.nav-links a.active{color:var(--primary)}.nav-links a.active{font-weight:600}
+        .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;transition:all 0.3s;border:2px solid transparent;white-space:nowrap;text-decoration:none}
+        .btn-primary{background:var(--primary);color:var(--white);border-color:var(--primary)}.btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:var(--shadow-xl)}
+        .btn-outline{background:transparent;color:var(--primary);border-color:var(--primary)}.btn-outline:hover{background:var(--primary);color:var(--white)}
+        .btn-lg{padding:14px 28px;font-size:1rem}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001;background:none;border:none;padding:8px}
+        .hamburger span{display:block;width:24px;height:2.5px;background:var(--text-dark);border-radius:3px;transition:all 0.3s}
+        .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+        .hero{padding:40px 0 30px;text-align:center;background:linear-gradient(180deg,#EEF2FF 0%,#F8FAFF 40%,#FFFFFF 100%)}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,0.1);color:var(--primary);padding:6px 16px;border-radius:50px;font-weight:600;font-size:0.85rem;margin-bottom:16px}
+        .hero h1{font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:800;margin-bottom:10px;line-height:1.15}
+        .hero h1 span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-subtitle{font-size:1rem;color:var(--text-muted);max-width:500px;margin:0 auto 20px;line-height:1.6}
+        .hero-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+        .hero-trust{display:flex;gap:14px;flex-wrap:wrap;font-size:0.82rem;color:var(--text-muted);justify-content:center}
+        .hero-trust span{display:flex;align-items:center;gap:4px}.hero-trust span::before{content:'✓';color:var(--accent);font-weight:700}
+
+        .stats-bar{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:30px}
+        .stat-item{text-align:center}.stat-number{font-family:'Poppins',sans-serif;font-size:1.6rem;font-weight:700;color:var(--primary)}.stat-label{font-size:0.82rem;color:var(--text-muted)}
+
+        .section{padding:40px 0}.section-header{text-align:center;margin-bottom:30px}
+        .section-header h2{font-size:clamp(1.4rem,2.5vw,1.8rem);margin-bottom:6px}.section-header p{color:var(--text-muted);font-size:0.95rem}
+
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+        .feature-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px 18px;transition:all 0.3s;text-align:center}
+        .feature-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
+        .feature-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto 12px;background:rgba(37,99,235,0.1);color:var(--primary)}
+        .feature-card h3{font-size:0.95rem;margin-bottom:4px}.feature-card p{font-size:0.82rem;color:var(--text-muted);line-height:1.5}
+
+        .how-bg{background:var(--bg-light)}.steps-row{display:flex;gap:20px;align-items:flex-start;position:relative}
+        .steps-row::before{content:'';position:absolute;top:36px;left:50px;right:50px;height:2px;background:var(--border);z-index:0}
+        .step-card{flex:1;text-align:center;position:relative;z-index:1;padding:0 14px}
+        .step-number{width:56px;height:56px;border-radius:50%;background:var(--white);border:3px solid var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'Poppins',sans-serif;font-size:1.2rem;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .step-icon{font-size:1.3rem;margin-bottom:8px}.step-card h3{font-size:0.95rem;margin-bottom:4px}.step-card p{font-size:0.82rem;color:var(--text-muted);line-height:1.5}
+
+        /* TEMPLATES */
+        .templates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+        .template-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all 0.3s;position:relative;cursor:pointer}
+        .template-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,0.12)}
+        .template-preview{height:280px;position:relative;overflow:hidden;font-family:'Inter',sans-serif;background:#fff;padding:0}
+        .template-info{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+        .template-info h4{font-size:0.85rem}.template-info .desc{font-size:0.72rem;color:var(--text-muted)}
+        .badge{position:absolute;top:8px;right:8px;padding:3px 8px;border-radius:50px;font-size:0.55rem;font-weight:700;z-index:2;text-transform:uppercase}
+        .badge-popular{background:#FEF3C7;color:#D97706}.badge-new{background:#DBEAFE;color:#2563EB}
+        .hover-overlay{position:absolute;inset:0;background:rgba(37,99,235,0.9);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;z-index:5}
+        .template-card:hover .hover-overlay{opacity:1}.hover-overlay .btn{background:var(--white);color:var(--primary);border:none;font-size:0.82rem}
+        .view-all-link{text-align:center;margin-top:24px}
+        .view-all-link a{font-weight:600;color:var(--primary);font-size:0.95rem;display:inline-flex;align-items:center;gap:6px;transition:gap 0.3s}.view-all-link a:hover{gap:12px}
+
+        .cta-banner{background:var(--gradient);padding:50px 0;text-align:center;position:relative;overflow:hidden}
+        .cta-banner h2{color:var(--white);font-size:clamp(1.4rem,2.5vw,1.8rem);margin-bottom:8px;position:relative;z-index:1}
+        .cta-banner p{color:rgba(255,255,255,0.9);font-size:0.95rem;margin-bottom:20px;position:relative;z-index:1}
+        .btn-white{background:var(--white);color:var(--primary);font-size:1rem;padding:14px 28px}.btn-white:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+
+        .footer{background:#1E293B;color:#CBD5E1;padding:36px 20px 18px}
+        .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:24px;max-width:1000px;margin:0 auto 24px}
+        .footer-col h4{color:#fff;font-size:0.88rem;margin-bottom:11px;text-transform:uppercase;letter-spacing:0.5px}
+        .footer-col ul{list-style:none}.footer-col ul li{margin-bottom:6px}
+        .footer-col ul li a{color:#CBD5E1;text-decoration:none;font-size:0.8rem;transition:color 0.2s;display:flex;align-items:center;gap:5px}
+        .footer-col ul li a:hover{color:#fff}.footer-col .logo-text{font-size:1.15rem;font-weight:800;color:#3b82f6;margin-bottom:5px}
+        .footer-col p{font-size:0.8rem;line-height:1.6;color:#94a3b8}
+        .footer-bottom{text-align:center;padding-top:16px;border-top:1px solid #334155;font-size:0.76rem;color:#64748B;max-width:1000px;margin:0 auto}.footer-bottom strong{color:#3b82f6}
+
+        @media(max-width:1024px){.templates-grid{grid-template-columns:repeat(2,1fr)}.features-grid{grid-template-columns:repeat(2,1fr)}.steps-row{flex-direction:column;gap:16px}.steps-row::before{display:none}}
+        @media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.templates-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto}.features-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto}.stats-bar{gap:20px}.hero{padding:30px 0 20px}.template-preview{height:240px}}
+        @media(max-width:480px){.hero-buttons{flex-direction:column}.hero-buttons .btn{width:100%;justify-content:center}.hero-trust{flex-direction:column;gap:6px;align-items:center}.btn-white{width:100%;justify-content:center}}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="../../services/make-cv/index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="index.html" class="logo"><i class="fa-solid fa-envelope"></i> CoverLetterPro</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="templates.html">Templates</a></li>
+                <li><a href="builder.html">Builder</a></li>
+            </ul>
+            <a href="builder.html" class="btn btn-primary">Build Cover Letter</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">✨ 100% Free — No Sign Up Required</div>
+            <h1>Create a <span>Professional Cover Letter</span> in Minutes</h1>
+            <p class="hero-subtitle">Pair your CV with a compelling cover letter. Choose from beautiful templates, fill in your details, and download as PDF — no sign-up required.</p>
+            <div class="hero-buttons">
+                <a href="builder.html" class="btn btn-primary btn-lg">Build Cover Letter Now <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="templates.html" class="btn btn-outline btn-lg">Browse Templates</a>
+            </div>
+            <div class="hero-trust">
+                <span>No sign-up required</span>
+                <span>Free PDF download</span>
+                <span>6 templates</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat-item"><div class="stat-number">25,000+</div><div class="stat-label">📄 Letters Created</div></div>
+        <div class="stat-item"><div class="stat-number">⭐ 4.8</div><div class="stat-label">User Rating</div></div>
+        <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">🎨 Templates</div></div>
+        <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">🆓 Free Always</div></div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header"><h2>Why Choose CoverLetterPro?</h2><p>Everything you need to create a professional cover letter</p></div>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-palette"></i></div><h3>Beautiful Templates</h3><p>6 professionally designed cover letter templates for every industry.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-bolt"></i></div><h3>Fast & Easy</h3><p>Build your cover letter in under 3 minutes with our guided form.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-file-pdf"></i></div><h3>Free PDF Download</h3><p>Download as PDF with zero watermarks — completely free.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div><h3>Mobile Friendly</h3><p>Build from any device — phone, tablet, or desktop.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-link"></i></div><h3>Match Your CV</h3><p>Templates designed to complement your CV perfectly.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div><h3>100% Private</h3><p>Your data never leaves your browser. Complete privacy.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section how-bg">
+        <div class="container">
+            <div class="section-header"><h2>How It Works</h2><p>Three simple steps to your professional cover letter</p></div>
+            <div class="steps-row">
+                <div class="step-card"><div class="step-number">01</div><div class="step-icon">🎨</div><h3>Pick a Template</h3><p>Browse our library and pick your favorite design.</p></div>
+                <div class="step-card"><div class="step-number">02</div><div class="step-icon">✍️</div><h3>Fill Your Details</h3><p>Enter your info and customize the content.</p></div>
+                <div class="step-card"><div class="step-number">03</div><div class="step-icon">📥</div><h3>Download & Share</h3><p>Download as PDF or share instantly.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEMPLATES SECTION -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header"><h2>Choose From 6 Templates</h2><p>Professional designs for every job application</p></div>
+            <div class="templates-grid">
+                <!-- 1. Classic Professional -->
+                <div class="template-card">
+                    <div class="template-preview" style="padding:18px 16px;display:flex;flex-direction:column;gap:8px">
+                        <div style="text-align:right;color:#1a3a6b;font-size:0.28rem;font-weight:600;margin-bottom:4px">Michael Anderson</div>
+                        <div style="font-size:0.24rem;color:#475569;text-align:right;line-height:1.3">📧 michael@email.com<br>📞 (512) 555-0187<br>📍 Austin, TX</div>
+                        <div style="height:1px;background:#1a3a6b;margin:6px 0"></div>
+                        <div style="font-size:0.22rem;color:#64748B">January 15, 2025</div>
+                        <div style="font-size:0.22rem;color:#475569;line-height:1.4">Hiring Manager<br>TechSphere Solutions<br>Austin, TX</div>
+                        <div style="font-size:0.22rem;color:#475569;line-height:1.4;margin-top:4px">Dear Hiring Manager,</div>
+                        <div style="font-size:0.2rem;color:#475569;line-height:1.3">I am writing to express my interest in the Senior Software Engineer position. With 8+ years of experience...</div>
+                        <div style="font-size:0.22rem;color:#475569;line-height:1.4;margin-top:4px">Sincerely,<br><b>Michael Anderson</b></div>
+                    </div>
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="template-info"><h4>Classic Professional</h4><span class="desc">Traditional format</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=classic" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+                <!-- 2. Modern Blue -->
+                <div class="template-card">
+                    <div class="template-preview" style="display:flex;flex-direction:column">
+                        <div style="background:#2563EB;color:#fff;padding:14px 16px">
+                            <div style="font-size:0.38rem;font-weight:700">Michael Anderson</div>
+                            <div style="font-size:0.24rem;opacity:0.9">Full Stack Software Engineer</div>
+                            <div style="font-size:0.2rem;opacity:0.75;margin-top:4px">📧 michael@email.com • 📞 (512) 555-0187</div>
+                        </div>
+                        <div style="padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:6px">
+                            <div style="font-size:0.2rem;color:#64748B">January 15, 2025</div>
+                            <div style="font-size:0.2rem;color:#475569">Dear Hiring Manager,</div>
+                            <div style="font-size:0.18rem;color:#475569;line-height:1.3">I am thrilled to apply for the Senior Software Engineer role at TechSphere Solutions...</div>
+                            <div style="font-size:0.2rem;color:#475569;margin-top:4px">Best regards,<br><b>Michael Anderson</b></div>
+                        </div>
+                    </div>
+                    <span class="badge badge-new">New</span>
+                    <div class="template-info"><h4>Modern Blue</h4><span class="desc">Bold header</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=modern" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+                <!-- 3. Minimal Clean -->
+                <div class="template-card">
+                    <div class="template-preview" style="padding:20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+                        <div style="font-size:0.36rem;font-weight:700;color:#1E293B">Michael Anderson</div>
+                        <div style="font-size:0.22rem;color:#64748B;text-transform:uppercase;letter-spacing:1px">Full Stack Software Engineer</div>
+                        <div style="font-size:0.2rem;color:#64748B">michael@email.com • (512) 555-0187</div>
+                        <div style="width:35px;height:1.5px;background:#64748B"></div>
+                        <div style="font-size:0.2rem;color:#475569;line-height:1.4;text-align:left;width:100%">
+                            <div style="text-align:right;font-size:0.18rem;color:#64748B;margin-bottom:4px">January 15, 2025</div>
+                            <div>Dear Hiring Manager,</div>
+                            <div style="font-size:0.18rem">I am writing to apply for the Senior Software Engineer position. My experience aligns perfectly...</div>
+                            <div style="margin-top:4px">Sincerely,<br><b>Michael Anderson</b></div>
+                        </div>
+                    </div>
+                    <div class="template-info"><h4>Minimal Clean</h4><span class="desc">Simple & elegant</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=minimal" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+                <!-- 4. Executive Dark -->
+                <div class="template-card">
+                    <div class="template-preview" style="display:flex;flex-direction:column">
+                        <div style="background:#1E293B;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px">
+                            <div style="width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.5rem;flex-shrink:0">MA</div>
+                            <div><div style="font-size:0.34rem;font-weight:700">Michael Anderson</div><div style="font-size:0.2rem;opacity:0.8">Full Stack Software Engineer</div></div>
+                        </div>
+                        <div style="padding:14px 16px;flex:1;display:flex;flex-direction:column;gap:5px">
+                            <div style="font-size:0.2rem;color:#64748B">January 15, 2025</div>
+                            <div style="font-size:0.2rem;color:#475569">Dear Hiring Manager,</div>
+                            <div style="font-size:0.17rem;color:#475569;line-height:1.3">I am excited to submit my application for the Senior Software Engineer position...</div>
+                            <div style="font-size:0.2rem;color:#475569;margin-top:3px">Sincerely,<br><b>Michael Anderson</b></div>
+                        </div>
+                    </div>
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="template-info"><h4>Executive Dark</h4><span class="desc">Bold professional</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=executive" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+                <!-- 5. Green Fresh -->
+                <div class="template-card">
+                    <div class="template-preview" style="padding:16px;display:flex;flex-direction:column;gap:6px">
+                        <div style="border-left:4px solid #10B981;padding-left:12px">
+                            <div style="font-size:0.34rem;font-weight:700;color:#1E293B">Michael Anderson</div>
+                            <div style="font-size:0.22rem;color:#10B981;font-weight:500">Full Stack Software Engineer</div>
+                            <div style="font-size:0.19rem;color:#64748B;margin-top:2px">michael@email.com • (512) 555-0187 • Austin, TX</div>
+                        </div>
+                        <div style="font-size:0.19rem;color:#64748B;margin-top:4px">January 15, 2025</div>
+                        <div style="font-size:0.2rem;color:#475569">Dear Hiring Manager,</div>
+                        <div style="font-size:0.18rem;color:#475569;line-height:1.3">I am writing to express my strong interest in the Senior Software Engineer role at TechSphere Solutions...</div>
+                        <div style="font-size:0.2rem;color:#475569;margin-top:3px">Best regards,<br><b>Michael Anderson</b></div>
+                    </div>
+                    <div class="template-info"><h4>Green Fresh</h4><span class="desc">Fresh & modern</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=green" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+                <!-- 6. Creative Purple -->
+                <div class="template-card">
+                    <div class="template-preview" style="display:flex">
+                        <div style="width:32%;background:linear-gradient(180deg,#7C3AED,#4C1D95);color:#fff;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px">
+                            <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.55rem;border:2px solid rgba(255,255,255,0.3)">MA</div>
+                            <div style="font-size:0.3rem;font-weight:700;text-align:center">Michael Anderson</div>
+                            <div style="font-size:0.2rem;opacity:0.85;text-align:center">Full Stack Engineer</div>
+                            <div style="font-size:0.17rem;opacity:0.7;text-align:center;line-height:1.3">📧 michael@email.com<br>📞 (512) 555-0187</div>
+                        </div>
+                        <div style="flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:5px">
+                            <div style="font-size:0.18rem;color:#64748B">January 15, 2025</div>
+                            <div style="font-size:0.19rem;color:#475569">Dear Hiring Manager,</div>
+                            <div style="font-size:0.17rem;color:#475569;line-height:1.3">I am excited to apply for the Senior Software Engineer position at TechSphere Solutions...</div>
+                            <div style="font-size:0.19rem;color:#475569;margin-top:3px">Sincerely,<br><b>Michael Anderson</b></div>
+                        </div>
+                    </div>
+                    <span class="badge badge-new">New</span>
+                    <div class="template-info"><h4>Creative Purple</h4><span class="desc">Unique sidebar</span></div>
+                    <div class="hover-overlay"><a href="builder.html?template=creative" class="btn">Use This Template <i class="fa-solid fa-arrow-right"></i></a></div>
+                </div>
+            </div>
+            <div class="view-all-link"><a href="templates.html">View All 6 Templates <i class="fa-solid fa-arrow-right"></i></a></div>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div class="container"><h2>Ready to Impress Employers?</h2><p>Join 25,000+ professionals who created their cover letter with CoverLetterPro — for free</p><a href="builder.html" class="btn btn-white btn-lg">Start Building Now <i class="fa-solid fa-arrow-right"></i></a></div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col"><div class="logo-text">⚡ ShankarTech Hub</div><p>Technology that helps people. Free tools, services, courses & downloads.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="../../../index.html"><i class="fas fa-chevron-right"></i> Home</a></li><li><a href="index.html"><i class="fas fa-chevron-right"></i> CoverLetterPro</a></li><li><a href="templates.html"><i class="fas fa-chevron-right"></i> Templates</a></li><li><a href="builder.html"><i class="fas fa-chevron-right"></i> Builder</a></li></ul></div>
+            <div class="footer-col"><h4>Contact</h4><ul><li><a href="https://wa.me/971553134655" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li><li><a href="tel:0553134655"><i class="fas fa-phone-alt"></i> Call Now</a></li><li><a href="mailto:sbvianet03@gmail.com"><i class="fas fa-envelope"></i> Email Us</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub | Technology that helps people</div>
+    </footer>
+
+    <script>
+        var hamburger=document.getElementById('hamburger'),navLinks=document.getElementById('navLinks');
+        hamburger.addEventListener('click',function(){hamburger.classList.toggle('active');navLinks.style.display=navLinks.style.display==='flex'?'none':'flex';navLinks.style.position='fixed';navLinks.style.top='64px';navLinks.style.right='0';navLinks.style.background='#fff';navLinks.style.padding='18px';navLinks.style.boxShadow='0 20px 50px rgba(0,0,0,0.15)';navLinks.style.borderRadius='0 0 12px 12px';navLinks.style.flexDirection='column';navLinks.style.gap='14px';navLinks.style.zIndex='999'});
+        if('serviceWorker' in navigator){navigator.serviceWorker.register('../../../service-worker.js').catch(()=>{})}
+    </script>
+</body>
+</html>
