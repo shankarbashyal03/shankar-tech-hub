@@ -1,0 +1,3 @@
+User-agent: *  
+Allow: /  
+Sitemap: https://shankartechhub.com/sitemap.xml  
