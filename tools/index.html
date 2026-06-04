@@ -4,398 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="ShankarTech Hub - 22 free online tools. CV Maker, Cover Letter, File Converter, Area Converter, BMI Calculator, Passport Photo Maker, QR Code Generator & more. Technology that helps people.">
-    <meta name="keywords" content="cv maker, cover letter, file converter, area converter, bmi calculator, passport photo maker, qr code generator, free online tools, nepal, uae, shankartech">
-    <meta name="author" content="Shankar Bashyal">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://shankartechhub.com">
-    <meta property="og:title" content="ShankarTech Hub | Technology that helps people">
-    <meta property="og:description" content="22 free online tools - CV Maker, Cover Letter, File Converter, Area Converter, BMI Calculator, Passport Photo Maker & more.">
-    <meta property="og:url" content="https://shankartechhub.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ShankarTech Hub | Technology that helps people">
-    <meta name="twitter:description" content="22 free online tools - CV Maker, Cover Letter, File Converter & more.">
-    <title>ShankarTech Hub | 22 Free Tools - CV Maker, File Converter, Area Converter & More</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ShankarTech">
-    <link rel="apple-touch-icon" href="icons/logo.png">
-    <link rel="icon" type="image/png" href="icons/logo.png">
-    <meta name="mobile-web-app-capable" content="yes">
-
+    <meta name="description" content="22 Free Online Tools - CV Maker, Cover Letter, File Converter, Area Converter, BMI Calculator, Passport Photo Maker, QR Code Generator & more.">
+    <title>22 Free Tools | ShankarTech Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
-        :root{--bg:#0f172a;--bg-secondary:#1a2332;--card:rgba(30,41,59,0.8);--card-hover:rgba(30,41,59,0.95);--text:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;--accent:#3b82f6;--accent-hover:#60a5fa;--accent2:#10b981;--accent3:#f59e0b;--sky-blue:#38bdf8;--border:rgba(51,65,85,0.5);--border-light:rgba(71,85,105,0.3);--shadow:0 4px 6px -1px rgba(0,0,0,0.3);--shadow-lg:0 20px 40px -10px rgba(0,0,0,0.5);--shadow-card:0 8px 32px rgba(0,0,0,0.2);--glow:0 0 30px rgba(59,130,246,0.15);--glow-hover:0 0 50px rgba(59,130,246,0.25);--gradient-hero:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);--radius-sm:10px;--radius:14px;--radius-lg:18px;--transition:all 0.35s cubic-bezier(0.4,0,0.2,1);--whatsapp:#25D366;--call:#10b981;--email:#f59e0b;--pin-glow:0 0 20px rgba(245,158,11,0.3)}
-        body.light-mode{--bg:#f8fafc;--bg-secondary:#e2e8f0;--card:#ffffff;--card-hover:#f1f5f9;--text:#1e293b;--text-secondary:#475569;--text-muted:#94a3b8;--border:#e2e8f0;--border-light:#cbd5e1;--shadow:0 4px 6px -1px rgba(0,0,0,0.06);--shadow-lg:0 20px 40px -10px rgba(0,0,0,0.1)}
-        body{background:var(--bg);background-image:radial-gradient(ellipse at top right,rgba(59,130,246,0.08) 0%,transparent 50%),radial-gradient(ellipse at bottom left,rgba(139,92,246,0.05) 0%,transparent 50%),radial-gradient(ellipse at center,rgba(16,185,129,0.03) 0%,transparent 70%);color:var(--text);min-height:100vh;line-height:1.6;overflow-x:hidden;padding-top:80px;padding-bottom:30px;transition:background 0.4s,color 0.4s}
-        body.light-mode{background:var(--bg);background-image:radial-gradient(ellipse at top right,rgba(59,130,246,0.04) 0%,transparent 50%),radial-gradient(ellipse at bottom left,rgba(139,92,246,0.03) 0%,transparent 50%)}
-
-        .bg-particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;pointer-events:none}
-        .particle{position:absolute;font-size:1.5rem;opacity:0.04;color:var(--accent);animation:floatParticle 18s infinite ease-in-out}
-        .particle:nth-child(1){top:8%;left:5%;animation-delay:0s;font-size:2rem}
-        .particle:nth-child(2){top:18%;right:8%;animation-delay:-3s;font-size:1.8rem}
-        .particle:nth-child(3){top:35%;left:12%;animation-delay:-6s;font-size:2.2rem}
-        .particle:nth-child(4){top:55%;right:12%;animation-delay:-9s;font-size:1.6rem}
-        .particle:nth-child(5){top:75%;left:8%;animation-delay:-12s;font-size:2rem}
-        .particle:nth-child(6){top:25%;right:4%;animation-delay:-15s;font-size:1.7rem}
-        .particle:nth-child(7){top:65%;left:18%;animation-delay:-7s;font-size:1.9rem}
-        .particle:nth-child(8){top:45%;right:18%;animation-delay:-11s;font-size:1.5rem}
-        .particle:nth-child(9){top:88%;right:25%;animation-delay:-14s;font-size:2.1rem}
-        .particle:nth-child(10){top:12%;left:22%;animation-delay:-17s;font-size:1.4rem}
-        @keyframes floatParticle{0%,100%{transform:translate(0,0) rotate(0deg) scale(1);opacity:0.04}25%{transform:translate(25px,-35px) rotate(60deg) scale(1.15);opacity:0.07}50%{transform:translate(-18px,25px) rotate(120deg) scale(0.9);opacity:0.03}75%{transform:translate(12px,-15px) rotate(200deg) scale(1.1);opacity:0.06}}
-
-        .header{background:rgba(15,23,42,0.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:0.9rem 2rem;border-bottom:1px solid var(--border);position:fixed;top:0;left:0;width:100%;z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,0.3)}
-        body.light-mode .header{background:rgba(255,255,255,0.92);box-shadow:0 2px 20px rgba(0,0,0,0.06)}
-        .header-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-        .logo-area{display:flex;align-items:center;gap:0.75rem;text-decoration:none;transition:var(--transition)}
-        .logo-area:hover{transform:translateY(-1px)}
-        .logo-img{width:44px;height:44px;border-radius:10px;object-fit:cover;box-shadow:0 0 20px rgba(59,130,246,0.3);border:2px solid rgba(59,130,246,0.3)}
-        .logo-fallback{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;color:white;box-shadow:0 0 20px rgba(59,130,246,0.3)}
-        .logo-text h1{font-size:1.25rem;font-weight:700;line-height:1.2;letter-spacing:-0.3px}
-        .logo-text h1 .shankar{background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .logo-text h1 .tech{color:var(--sky-blue);-webkit-text-fill-color:var(--sky-blue)}
-        .logo-text .slogan{font-size:0.7rem;color:var(--text-secondary);font-weight:400;letter-spacing:0.3px}
-        .desktop-nav{display:flex;align-items:center;gap:0.5rem}
-        .nav-link{color:var(--text-secondary);text-decoration:none;font-size:0.88rem;font-weight:500;padding:0.5rem 1rem;border-radius:8px;transition:var(--transition);white-space:nowrap;letter-spacing:0.2px}
-        .nav-link i{margin-right:6px;font-size:0.85rem}
-        .nav-link:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-        .nav-link.active{color:var(--accent);background:rgba(59,130,246,0.12);font-weight:600}
-        .mobile-menu-btn{display:none;flex-direction:column;justify-content:space-between;width:32px;height:22px;background:none;border:none;cursor:pointer;padding:0;z-index:1002}
-        .mobile-menu-btn span{display:block;width:100%;height:2.5px;background:var(--text);border-radius:3px;transition:var(--transition)}
-        .mobile-menu-btn.active span:nth-child(1){transform:translateY(9.75px) rotate(45deg)}
-        .mobile-menu-btn.active span:nth-child(2){opacity:0;transform:scale(0)}
-        .mobile-menu-btn.active span:nth-child(3){transform:translateY(-9.75px) rotate(-45deg)}
-        .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;opacity:0;visibility:hidden;transition:opacity 0.3s;backdrop-filter:blur(3px)}
-        .sidebar-overlay.active{opacity:1;visibility:visible}
-        .sidebar{position:fixed;top:0;left:-300px;width:280px;height:100vh;background:rgba(15,23,42,0.98);backdrop-filter:blur(20px);border-right:1px solid var(--border);z-index:1001;padding:5rem 1.5rem 2rem;transition:left 0.4s cubic-bezier(0.4,0,0.2,1);overflow-y:auto}
-        .sidebar.active{left:0}
-        .sidebar-links{display:flex;flex-direction:column;gap:0.5rem}
-        .sidebar-links a{padding:0.9rem 1rem;border-radius:10px;color:var(--text-secondary);text-decoration:none;font-size:0.95rem;display:flex;align-items:center;gap:0.75rem;transition:var(--transition)}
-        .sidebar-links a i{width:20px;text-align:center}
-        .sidebar-links a:hover{background:rgba(255,255,255,0.04);color:var(--text);transform:translateX(6px)}
-        .sidebar-links a.active{color:var(--accent);background:rgba(59,130,246,0.1);font-weight:600}
-
-        .hero{max-width:900px;margin:2.5rem auto 1.5rem;padding:0 1.5rem;text-align:center}
-        .hero-badge{display:inline-block;padding:0.4rem 1.2rem;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:25px;font-size:0.8rem;font-weight:500;color:var(--accent-hover);margin-bottom:1.2rem;letter-spacing:0.5px}
-        .hero h2{font-size:2.8rem;font-weight:900;background:var(--gradient-hero);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.8rem;line-height:1.15;letter-spacing:-1px}
-        .hero p{font-size:1.05rem;color:var(--text-secondary);max-width:550px;margin:0 auto 1.8rem;font-weight:400;line-height:1.6}
-        .search-wrap{max-width:500px;margin:1.5rem auto;position:relative}
-        .search-input{width:100%;padding:1rem 1.4rem 1rem 3rem;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:30px;color:var(--text);font-size:0.95rem;transition:var(--transition);letter-spacing:0.3px}
-        .search-input::placeholder{color:var(--text-muted)}
-        .search-input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,0.06);box-shadow:var(--glow)}
-        .search-icon{position:absolute;left:1.2rem;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem}
-        .category-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin:1.8rem auto;max-width:900px;padding:0 1rem}
-        .cat-btn{padding:0.6rem 1.3rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:25px;color:var(--text-secondary);font-size:0.82rem;font-weight:500;cursor:pointer;transition:var(--transition);white-space:nowrap;display:flex;align-items:center;gap:0.4rem;letter-spacing:0.3px}
-        .cat-btn i{font-size:0.75rem}
-        .cat-btn:hover{color:var(--text);border-color:var(--accent);background:rgba(59,130,246,0.1)}
-        .cat-btn.active{color:white;border-color:var(--accent);background:rgba(59,130,246,0.25);font-weight:600;box-shadow:0 0 20px rgba(59,130,246,0.2)}
-
-        .pinned-section{max-width:1400px;margin:0 auto 1rem;padding:0 1.5rem;display:none}
-        .pinned-section.show{display:block}
-        .section-head{display:flex;align-items:center;gap:0.6rem;max-width:1400px;margin:3rem auto 1.2rem;padding:0 1.5rem}
-        .section-head .head-icon{width:36px;height:36px;background:rgba(59,130,246,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:0.9rem}
-        .pinned-section .section-head .head-icon{background:rgba(245,158,11,0.2);color:var(--accent3)}
-        .section-head h3{font-size:1.5rem;font-weight:700;letter-spacing:-0.3px}
-        .pinned-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;max-width:1400px;margin:0 auto;padding:0 1.5rem 1rem}
-
-        .tools-grid,.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;max-width:1400px;margin:0 auto;padding:0 1.5rem 1.5rem}
-        .tool-card,.service-card{background:var(--card);backdrop-filter:blur(16px);border-radius:var(--radius-lg);padding:1.4rem;border:1px solid var(--border-light);cursor:pointer;transition:var(--transition);text-decoration:none;color:inherit;display:flex;flex-direction:column;position:relative;overflow:hidden}
-        .tool-card::before,.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at top right,rgba(59,130,246,0.08),transparent 70%);opacity:0;transition:var(--transition)}
-        .tool-card:hover::before,.service-card:hover::before{opacity:1}
-        .tool-card:hover,.service-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:var(--shadow-lg),var(--glow-hover);background:var(--card-hover)}
-        .tool-card.pinned-card,.service-card.pinned-card{border-color:rgba(245,158,11,0.4);box-shadow:var(--pin-glow)}
-        .tool-icon-fa{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;margin-bottom:0.8rem;transition:var(--transition);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-        .tool-card:hover .tool-icon-fa{transform:scale(1.08)}
-        .service-icon-fa{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:white;margin-bottom:0.8rem;transition:var(--transition);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-        .service-card:hover .service-icon-fa{transform:scale(1.08)}
-        .card-content h3{font-size:1rem;font-weight:700;margin-bottom:0.3rem;letter-spacing:-0.2px;color:var(--text)}
-        .card-content p{font-size:0.8rem;color:var(--text-secondary);line-height:1.4;flex-grow:1}
-        .card-tag{display:inline-block;padding:0.3rem 0.7rem;background:rgba(255,255,255,0.03);border-radius:15px;font-size:0.68rem;font-weight:600;text-transform:uppercase;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.5px}
-        .pin-btn{position:absolute;top:0.8rem;right:0.8rem;background:none;border:none;color:var(--text-muted);font-size:0.85rem;cursor:pointer;padding:0.35rem;border-radius:6px;transition:var(--transition);z-index:2;opacity:0}
-        .tool-card:hover .pin-btn,.service-card:hover .pin-btn{opacity:1}
-        .pin-btn:hover{color:var(--accent3);background:rgba(245,158,11,0.15)}
-        .pin-btn.pinned{color:var(--accent3);opacity:1}
-        .pin-count{font-size:0.7rem;color:var(--accent3);margin-left:0.5rem;font-weight:400}
-
-        .floating-actions{position:fixed;bottom:28px;right:24px;display:flex;flex-direction:column;gap:12px;z-index:999}
-        .float-btn{width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;font-size:1.2rem;color:white;box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);display:flex;align-items:center;justify-content:center;text-decoration:none;position:relative}
-        .float-btn:hover{transform:scale(1.18) translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.5)}
-        .float-btn:active{transform:scale(0.9)}
-        .float-whatsapp{background:var(--whatsapp);animation:pulse-wa 2.2s infinite}
-        .float-call{background:var(--call);animation:pulse-call 2.2s infinite 0.5s}
-        .float-email{background:var(--email);animation:pulse-email 2.2s infinite 1s}
-        .float-btn::after{content:attr(data-tooltip);position:absolute;right:60px;background:#1e293b;color:#f1f5f9;padding:5px 12px;border-radius:18px;font-size:0.7rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.3s;font-weight:600}
-        .float-btn:hover::after{opacity:1}
-        @keyframes pulse-wa{0%,100%{box-shadow:0 6px 20px rgba(37,211,102,0.35)}50%{box-shadow:0 8px 35px rgba(37,211,102,0.65)}}
-        @keyframes pulse-call{0%,100%{box-shadow:0 6px 20px rgba(16,185,129,0.35)}50%{box-shadow:0 8px 35px rgba(16,185,129,0.65)}}
-        @keyframes pulse-email{0%,100%{box-shadow:0 6px 20px rgba(245,158,11,0.35)}50%{box-shadow:0 8px 35px rgba(245,158,11,0.65)}}
-
-        .footer{background:rgba(15,23,42,0.8);border-top:1px solid var(--border);padding:2.5rem 1.5rem 0;margin-top:3rem}
-        body.light-mode .footer{background:#f1f5f9;border-top-color:#cbd5e1}
-        .footer-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;text-align:left}
-        .footer-section h4{font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;color:var(--text)}
-        body.light-mode .footer-section h4{color:#1e293b}
-        .footer-section h4 i{color:var(--accent)}
-        .footer-links{list-style:none}.footer-links li{margin-bottom:0.4rem}
-        .footer-links a{color:var(--text-secondary);text-decoration:none;font-size:0.85rem;transition:var(--transition);display:flex;align-items:center;gap:0.4rem}
-        body.light-mode .footer-links a{color:#475569}
-        .footer-links a:hover{color:var(--accent-hover);transform:translateX(4px)}
-        body.light-mode .footer-links a:hover{color:#3b82f6}
-        .copyright-bar{text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.8rem;border-top:1px solid var(--border);margin-top:2rem;letter-spacing:0.3px}
-        body.light-mode .copyright-bar{color:#64748b;border-top-color:#cbd5e1}
-        .copyright-bar strong{color:var(--accent-hover);font-weight:700}
-        .offline-banner{background:#ef4444;color:white;text-align:center;padding:7px;font-size:0.78rem;display:none;position:fixed;top:76px;left:0;right:0;z-index:999;font-weight:500}
-        .offline-banner.show{display:block}
-        .toast{position:fixed;top:100px;right:20px;background:#3b82f6;color:white;padding:0.85rem 1.3rem;border-radius:10px;z-index:10000;animation:slideInRight 0.3s ease,fadeOut 0.3s ease 2.5s forwards;box-shadow:0 8px 25px rgba(0,0,0,0.4);font-size:0.85rem;font-weight:500}
-        @keyframes slideInRight{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
-        @keyframes fadeOut{from{opacity:1}to{opacity:0}}
-        .install-btn{background:linear-gradient(135deg,var(--accent),var(--accent-hover));color:white;border:none;padding:0.75rem 1.5rem;border-radius:25px;font-weight:600;cursor:pointer;transition:var(--transition);display:none;margin:0.8rem auto 0;gap:0.5rem;align-items:center;font-size:0.88rem;letter-spacing:0.3px}
-        .install-btn:hover{transform:translateY(-2px);box-shadow:var(--glow-hover)}
-
-        @media(max-width:992px){.tools-grid,.services-grid,.pinned-grid{grid-template-columns:repeat(2,1fr);gap:1rem}.hero h2{font-size:2.2rem}}
-        @media(max-width:768px){body{padding-top:68px}.header{padding:0.7rem 1rem}.desktop-nav{display:none}.mobile-menu-btn{display:flex}.tools-grid,.services-grid,.pinned-grid{grid-template-columns:repeat(3,1fr)!important;gap:0.6rem!important;padding:0 0.8rem 1rem!important}.tool-card,.service-card{padding:1rem 0.7rem!important;border-radius:12px!important}.tool-icon-fa{width:36px!important;height:36px!important;font-size:1.1rem!important;border-radius:8px!important;margin-bottom:0.5rem!important}.service-icon-fa{width:36px!important;height:36px!important;font-size:1.1rem!important;border-radius:8px!important;margin-bottom:0.5rem!important}.card-content h3{font-size:0.72rem!important}.card-content p{font-size:0.6rem!important;display:block!important}.card-tag{font-size:0.6rem!important;padding:0.2rem 0.5rem!important;margin-top:0.4rem!important}.pin-btn{top:0.3rem;right:0.3rem;font-size:0.65rem;opacity:1}.hero{margin:2rem auto 1rem}.hero h2{font-size:1.6rem}.hero p{font-size:0.85rem}.cat-btn{padding:0.5rem 0.9rem;font-size:0.72rem}.floating-actions{bottom:18px;right:14px;gap:8px}.float-btn{width:40px;height:40px;font-size:1rem}.float-btn::after{display:none}.section-head{margin:2rem auto 0.8rem}.section-head h3{font-size:1.2rem}.footer-content{grid-template-columns:1fr 1fr}}
-        @media(max-width:480px){.tools-grid,.services-grid,.pinned-grid{grid-template-columns:repeat(2,1fr)!important;gap:0.5rem!important}.tool-card,.service-card{padding:0.8rem 0.6rem!important}.tool-icon-fa{width:30px!important;height:30px!important;font-size:0.9rem!important}.service-icon-fa{width:30px!important;height:30px!important;font-size:0.9rem!important}.card-content h3{font-size:0.68rem!important}.logo-text h1{font-size:1rem!important}.logo-img,.logo-fallback{width:36px;height:36px}.hero h2{font-size:1.4rem}.footer-content{grid-template-columns:1fr}}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--card-hover:#334155;--text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;--acc:#3b82f6;--acc2:#10b981;--acc3:#f59e0b;--bdr:#334155;--shadow:0 8px 30px rgba(0,0,0,0.3);--shadow-hover:0 15px 40px rgba(0,0,0,0.5);--transition:all 0.3s ease}
+        body.light-mode{--bg:#f8fafc;--card:#fff;--card-hover:#f1f5f9;--text:#1e293b;--text2:#475569;--text3:#94a3b8;--bdr:#e2e8f0;--shadow:0 8px 30px rgba(0,0,0,0.06);--shadow-hover:0 15px 40px rgba(0,0,0,0.12)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;padding:20px;transition:0.3s}
+        .container{max-width:1100px;margin:0 auto}
+        .header{display:flex;align-items:center;gap:15px;margin-bottom:30px;flex-wrap:wrap}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--bdr);border-radius:10px;padding:11px 18px;font-size:0.9rem;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:var(--transition)}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--acc)}
+        .header-content{flex:1;text-align:center}
+        .header-content h1{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px}
+        .header-content p{font-size:0.9rem;color:var(--text2)}
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:30px}
+        .tool-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:25px;transition:var(--transition);text-decoration:none;color:inherit;display:flex;align-items:center;gap:15px;position:relative;overflow:hidden}
+        .tool-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);transform:scaleX(0);transition:transform 0.3s ease}
+        .tool-card:hover::before{transform:scaleX(1)}
+        .tool-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover);border-color:var(--acc)}
+        .tool-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;flex-shrink:0}
+        .tool-info h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+        .tool-info p{font-size:0.8rem;color:var(--text2);line-height:1.4}
+        .tool-tag{display:inline-block;padding:4px 10px;border-radius:12px;font-size:0.7rem;font-weight:600;background:rgba(59,130,246,0.15);color:var(--acc);margin-top:6px}
+        .footer{text-align:center;margin-top:40px;color:var(--text3);font-size:0.85rem;border-top:1px solid var(--bdr);padding-top:20px}
+        .footer strong{color:var(--acc)}
+        @media(max-width:768px){.tools-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}.header-content h1{font-size:1.4rem}}
+        @media(max-width:480px){.tools-grid{grid-template-columns:1fr}.header{flex-direction:column}.back-btn{align-self:flex-start}}
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <a href="https://shankartechhub.com" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <div class="header-content">
+                <h1><i class="fas fa-tools"></i> Free Tools</h1>
+                <p>22 free online tools — all in one place</p>
+            </div>
+        </div>
 
-    <div class="bg-particles">
-        <div class="particle"><i class="fas fa-calculator"></i></div>
-        <div class="particle"><i class="fas fa-calendar-alt"></i></div>
-        <div class="particle"><i class="fas fa-exchange-alt"></i></div>
-        <div class="particle"><i class="fas fa-qrcode"></i></div>
-        <div class="particle"><i class="fas fa-compress-alt"></i></div>
-        <div class="particle"><i class="fas fa-thermometer-half"></i></div>
-        <div class="particle"><i class="fas fa-weight-hanging"></i></div>
-        <div class="particle"><i class="fas fa-tachometer-alt"></i></div>
-        <div class="particle"><i class="fas fa-file-export"></i></div>
-        <div class="particle"><i class="fas fa-image"></i></div>
-    </div>
-
-    <div class="offline-banner" id="offlineBanner">⚠️ You are offline. Some features may not work.</div>
-
-    <header class="header">
-        <div class="header-inner">
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
-            <a href="index.html" class="logo-area">
-                <img src="icons/logo.png" alt="ShankarTech Hub Logo" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                <div class="logo-fallback" style="display:none;">ST</div>
-                <div class="logo-text">
-                    <h1><span class="shankar">Shankar</span><span class="tech">Tech</span> <span class="shankar">Hub</span></h1>
-                    <div class="slogan">Technology that helps people</div>
-                </div>
+        <div class="tools-grid">
+            <a href="https://shankartechhub.com/tools/cv-maker-free/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)"><i class="fas fa-file-alt"></i></div>
+                <div class="tool-info"><h3>CV Maker Free</h3><p>Build a professional CV with 16 free templates</p><span class="tool-tag">tools</span></div>
             </a>
-            <nav class="desktop-nav">
-                <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a>
-                <a href="services/index.html" class="nav-link"><i class="fas fa-globe"></i> Services</a>
-                <a href="courses/index.html" class="nav-link"><i class="fas fa-book"></i> Courses</a>
-                <a href="downloads/index.html" class="nav-link"><i class="fas fa-download"></i> Downloads</a>
-                <a href="contact/index.html" class="nav-link"><i class="fas fa-phone"></i> Contact</a>
-                <a href="settings/index.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
-            </nav>
+            <a href="https://shankartechhub.com/tools/cover-letter-maker/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#10b981,#3b82f6)"><i class="fas fa-file-lines"></i></div>
+                <div class="tool-info"><h3>Cover Letter Maker</h3><p>Create cover letters with 6 free templates</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/file-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"><i class="fas fa-file-export"></i></div>
+                <div class="tool-info"><h3>File Converter</h3><p>Convert PDF, JPG, PNG, HEIC & more formats</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/area-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)"><i class="fas fa-draw-polygon"></i></div>
+                <div class="tool-info"><h3>Area Converter</h3><p>Convert acres, hectares, sq meters & more</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/passport-photo-maker/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)"><i class="fas fa-camera"></i></div>
+                <div class="tool-info"><h3>Passport Photo Maker</h3><p>Create passport & visa photos in seconds</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/bmi-fat-calculators/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#ef4444,#f59e0b)"><i class="fas fa-weight-scale"></i></div>
+                <div class="tool-info"><h3>BMI & Body Fat Calculator</h3><p>Check BMI & body fat with health tips</p><span class="tool-tag">health</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/qr-code-generator/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"><i class="fas fa-qrcode"></i></div>
+                <div class="tool-info"><h3>QR Code Generator</h3><p>Make QR codes for links, text & WiFi</p><span class="tool-tag">generator</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/age-calculator/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#14b8a6,#10b981)"><i class="fas fa-calendar-days"></i></div>
+                <div class="tool-info"><h3>Age Calculator</h3><p>Calculate your exact age in years, months & days</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/currency-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#f97316,#f59e0b)"><i class="fas fa-coins"></i></div>
+                <div class="tool-info"><h3>Currency Converter</h3><p>Live exchange rates for world currencies</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/date-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed)"><i class="fas fa-calendar"></i></div>
+                <div class="tool-info"><h3>Date Converter</h3><p>Switch between AD & BS Nepali calendar</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/emi-calculator/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#0ea5e9,#3b82f6)"><i class="fas fa-calculator"></i></div>
+                <div class="tool-info"><h3>EMI Calculator</h3><p>Calculate loan EMI with interest breakdown</p><span class="tool-tag">finance</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/professional-notes/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#84cc16,#10b981)"><i class="fas fa-note-sticky"></i></div>
+                <div class="tool-info"><h3>Professional Notes</h3><p>Rich notes with voice, tables & images</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/barcode-generator/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#64748b,#475569)"><i class="fas fa-barcode"></i></div>
+                <div class="tool-info"><h3>Barcode Generator</h3><p>Generate scannable barcodes instantly</p><span class="tool-tag">generator</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/image-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)"><i class="fas fa-image"></i></div>
+                <div class="tool-info"><h3>Image Converter</h3><p>Switch between JPG, PNG, WebP formats</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/file-compressor/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><i class="fas fa-compress"></i></div>
+                <div class="tool-info"><h3>File Compressor</h3><p>Shrink files without losing quality</p><span class="tool-tag">tools</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/jewellery-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#eab308,#f59e0b)"><i class="fas fa-gem"></i></div>
+                <div class="tool-info"><h3>Jewellery Converter</h3><p>Convert tola, grams, carats easily</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/data-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#06b6d4,#0891b2)"><i class="fas fa-database"></i></div>
+                <div class="tool-info"><h3>Data Converter</h3><p>Convert KB, MB, GB, TB storage units</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/speed-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)"><i class="fas fa-gauge-high"></i></div>
+                <div class="tool-info"><h3>Speed Converter</h3><p>Convert mph, km/h, knots & more</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/temperature-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#f97316,#ef4444)"><i class="fas fa-temperature-half"></i></div>
+                <div class="tool-info"><h3>Temperature Converter</h3><p>Switch between °C, °F & Kelvin</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/volume-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#3b82f6,#6366f1)"><i class="fas fa-flask"></i></div>
+                <div class="tool-info"><h3>Volume Converter</h3><p>Convert liters, gallons, cups & more</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/weight-converter/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#10b981,#059669)"><i class="fas fa-weight-hanging"></i></div>
+                <div class="tool-info"><h3>Weight Converter</h3><p>Convert kg, lbs, ounces & grams</p><span class="tool-tag">converter</span></div>
+            </a>
+            <a href="https://shankartechhub.com/tools/calendar/" class="tool-card">
+                <div class="tool-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)"><i class="fas fa-calendar-check"></i></div>
+                <div class="tool-info"><h3>Calendar Planner</h3><p>Interactive calendar with event reminders</p><span class="tool-tag">tools</span></div>
+            </a>
         </div>
-    </header>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-links">
-            <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
-            <a href="services/index.html"><i class="fas fa-globe"></i> Online Services</a>
-            <a href="courses/index.html"><i class="fas fa-book"></i> Courses & Notes</a>
-            <a href="downloads/index.html"><i class="fas fa-download"></i> Software & Fonts</a>
-            <a href="contact/index.html"><i class="fas fa-phone"></i> Contact Us</a>
-            <a href="settings/index.html"><i class="fas fa-cog"></i> Settings</a>
-            <a href="privacy/index.html"><i class="fas fa-shield-halved"></i> Privacy Policy</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-badge">✦ 22 Free Tools — All-in-One Hub</div>
-        <h2>Your Ultimate Tool Hub</h2>
-        <p>Useful tools, online services, courses & notes, software & fonts — all in one place. Technology that helps people.</p>
-        <div class="search-wrap">
-            <span class="search-icon"><i class="fas fa-search"></i></span>
-            <input type="text" class="search-input" id="searchBox" placeholder="Search tools & services...">
-        </div>
-        <button class="install-btn" id="installButton"><i class="fas fa-download"></i> Install App</button>
-    </section>
-
-    <div class="category-tabs">
-        <button class="cat-btn active" data-cat="all"><i class="fas fa-th-large"></i> All</button>
-        <button class="cat-btn" data-cat="tools"><i class="fas fa-tools"></i> Tools</button>
-        <button class="cat-btn" data-cat="services"><i class="fas fa-globe"></i> Services</button>
-        <button class="cat-btn" data-cat="converter"><i class="fas fa-exchange-alt"></i> Converters</button>
-        <button class="cat-btn" data-cat="finance"><i class="fas fa-chart-line"></i> Finance</button>
-        <button class="cat-btn" data-cat="generator"><i class="fas fa-qrcode"></i> Generators</button>
-    </div>
-
-    <div class="pinned-section" id="pinnedSection">
-        <div class="section-head">
-            <div class="head-icon"><i class="fas fa-thumbtack"></i></div>
-            <h3>📌 Pinned Favorites <span class="pin-count" id="pinCount"></span></h3>
-        </div>
-        <div class="pinned-grid" id="pinnedGrid"></div>
-    </div>
-
-    <div class="section-head"><div class="head-icon"><i class="fas fa-toolbox"></i></div><h2>22 Free Online Tools</h2></div>
-    <div class="tools-grid" id="toolsGrid"></div>
-
-    <div class="section-head"><div class="head-icon"><i class="fas fa-globe"></i></div><h2>Online Services</h2></div>
-    <div class="services-grid" id="servicesGrid"></div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section"><h4><i class="fas fa-compass"></i> Navigation</h4><ul class="footer-links"><li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li><li><a href="services/index.html"><i class="fas fa-chevron-right"></i> Services</a></li><li><a href="courses/index.html"><i class="fas fa-chevron-right"></i> Courses</a></li></ul></div>
-            <div class="footer-section"><h4><i class="fas fa-link"></i> Quick Links</h4><ul class="footer-links"><li><a href="downloads/index.html"><i class="fas fa-chevron-right"></i> Downloads</a></li><li><a href="contact/index.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li><li><a href="settings/index.html"><i class="fas fa-chevron-right"></i> Settings</a></li><li><a href="privacy/index.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li></ul></div>
-            <div class="footer-section"><h4><i class="fas fa-handshake"></i> Connect</h4><ul class="footer-links"><li><a href="https://wa.me/971553134655" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a></li><li><a href="tel:0553134655"><i class="fas fa-phone-alt"></i> Call</a></li><li><a href="mailto:sbvianet03@gmail.com"><i class="fas fa-envelope"></i> Email</a></li></ul></div>
-        </div>
-        <div class="copyright-bar">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub | Technology that helps people</div>
-    </footer>
-
-    <div class="floating-actions">
-        <a href="https://wa.me/971553134655" target="_blank" class="float-btn float-whatsapp" data-tooltip="WhatsApp" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="tel:0553134655" class="float-btn float-call" data-tooltip="Call Now" aria-label="Call"><i class="fas fa-phone-alt"></i></a>
-        <a href="mailto:sbvianet03@gmail.com" class="float-btn float-email" data-tooltip="Send Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        <div class="footer">© <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub | Technology that helps people</div>
     </div>
 
     <script>
-        const toolsData = [
-            {name:"CV Maker Free",icon:"fa-file-alt",cat:"tools",desc:"Build a pro CV with 16 free templates",path:"tools/cv-maker-free/index.html"},
-            {name:"Cover Letter Free",icon:"fa-file-lines",cat:"tools",desc:"Create cover letters with 6 free templates",path:"tools/cover-letter-maker/index.html"},
-            {name:"File Converter",icon:"fa-file-export",cat:"tools",desc:"Convert PDF, JPG, PNG, HEIC & more",path:"tools/file-converter/index.html"},
-            {name:"Area Converter",icon:"fa-draw-polygon",cat:"converter",desc:"Convert acres, hectares, sq meters & more",path:"tools/area-converter/index.html"},
-            {name:"Passport Photo Maker",icon:"fa-camera",cat:"tools",desc:"Create passport & visa photos in seconds",path:"tools/passport-photo-maker/index.html"},
-            {name:"BMI & Body Fat",icon:"fa-weight-scale",cat:"health",desc:"Check BMI & body fat with health tips",path:"tools/bmi-fat-calculators/index.html"},
-            {name:"QR Code Generator",icon:"fa-qrcode",cat:"generator",desc:"Make QR codes for links, text & WiFi",path:"tools/qr-code-generator/index.html"},
-            {name:"Age Calculator",icon:"fa-calendar-days",cat:"tools",desc:"Calculate your exact age in years, months & days",path:"tools/age-calculator/index.html"},
-            {name:"Currency Converter",icon:"fa-coins",cat:"converter",desc:"Live exchange rates for world currencies",path:"tools/currency-converter/index.html"},
-            {name:"Date Converter",icon:"fa-calendar",cat:"converter",desc:"Switch between AD & BS Nepali calendar",path:"tools/date-converter/index.html"},
-            {name:"EMI Calculator",icon:"fa-calculator",cat:"finance",desc:"Calculate loan EMI with interest breakdown",path:"tools/emi-calculator/index.html"},
-            {name:"Professional Notes",icon:"fa-note-sticky",cat:"tools",desc:"Rich notes with voice, tables & images",path:"tools/professional-notes/index.html"},
-            {name:"Barcode Generator",icon:"fa-barcode",cat:"generator",desc:"Generate scannable barcodes instantly",path:"tools/barcode-generator/index.html"},
-            {name:"Image Converter",icon:"fa-image",cat:"tools",desc:"Switch between JPG, PNG, WebP formats",path:"tools/image-converter/index.html"},
-            {name:"File Compressor",icon:"fa-compress",cat:"tools",desc:"Shrink files without losing quality",path:"tools/file-compressor/index.html"},
-            {name:"Jewellery Converter",icon:"fa-gem",cat:"converter",desc:"Convert tola, grams, carats easily",path:"tools/jewellery-converter/index.html"},
-            {name:"Data Converter",icon:"fa-database",cat:"converter",desc:"Convert KB, MB, GB, TB storage units",path:"tools/data-converter/index.html"},
-            {name:"Speed Converter",icon:"fa-gauge-high",cat:"converter",desc:"Convert mph, km/h, knots & more",path:"tools/speed-converter/index.html"},
-            {name:"Temperature",icon:"fa-temperature-half",cat:"converter",desc:"Switch between °C, °F & Kelvin",path:"tools/temperature-converter/index.html"},
-            {name:"Volume Converter",icon:"fa-flask",cat:"converter",desc:"Convert liters, gallons, cups & more",path:"tools/volume-converter/index.html"},
-            {name:"Weight Converter",icon:"fa-weight-hanging",cat:"converter",desc:"Convert kg, lbs, ounces & grams",path:"tools/weight-converter/index.html"},
-            {name:"Calendar Planner",icon:"fa-calendar-check",cat:"tools",desc:"Interactive calendar with event reminders",path:"tools/calendar/index.html"}
-        ];
-
-        const servicesData = [
-            {name:"Make CV",desc:"Make professional CV, get by email",icon:"fa-file-alt",color:"linear-gradient(135deg,#3b82f6,#8b5cf6)",link:"services/make-cv/index.html"},
-            {name:"Cover Letter",desc:"Make cover letter, get by email",icon:"fa-file-lines",color:"linear-gradient(135deg,#10b981,#3b82f6)",link:"services/cover-letter/index.html"},
-            {name:"Emirates ID",desc:"Emirates ID renewal service",icon:"fa-id-card",color:"linear-gradient(135deg,#009e60,#ce1126)",link:"services/emirates-id-renewal/index.html"},
-            {name:"Police Report UAE",desc:"UAE police report assistance",icon:"fa-file-shield",color:"linear-gradient(135deg,#f59e0b,#ef4444)",link:"services/police-report-uae/index.html"},
-            {name:"Police Report Nepal",desc:"Nepal police report assistance",icon:"fa-file-circle-check",color:"linear-gradient(135deg,#dc143c,#003893)",link:"services/police-report-nepal/index.html"},
-            {name:"E-Passport Form",desc:"E-passport application form",icon:"fa-passport",color:"linear-gradient(135deg,#3b82f6,#06b6d4)",link:"services/epassport-form/index.html"},
-            {name:"National ID Form",desc:"National ID application form",icon:"fa-address-card",color:"linear-gradient(135deg,#8b5cf6,#ec4899)",link:"services/national-id-form/index.html"},
-            {name:"PAN Card",desc:"PAN card application service",icon:"fa-credit-card",color:"linear-gradient(135deg,#f59e0b,#d97706)",link:"services/pan-card/index.html"},
-            {name:"Voter ID",desc:"Voter ID registration",icon:"fa-check-to-slot",color:"linear-gradient(135deg,#10b981,#84cc16)",link:"services/voter-id/index.html"},
-            {name:"Shram Renewal",desc:"Shram renewal service",icon:"fa-arrows-rotate",color:"linear-gradient(135deg,#06b6d4,#3b82f6)",link:"services/shram-renewal/index.html"},
-            {name:"Other Services",desc:"More online services",icon:"fa-ellipsis",color:"linear-gradient(135deg,#64748b,#475569)",link:"services/other-services/index.html"}
-        ];
-
         function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
         applyTheme(localStorage.getItem('shankartech_theme')||'dark');
         window.addEventListener('storage',e=>{if(e.key==='shankartech_theme')applyTheme(e.newValue||'dark')});
-        window.addEventListener('focus',()=>{applyTheme(localStorage.getItem('shankartech_theme')||'dark')});
-
-        const PIN_KEY='shankartech_pinned_v6';
-        let pinnedItems=JSON.parse(localStorage.getItem(PIN_KEY))||[];
-
-        function togglePin(itemName,type){
-            const key=type+':'+itemName;
-            const idx=pinnedItems.indexOf(key);
-            if(idx===-1){if(pinnedItems.length>=20){showToast('⚠️ Max 20 pins!');return}pinnedItems.push(key);showToast('📌 '+itemName+' pinned!')}
-            else{pinnedItems.splice(idx,1);showToast('📍 '+itemName+' unpinned!')}
-            localStorage.setItem(PIN_KEY,JSON.stringify(pinnedItems));renderAll();
-        }
-
-        function showToast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
-
-        function renderPinned(){
-            const s=document.getElementById('pinnedSection'),g=document.getElementById('pinnedGrid'),c=document.getElementById('pinCount');
-            g.innerHTML='';
-            if(pinnedItems.length===0){s.classList.remove('show');return}
-            s.classList.add('show');c.textContent='('+pinnedItems.length+'/20)';
-            pinnedItems.forEach(key=>{
-                const[type,name]=key.split(':');
-                if(type==='tool'){
-                    const tool=toolsData.find(t=>t.name===name);if(!tool)return;
-                    const cd=document.createElement('a');cd.href=tool.path;cd.target='_blank';cd.className='tool-card pinned-card';
-                    cd.innerHTML=`<button class="pin-btn pinned"><i class="fas fa-thumbtack"></i></button><div class="tool-icon-fa" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)"><i class="fas ${tool.icon}"></i></div><div class="card-content"><h3>${tool.name}</h3><p>${tool.desc}</p><span class="card-tag">${tool.cat}</span></div>`;
-                    cd.querySelector('.pin-btn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();togglePin(tool.name,'tool')});
-                    g.appendChild(cd);
-                }else if(type==='service'){
-                    const svc=servicesData.find(s=>s.name===name);if(!svc)return;
-                    const cd=document.createElement('a');cd.href=svc.link;cd.target='_blank';cd.className='service-card pinned-card';
-                    cd.innerHTML=`<button class="pin-btn pinned"><i class="fas fa-thumbtack"></i></button><div class="service-icon-fa" style="background:${svc.color}"><i class="fas ${svc.icon}"></i></div><div class="card-content"><h3>${svc.name}</h3><p>${svc.desc}</p><span class="card-tag">service</span></div>`;
-                    cd.querySelector('.pin-btn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();togglePin(svc.name,'service')});
-                    g.appendChild(cd);
-                }
-            });
-        }
-
-        function renderTools(ft=toolsData){
-            const g=document.getElementById('toolsGrid');g.innerHTML='';
-            ft.forEach(tool=>{
-                const isPinned=pinnedItems.includes('tool:'+tool.name);
-                const c=document.createElement('a');c.href=tool.path;c.target='_blank';c.className='tool-card';c.setAttribute('data-cat',tool.cat);
-                c.innerHTML=`<button class="pin-btn ${isPinned?'pinned':''}"><i class="fas fa-thumbtack"></i></button><div class="tool-icon-fa" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)"><i class="fas ${tool.icon}"></i></div><div class="card-content"><h3>${tool.name}</h3><p>${tool.desc}</p><span class="card-tag">${tool.cat}</span></div>`;
-                c.querySelector('.pin-btn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();togglePin(tool.name,'tool')});
-                g.appendChild(c);
-            });
-        }
-
-        function renderServices(){
-            const g=document.getElementById('servicesGrid');g.innerHTML='';
-            servicesData.forEach(svc=>{
-                const isPinned=pinnedItems.includes('service:'+svc.name);
-                const c=document.createElement('a');c.href=svc.link;c.target='_blank';c.className='service-card';c.setAttribute('data-cat','services');
-                c.innerHTML=`<button class="pin-btn ${isPinned?'pinned':''}"><i class="fas fa-thumbtack"></i></button><div class="service-icon-fa" style="background:${svc.color}"><i class="fas ${svc.icon}"></i></div><div class="card-content"><h3>${svc.name}</h3><p>${svc.desc}</p><span class="card-tag">service</span></div>`;
-                c.querySelector('.pin-btn').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();togglePin(svc.name,'service')});
-                g.appendChild(c);
-            });
-        }
-
-        function renderAll(){renderPinned();renderTools();renderServices();}
-
-        let activeCat='all',searchTerm='';
-        function filterAll(){
-            let filtered=toolsData;
-            if(activeCat!=='all')filtered=filtered.filter(t=>t.cat===activeCat);
-            if(searchTerm.trim()){const term=searchTerm.toLowerCase();filtered=filtered.filter(t=>t.name.toLowerCase().includes(term)||t.desc.toLowerCase().includes(term)||t.cat.toLowerCase().includes(term))}
-            renderTools(filtered);
-        }
-
-        document.getElementById('searchBox').addEventListener('input',e=>{searchTerm=e.target.value;filterAll()});
-        document.querySelectorAll('.cat-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeCat=btn.dataset.cat;filterAll()})});
-
-        const mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
-        function cm(){mb.classList.remove('active');sb.classList.remove('active');ov.classList.remove('active');document.body.style.overflow=''}
-        mb.addEventListener('click',()=>{if(sb.classList.contains('active'))cm();else{mb.classList.add('active');sb.classList.add('active');ov.classList.add('active');document.body.style.overflow='hidden'}});
-        ov.addEventListener('click',cm);
-        document.querySelectorAll('.sidebar-links a').forEach(l=>l.addEventListener('click',cm));
-
-        let dp;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;document.getElementById('installButton').style.display='inline-flex'});
-        document.getElementById('installButton').addEventListener('click',async()=>{if(!dp)return;dp.prompt();const{outcome}=await dp.userChoice;if(outcome==='accepted')document.getElementById('installButton').style.display='none';dp=null});
-        window.addEventListener('appinstalled',()=>{document.getElementById('installButton').style.display='none'});
-
-        if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('service-worker.js').then(r=>console.log('✅ SW')).catch(e=>console.log('SW failed',e))})}
-
-        const ob=document.getElementById('offlineBanner');
-        function uos(){if(navigator.onLine)ob.classList.remove('show');else ob.classList.add('show')}
-        window.addEventListener('online',uos);window.addEventListener('offline',uos);uos();
-
-        renderAll();
     </script>
 </body>
 </html>
