@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+        body{background:#0f172a;color:#f1f5f9;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+        .login-box{background:#1e293b;border-radius:20px;padding:40px;max-width:400px;width:100%;text-align:center;border:1px solid #334155}
+        .login-box h1{font-size:1.8rem;margin-bottom:10px;color:#3b82f6}
+        .login-box p{color:#94a3b8;margin-bottom:25px;font-size:0.9rem}
+        .input-group{position:relative;margin:8px 0}
+        .input-group input{width:100%;padding:14px;background:#0f172a;border:2px solid #334155;border-radius:10px;color:#fff;font-size:0.95rem}
+        .input-group input:focus{outline:none;border-color:#3b82f6}
+        .input-group .toggle-pwd{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#94a3b8;cursor:pointer;font-size:1.1rem;background:none;border:none}
+        .input-group .toggle-pwd:hover{color:#3b82f6}
+        .login-btn{width:100%;padding:14px;background:#3b82f6;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:15px;transition:0.3s}
+        .login-btn:hover{background:#2563eb}
+        .error{color:#ef4444;font-size:0.85rem;margin-top:10px;display:none}
+        .dashboard{display:none;width:100%;max-width:1200px}
+        .dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
+        .dash-header h1{font-size:1.8rem;color:#3b82f6}
+        .logout-btn{background:#ef4444;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600}
+        .logout-btn:hover{background:#dc2626}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-bottom:30px}
+        .stat-card{background:#1e293b;border-radius:15px;padding:20px;text-align:center;border:1px solid #334155}
+        .stat-card .number{font-size:2rem;font-weight:800;color:#3b82f6}
+        .stat-card .label{color:#94a3b8;font-size:0.85rem;margin-top:5px}
+        .section-title{font-size:1.3rem;font-weight:700;margin:25px 0 15px;color:#60a5fa}
+        .task-list{display:flex;flex-direction:column;gap:10px}
+        .task-item{background:#1e293b;border-radius:12px;padding:18px;border:1px solid #334155;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+        .task-item.pending{border-left:4px solid #ef4444}
+        .task-item.progress{border-left:4px solid #f59e0b}
+        .task-item.done{border-left:4px solid #10b981;opacity:0.6}
+        .task-info h4{font-size:0.95rem;margin-bottom:4px}
+        .task-info p{font-size:0.8rem;color:#94a3b8}
+        .task-actions{display:flex;gap:8px}
+        .task-actions button{padding:8px 15px;border:none;border-radius:8px;cursor:pointer;font-size:0.8rem;font-weight:600;color:#fff;transition:0.3s}
+        .btn-progress{background:#f59e0b}.btn-done{background:#10b981}.btn-delete{background:#ef4444}
+        .add-task{background:#1e293b;border-radius:15px;padding:20px;border:1px solid #334155;margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+        .add-task input,.add-task select{flex:1;min-width:150px;padding:12px;background:#0f172a;border:2px solid #334155;border-radius:10px;color:#fff;font-size:0.9rem}
+        .add-task input:focus,.add-task select:focus{outline:none;border-color:#3b82f6}
+        .add-task button{padding:12px 25px;background:#3b82f6;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:0.3s}
+        .add-task button:hover{background:#2563eb}
+        .refresh-btn{background:#10b981;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600;margin-left:10px}
+        .refresh-btn:hover{background:#059669}
+        .loading{text-align:center;padding:20px;color:#94a3b8}
+        .timestamp{color:#64748b;font-size:0.8rem;margin-top:10px;text-align:right}
+        @media(max-width:768px){.task-item{flex-direction:column;align-items:flex-start}.add-task{flex-direction:column}.stats{grid-template-columns:repeat(2,1fr)}}
+    </style>
+</head>
+<body>
+
+    <div class="login-box" id="loginScreen">
+        <h1>🔒 Admin Panel</h1>
+        <p>ShankarTech Hub</p>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username" autocomplete="off">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" autocomplete="off">
+            <button class="toggle-pwd" onclick="togglePassword()"><i class="fas fa-eye" id="eyeIcon"></i></button>
+        </div>
+        <button class="login-btn" onclick="login()">Login</button>
+        <p class="error" id="loginError">Invalid credentials! Username: 293103</p>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <div class="dash-header">
+            <h1>📋 Task Manager</h1>
+            <div>
+                <button class="refresh-btn" onclick="fetchAllOrders()"><i class="fas fa-sync-alt"></i> Refresh Orders</button>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+        <div class="stats">
+            <div class="stat-card"><div class="number" id="statPending">0</div><div class="label">🔴 Pending</div></div>
+            <div class="stat-card"><div class="number" id="statProgress">0</div><div class="label">🟡 In Progress</div></div>
+            <div class="stat-card"><div class="number" id="statDone">0</div><div class="label">🟢 Completed</div></div>
+            <div class="stat-card"><div class="number" id="statTotal">0</div><div class="label">📊 Total</div></div>
+        </div>
+        <div class="section-title">📝 All Orders & Tasks</div>
+        <div class="task-list" id="taskList"><div class="loading">Click Refresh to fetch orders...</div></div>
+        <div class="add-task">
+            <input type="text" id="taskName" placeholder="Task name...">
+            <select id="taskSource">
+                <option value="manual">Manual Task</option>
+                <option value="CV Order">CV Order</option>
+                <option value="Cover Letter Order">Cover Letter Order</option>
+                <option value="Other Service">Other Service</option>
+            </select>
+            <input type="text" id="taskEmail" placeholder="Email (optional)">
+            <button onclick="addTask()"><i class="fas fa-plus"></i> Add Task</button>
+        </div>
+        <div class="timestamp" id="lastUpdated"></div>
+    </div>
+
+    <script>
+        // ==========================================
+        // LOGIN - Username: 293103 | Password: Leopard#65846
+        // ==========================================
+        const ADMIN_USER = "293103";
+        const ADMIN_PASS = "Leopard#65846";
+
+        function togglePassword() {
+            const pwd = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            if (pwd.type === 'password') { pwd.type = 'text'; icon.className = 'fas fa-eye-slash'; }
+            else { pwd.type = 'password'; icon.className = 'fas fa-eye'; }
+        }
+
+        function login() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('loginError').style.display = 'none';
+                sessionStorage.setItem('admin_logged_in', 'true');
+                fetchAllOrders();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        if (sessionStorage.getItem('admin_logged_in') === 'true') {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            fetchAllOrders();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') { login(); }
+        });
+
+        // ==========================================
+        // GOOGLE SHEETS - YOUR 3 FORMS
+        // ==========================================
+        let tasks = JSON.parse(localStorage.getItem('shankar_tasks') || '[]');
+
+        const SHEETS = {
+            cv: '1F4Y0tNYuso5s--TKU1tvq_1VAfBN-f2tqvA44gJERBk',
+            cover: '1Ne2DfqL_HOsje6PECrSQROj9cZj-04WZ4MEoGiPC3V8',
+            other: '1i4936rN_RRN9rklCG1FA30bpRuFyJr39HbS02QTdZ_Q'
+        };
+
+        async function fetchGoogleSheet(id, type, icon) {
+            try {
+                const r = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json`);
+                const t = await r.text();
+                const j = JSON.parse(t.substring(47).slice(0, -2));
+                const rows = j.table.rows || [];
+                return rows.map(row => ({
+                    name: row.c[0]?.v || 'Unknown',
+                    email: row.c[1]?.v || '',
+                    phone: row.c[2]?.v || '',
+                    date: row.c[3]?.v || new Date().toLocaleDateString(),
+                    type: type,
+                    icon: icon,
+                    source: 'google_form'
+                }));
+            } catch(e) { 
+                console.log('Could not fetch ' + type + ' sheet');
+                return []; 
+            }
+        }
+
+        async function fetchAllOrders() {
+            document.getElementById('taskList').innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Fetching orders from Google Forms...</div>';
+            
+            const cvOrders = await fetchGoogleSheet(SHEETS.cv, 'CV Order', '📄');
+            const coverOrders = await fetchGoogleSheet(SHEETS.cover, 'Cover Letter Order', '📝');
+            const otherOrders = await fetchGoogleSheet(SHEETS.other, 'Other Service', '📋');
+            
+            const allOrders = [...cvOrders, ...coverOrders, ...otherOrders];
+            
+            // Add new orders to tasks (avoid duplicates)
+            allOrders.forEach(order => {
+                const exists = tasks.find(t => t.name === order.name && t.type === order.type && t.email === order.email);
+                if (!exists) {
+                    tasks.unshift({...order, status: 'pending', id: Date.now() + Math.random()});
+                }
+            });
+
+            localStorage.setItem('shankar_tasks', JSON.stringify(tasks));
+            renderTasks();
+            
+            const total = allOrders.length;
+            document.getElementById('lastUpdated').textContent = `✅ ${total} orders fetched | Updated: ` + new Date().toLocaleString();
+        }
+
+        // ==========================================
+        // TASK MANAGEMENT
+        // ==========================================
+        function addTask() {
+            const n = document.getElementById('taskName').value.trim();
+            const t = document.getElementById('taskSource').value;
+            const e = document.getElementById('taskEmail').value.trim();
+            if (!n) return alert('Please enter a task name');
+            tasks.unshift({name:n, type:t, email:e, status:'pending', date:new Date().toLocaleDateString(), source:'manual', icon:'✍️', id:Date.now()});
+            localStorage.setItem('shankar_tasks', JSON.stringify(tasks));
+            document.getElementById('taskName').value = '';
+            document.getElementById('taskEmail').value = '';
+            renderTasks();
+        }
+
+        function updateStatus(id, s) {
+            tasks = tasks.map(t => t.id === id ? {...t, status:s} : t);
+            localStorage.setItem('shankar_tasks', JSON.stringify(tasks));
+            renderTasks();
+        }
+
+        function deleteTask(id) {
+            if (confirm('Delete this task permanently?')) {
+                tasks = tasks.filter(t => t.id !== id);
+                localStorage.setItem('shankar_tasks', JSON.stringify(tasks));
+                renderTasks();
+            }
+        }
+
+        function renderTasks() {
+            const pending = tasks.filter(t => t.status === 'pending');
+            const progress = tasks.filter(t => t.status === 'progress');
+            const done = tasks.filter(t => t.status === 'done');
+            
+            document.getElementById('statPending').textContent = pending.length;
+            document.getElementById('statProgress').textContent = progress.length;
+            document.getElementById('statDone').textContent = done.length;
+            document.getElementById('statTotal').textContent = tasks.length;
+            
+            const sorted = [...pending, ...progress, ...done.slice(0, 10)];
+            const list = document.getElementById('taskList');
+            
+            if (sorted.length === 0) { 
+                list.innerHTML = '<div class="loading">No orders yet. When someone fills your CV form, it will appear here! Click Refresh to check.</div>'; 
+                return; 
+            }
+            
+            list.innerHTML = sorted.map(t => `
+                <div class="task-item ${t.status}">
+                    <div class="task-info">
+                        <h4>${t.icon || '📋'} ${t.name} 
+                            <span style="font-size:0.7rem;color:#64748b">[${t.type}]</span>
+                            ${t.source === 'google_form' ? '<span style="color:#10b981;font-size:0.65rem;">🤖 From Google Form</span>' : '<span style="color:#f59e0b;font-size:0.65rem;">✍️ Manual</span>'}
+                        </h4>
+                        <p>📅 ${t.date} ${t.email ? '| 📧 ' + t.email : ''} ${t.phone ? '| 📱 ' + t.phone : ''}</p>
+                    </div>
+                    <div class="task-actions">
+                        ${t.status !== 'progress' ? `<button class="btn-progress" onclick="updateStatus(${t.id}, 'progress')">Start</button>` : ''}
+                        ${t.status !== 'done' ? `<button class="btn-done" onclick="updateStatus(${t.id}, 'done')">Done</button>` : ''}
+                        <button class="btn-delete" onclick="deleteTask(${t.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderTasks();
+        document.getElementById('lastUpdated').textContent = 'Ready | Click Refresh to fetch orders | ' + new Date().toLocaleString();
+    </script>
+</body>
+</html>

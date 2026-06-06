@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="ShankarTech Hub - Settings">
+    <meta name="theme-color" content="#f8fafc">
+    <meta name="description" content="ShankarTech Hub - Settings. Manage your theme, backup & restore data, and privacy settings.">
     <title>Settings | ShankarTech Hub</title>
 
     <link rel="manifest" href="../manifest.json">
@@ -22,22 +22,22 @@
         }
 
         :root {
-            --bg: #0f172a;
-            --card: rgba(30, 41, 59, 0.85);
-            --text: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent: #3b82f6;
-            --border: rgba(51, 65, 85, 0.5);
-            --danger: #ef4444;
-            --transition: all 0.3s ease;
-        }
-
-        .light-mode {
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
             --text-secondary: #64748b;
+            --accent: #3b82f6;
             --border: #e2e8f0;
+            --danger: #ef4444;
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --bg: #0f172a;
+            --card: rgba(30, 41, 59, 0.85);
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: rgba(51, 65, 85, 0.5);
         }
 
         body {
@@ -49,8 +49,12 @@
             transition: background 0.4s, color 0.4s;
         }
 
+        .dark-mode body {
+            background-image: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+        }
+
         .header {
-            background: rgba(15, 23, 42, 0.92);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(24px);
             padding: 0.9rem 2rem;
             border-bottom: 1px solid var(--border);
@@ -59,11 +63,12 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
         }
 
-        .light-mode .header {
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        .dark-mode .header {
+            background: rgba(15, 23, 42, 0.92);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
 
         .header-inner {
@@ -105,6 +110,12 @@
         .logo-text h1 {
             font-size: 1.15rem;
             font-weight: 700;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark-mode .logo-text h1 {
             background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,6 +145,12 @@
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark-mode .page-title {
             background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -147,6 +164,11 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             transition: var(--transition);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+
+        .dark-mode .settings-group {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
 
         .settings-group h3 {
@@ -195,7 +217,7 @@
         .theme-label {
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text);
+            color: var(--text-secondary);
         }
 
         .theme-label.active { color: var(--accent); }
@@ -204,11 +226,15 @@
             position: relative;
             width: 56px;
             height: 30px;
-            background: #334155;
+            background: #cbd5e1;
             border-radius: 15px;
             cursor: pointer;
             transition: var(--transition);
             border: 2px solid var(--border);
+        }
+
+        .dark-mode .toggle-switch {
+            background: #334155;
         }
 
         .toggle-switch.active {
@@ -225,17 +251,11 @@
             background: white;
             border-radius: 50%;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .toggle-switch.active .toggle-knob {
             left: 27px;
-        }
-
-        .toggle-icons {
-            display: flex;
-            gap: 0.5rem;
-            font-size: 0.9rem;
         }
 
         /* Buttons */
@@ -322,7 +342,7 @@
     <header class="header">
         <div class="header-inner">
             <a href="../index.html" class="logo-area">
-                <img src="../icons/logo.png" alt="Logo" class="logo-img"
+                <img src="../icons/logo.png" alt="ShankarTech Hub Logo" class="logo-img"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="logo-fallback" style="display:none;">ST</div>
                 <div class="logo-text">
@@ -388,23 +408,6 @@
             </div>
         </div>
 
-        <!-- Contact Info -->
-        <div class="settings-group">
-            <h3><i class="fas fa-address-book"></i> Contact Details</h3>
-            <div class="setting-item">
-                <span class="setting-left"><i class="fab fa-whatsapp"></i> WhatsApp</span>
-                <span style="color: var(--text-secondary); font-size: 0.85rem;">+971 55 313 4655</span>
-            </div>
-            <div class="setting-item">
-                <span class="setting-left"><i class="fas fa-phone-alt"></i> Phone</span>
-                <span style="color: var(--text-secondary); font-size: 0.85rem;">0553134655</span>
-            </div>
-            <div class="setting-item">
-                <span class="setting-left"><i class="fas fa-envelope"></i> Email</span>
-                <span style="color: var(--text-secondary); font-size: 0.85rem;">sbvianet03@gmail.com</span>
-            </div>
-        </div>
-
         <!-- Actions -->
         <button class="btn-danger" onclick="clearAllData()">
             <i class="fas fa-trash-alt"></i> Delete All Data
@@ -415,41 +418,50 @@
     </main>
 
     <footer class="footer">
-        © <strong>Shankar Bashyal @2060</strong> | ShankarTech Hub | Technology that helps people
+        © <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub | Technology that helps people
     </footer>
 
     <script>
         // ===== THEME MANAGEMENT =====
         function applyTheme(theme) {
-            if (theme === 'light') {
-                document.body.classList.add('light-mode');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
                 document.getElementById('themeToggle').classList.add('active');
-                document.getElementById('darkLabel').classList.remove('active');
-                document.getElementById('lightLabel').classList.add('active');
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f8fafc');
-            } else {
-                document.body.classList.remove('light-mode');
-                document.getElementById('themeToggle').classList.remove('active');
                 document.getElementById('darkLabel').classList.add('active');
                 document.getElementById('lightLabel').classList.remove('active');
                 document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a');
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('themeToggle').classList.remove('active');
+                document.getElementById('darkLabel').classList.remove('active');
+                document.getElementById('lightLabel').classList.add('active');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f8fafc');
             }
             localStorage.setItem('shankartech_theme', theme);
         }
 
         function toggleTheme() {
-            const currentTheme = localStorage.getItem('shankartech_theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const currentTheme = localStorage.getItem('shankartech_theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             applyTheme(newTheme);
             showToast(newTheme === 'dark' ? '🌙 Dark mode activated' : '☀️ Light mode activated');
         }
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('shankartech_theme') || 'dark';
+        // Load saved theme (default LIGHT)
+        const savedTheme = localStorage.getItem('shankartech_theme') || 'light';
         applyTheme(savedTheme);
+
+        // Listen for theme changes from other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shankartech_theme') {
+                applyTheme(e.newValue || 'light');
+            }
+        });
 
         // ===== TOAST =====
         function showToast(msg) {
+            const oldToast = document.querySelector('.toast');
+            if (oldToast) oldToast.remove();
             const t = document.createElement('div');
             t.className = 'toast';
             t.textContent = msg;
@@ -498,7 +510,7 @@
                         if (theme && !data.shankartech_theme) {
                             localStorage.setItem('shankartech_theme', theme);
                         }
-                        applyTheme(localStorage.getItem('shankartech_theme') || 'dark');
+                        applyTheme(localStorage.getItem('shankartech_theme') || 'light');
                         showToast('✅ Data restored successfully!');
                     } catch (err) {
                         showToast('❌ Invalid backup file!');
@@ -520,10 +532,7 @@ ShankarTech Hub respects your privacy.
 🔹 No data is shared with third parties
 🔹 You can delete all data anytime
 
-📞 Contact: sbvianet03@gmail.com
-📱 WhatsApp: +971 55 313 4655
-
-© Shankar Bashyal @2060
+© Shankar Bashyal @2026
             `.trim();
             alert(content);
         }
