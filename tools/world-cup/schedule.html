@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="FIFA World Cup 2026 Full Schedule - UAE Time & Nepal Time.">
+    <meta name="robots" content="index, follow">
+    <title>World Cup 2026 Schedule | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text2:#94a3b8;--acc:#3b82f6;--bdr:#334155;--shadow:0 8px 30px rgba(0,0,0,0.3)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+        .container{max-width:800px;margin:0 auto}
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--bdr);border-radius:10px;padding:10px 16px;font-size:0.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:0.3s;margin-bottom:20px}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--acc)}
+        
+        h2{text-align:center;margin-bottom:20px;color:#60a5fa;font-size:1.5rem}
+        
+        .time-tabs{display:flex;gap:10px;margin-bottom:20px;justify-content:center}
+        .time-tab{padding:12px 25px;border-radius:25px;border:2px solid var(--bdr);cursor:pointer;font-size:0.95rem;font-weight:600;background:var(--card);color:var(--text2);transition:0.3s}
+        .time-tab.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+        
+        .schedule-container{width:100%;border-radius:15px;overflow:hidden;box-shadow:var(--shadow)}
+        .schedule-img{width:100%;height:auto;display:none}
+        .schedule-img.active{display:block}
+        
+        .footer{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid var(--bdr);color:var(--text2);font-size:0.85rem}
+        .footer strong{color:var(--acc)}
+        
+        @media(max-width:480px){h2{font-size:1.2rem}.time-tab{padding:10px 18px;font-size:0.85rem}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+
+        <h2>📅 FIFA World Cup 2026 Schedule</h2>
+
+        <div class="time-tabs">
+            <button class="time-tab active" onclick="showSchedule('uae')">🇦🇪 UAE Time (GMT+4)</button>
+            <button class="time-tab" onclick="showSchedule('nepal')">🇳🇵 Nepal Time (GMT+5:45)</button>
+        </div>
+
+        <div class="schedule-container">
+            <img src="images/schedule-uae.png" alt="World Cup Schedule - UAE Time" class="schedule-img active" id="scheduleUAE" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22><rect fill=%22%231e293b%22 width=%22800%22 height=%22600%22 rx=%2210%22/><text fill=%22%2394a3b8%22 x=%22400%22 y=%22300%22 text-anchor=%22middle%22 font-size=%2220%22>Schedule image coming soon</text></svg>'">
+            <img src="images/schedule-nepal.png" alt="World Cup Schedule - Nepal Time" class="schedule-img" id="scheduleNepal" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22600%22><rect fill=%22%231e293b%22 width=%22800%22 height=%22600%22 rx=%2210%22/><text fill=%22%2394a3b8%22 x=%22400%22 y=%22300%22 text-anchor=%22middle%22 font-size=%2220%22>Schedule image coming soon</text></svg>'">
+        </div>
+
+        <div class="footer">
+            © <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub
+        </div>
+    </div>
+
+    <script>
+        function showSchedule(tz) {
+            document.querySelectorAll('.time-tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('scheduleUAE').classList.remove('active');
+            document.getElementById('scheduleNepal').classList.remove('active');
+            if(tz === 'uae') document.getElementById('scheduleUAE').classList.add('active');
+            else document.getElementById('scheduleNepal').classList.add('active');
+        }
+        function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+    </script>
+</body>
+</html>

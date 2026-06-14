@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="FIFA World Cup 2026 - Schedule, Live Updates, UAE Time & Nepal Time. Watch without ads on Brave Browser.">
+    <meta name="robots" content="index, follow">
+    <title>FIFA World Cup 2026 | ShankarTech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+        :root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text2:#94a3b8;--acc:#3b82f6;--bdr:#334155;--shadow:0 8px 30px rgba(0,0,0,0.3)}
+        body{background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+        .container{max-width:900px;margin:0 auto}
+        
+        .back-btn{background:var(--card);color:var(--text);border:1px solid var(--bdr);border-radius:10px;padding:10px 16px;font-size:0.9rem;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:0.3s;margin-bottom:20px}
+        .back-btn:hover{transform:translateY(-2px);border-color:var(--acc)}
+        
+        .banner-container{width:100%;border-radius:15px;overflow:hidden;margin-bottom:25px;box-shadow:var(--shadow);background:linear-gradient(135deg,#1e3a5f,#0f172a)}
+        .banner-img{width:100%;height:auto;display:block}
+        
+        .action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:20px}
+        .action-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px 15px;border-radius:18px;text-decoration:none;color:#fff;font-weight:700;transition:0.3s;text-align:center;gap:8px;min-height:140px}
+        .action-card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,0.4)}
+        .action-card .icon{font-size:2.5rem}
+        .action-card .title{font-size:0.95rem}
+        .action-card .sub{font-size:0.7rem;opacity:0.8}
+        
+        .schedule-btn{background:linear-gradient(135deg,#10b981,#059669)}
+        .watch-btn{background:linear-gradient(135deg,#ef4444,#dc2626)}
+        .brave-btn{background:linear-gradient(135deg,#fb542b,#e0441a)}
+        
+        .info-box{background:var(--card);border-radius:15px;padding:20px;border:1px solid var(--bdr);text-align:center;margin-top:20px}
+        .info-box p{color:var(--text2);font-size:0.85rem}
+        
+        .footer{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid var(--bdr);color:var(--text2);font-size:0.85rem}
+        .footer strong{color:var(--acc)}
+        
+        @media(max-width:768px){
+            .action-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+            .action-card{padding:20px 10px;min-height:120px}
+            .action-card .icon{font-size:2rem}
+            .action-card .title{font-size:0.85rem}
+        }
+        @media(max-width:400px){
+            .action-grid{grid-template-columns:1fr 1fr;gap:8px}
+            .action-card{padding:15px 8px;min-height:100px;border-radius:12px}
+            .action-card .icon{font-size:1.8rem}
+            .action-card .title{font-size:0.75rem}
+            .action-card .sub{font-size:0.65rem}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://shankartechhub.com" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+        <!-- Banner PNG - 1200×400px -->
+        <div class="banner-container">
+            <img src="images/banner.png" alt="FIFA World Cup 2026" class="banner-img" onerror="this.style.display='none'">
+        </div>
+
+        <!-- 3 Cards (2x2 Grid on Phone) -->
+        <div class="action-grid">
+            <a href="schedule.html" class="action-card schedule-btn">
+                <span class="icon">📅</span>
+                <span class="title">Full Schedule</span>
+                <span class="sub">UAE & Nepal</span>
+            </a>
+            <a href="https://www.yosintv.net/football.html" target="_blank" class="action-card watch-btn">
+                <span class="icon">📺</span>
+                <span class="title">Watch Live</span>
+                <span class="sub">Stream</span>
+            </a>
+            <a href="https://brave.com/download" target="_blank" class="action-card brave-btn">
+                <span class="icon">🦁</span>
+                <span class="title">Brave Browser</span>
+                <span class="sub">No Ads</span>
+            </a>
+        </div>
+
+        <div class="info-box">
+            <p>⚠️ ShankarTech Hub only provides schedule & redirect links. We do not host or stream matches.</p>
+        </div>
+
+        <div class="footer">
+            © <strong>Shankar Bashyal @2026</strong> | ShankarTech Hub | Technology that helps people
+        </div>
+    </div>
+
+    <script>
+        function applyTheme(t){t==='light'?document.body.classList.add('light-mode'):document.body.classList.remove('light-mode')}
+        applyTheme(localStorage.getItem('shankartech_theme')||'dark');
+    </script>
+</body>
+</html>
